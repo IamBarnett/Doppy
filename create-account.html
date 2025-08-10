@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            top: 50px;
+            left: 20px;
+        }
+
+        .help-btn {
+            top: 50px;
+            right: 20px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        /* Login Screen */
+        .login-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            padding: 60px 40px;
+        }
+
+        /* Background Circles */
+        .bg-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .bg-circle-1 {
+            width: 350px;
+            height: 350px;
+            bottom: -150px;
+            right: -100px;
+            background: rgba(30, 136, 229, 0.2);
+        }
+
+        .bg-circle-2 {
+            width: 250px;
+            height: 250px;
+            bottom: -80px;
+            left: -120px;
+            background: rgba(30, 136, 229, 0.15);
+        }
+
+        /* Header Section */
+        .login-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .doppy-logo-small {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-d-small {
+            width: 50px;
+            height: 50px;
+            background: #FFC107;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #1976D2;
+            margin-right: 10px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo-text-small {
+            font-size: 32px;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: white;
+            font-size: 16px;
+            font-weight: 300;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.4;
+            opacity: 0.9;
+            max-width: 250px;
+        }
+
+        /* Buttons Section */
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 280px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 16px 40px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .btn-signup {
+            background: #FFC107;
+            color: #1976D2;
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+        }
+
+        .btn-login {
+            background: rgba(255,255,255,0.9);
+            color: #1976D2;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-signup:hover {
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+        }
+
+        .btn-login:hover {
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Logo Hover Effect */
+        .logo-d-small:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 15px rgba(255, 193, 7, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Loading state */
+        .btn.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .btn.loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .login-screen {
+                padding: 40px 30px;
+            }
+            
+            .auth-buttons {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="status-left">9:41</span>
+            <span class="status-right">🔋 100%</span>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <a href="index.html" class="nav-btn back-btn" id="backBtn">←</a>
+        <button class="nav-btn help-btn" id="helpBtn">?</button>
+
+        <!-- Background Circles -->
+        <div class="bg-circles">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+        </div>
+
+        <!-- Login Screen Content -->
+        <div class="login-screen">
+            <div class="login-header">
+                <div class="doppy-logo-small">
+                    <div class="logo-d-small">D</div>
+                    <span class="logo-text-small">oppy</span>
+                </div>
+                <p class="subtitle">Your Pet's Best Care, Anytime, Anywhere.</p>
+            </div>
+
+            <div class="auth-buttons">
+                <button class="btn btn-signup" id="signupBtn">Sign up</button>
+                <button class="btn btn-login" id="loginBtn">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login Screen JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initLoginScreen();
+            setupEffects();
+            updateStatusTime();
+            
+            // Update time every minute
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initLoginScreen() {
+            // Load registration data
+            const registrationData = getUserData('registrationData') || {};
+            console.log('Login: Registration data loaded', registrationData);
+            
+            // Update current step
+            registrationData.currentStep = 'login';
+            registrationData.loginPageLoaded = new Date().toISOString();
+            saveUserData('registrationData', registrationData);
+        }
+
+        function setupEffects() {
+            const signupBtn = document.getElementById('signupBtn');
+            const loginBtn = document.getElementById('loginBtn');
+            const helpBtn = document.getElementById('helpBtn');
+            const backBtn = document.getElementById('backBtn');
+
+            // Sign up button
+            if (signupBtn) {
+                signupBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleButtonClick(this, 'signup', 'create-account.html');
+                });
+            }
+
+            // Login button (for now, goes to same create account page)
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleButtonClick(this, 'login', 'create-account.html');
+                });
+            }
+
+            // Help button
+            if (helpBtn) {
+                helpBtn.addEventListener('click', function() {
+                    showNotification('Help: Contact support at help@doppy.com', 'info');
+                });
+            }
+
+            // Back button effect
+            if (backBtn) {
+                backBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Add loading effect
+                    this.style.opacity = '0.7';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 300);
+                });
+            }
+
+            // Logo interaction
+            const logoD = document.querySelector('.logo-d-small');
+            if (logoD) {
+                logoD.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.2) rotate(360deg)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 600);
+                });
+            }
+
+            // Parallax effect for background circles
+            document.addEventListener('mousemove', function(e) {
+                const circles = document.querySelectorAll('.bg-circle');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+
+                circles.forEach((circle, index) => {
+                    const speed = (index + 1) * 0.3;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    circle.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        }
+
+        function handleButtonClick(button, action, nextPage) {
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (rect.width / 2 - size / 2) + 'px';
+            ripple.style.top = (rect.height / 2 - size / 2) + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255,255,255,0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.pointerEvents = 'none';
+            
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            button.appendChild(ripple);
+            
+            // Add loading state
+            button.classList.add('loading');
+            const originalText = button.textContent;
+            button.textContent = 'Loading';
+            
+            // Save action data
+            const registrationData = getUserData('registrationData') || {};
+            registrationData.loginAction = {
+                action: action,
+                timestamp: new Date().toISOString()
+            };
+            registrationData.currentStep = 'create-account';
+            saveUserData('registrationData', registrationData);
+            
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = nextPage;
+            }, 1000);
+            
+            // Clean up ripple
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 600);
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ff4444' : '#4CAF50'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: fadeInDown 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeInUp 0.3s ease-out reverse';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Utility functions
+        function saveUserData(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                console.error('Error saving data:', error);
+                return false;
+            }
+        }
+
+        function getUserData(key) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+                return null;
+            }
+        }
+
+        // Debug info
+        console.log('Doppy Login Screen loaded successfully');
+    </script>
+</body>
+</html>

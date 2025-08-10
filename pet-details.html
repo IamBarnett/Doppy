@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Pet Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-btn { top: 50px; left: 20px; }
+        .help-btn { top: 50px; right: 20px; }
+        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+
+        .pet-details-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            padding: 20px 30px 40px 30px;
+            overflow-y: auto;
+        }
+
+        .bg-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .bg-circle-1 {
+            width: 300px;
+            height: 300px;
+            bottom: -100px;
+            right: -80px;
+            background: rgba(30, 136, 229, 0.2);
+        }
+
+        .bg-circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -100px;
+            background: rgba(30, 136, 229, 0.15);
+        }
+
+        .header-section {
+            text-align: center;
+            margin: 40px 0 30px 0;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .doppy-logo-small {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-d-small {
+            width: 45px;
+            height: 45px;
+            background: #FFC107;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976D2;
+            margin-right: 8px;
+            box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+        }
+
+        .logo-text-small {
+            font-size: 28px;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .screen-title {
+            color: white;
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .selected-pet-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            animation: zoomIn 0.6s ease-out 0.2s both;
+        }
+
+        .selected-pet-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .selected-pet-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .selected-pet-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            background: rgba(255,193,7,0.2);
+            padding: 8px 20px;
+            border-radius: 15px;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 5px 20px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(51,51,51,0.6);
+        }
+
+        .final-section {
+            margin-top: auto;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .final-logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .doppy-logo-final {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-d-final {
+            width: 50px;
+            height: 50px;
+            background: #FFC107;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #1976D2;
+            margin-right: 10px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .logo-text-final {
+            font-size: 32px;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .final-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+
+        .btn-done {
+            width: 100%;
+            background: #FFC107;
+            color: #1976D2;
+            border: none;
+            padding: 18px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-done:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+        }
+
+        .btn-done:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-done.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .completion-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid rgba(76, 175, 80, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .completion-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .completion-message h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .completion-message p {
+            color: white;
+            font-size: 14px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        @keyframes success {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .input-error {
+            border: 2px solid #ff4444 !important;
+            background: rgba(255, 68, 68, 0.1) !important;
+        }
+
+        @media (max-width: 480px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .pet-details-screen {
+                padding: 15px 25px 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="status-bar">
+            <span class="status-left">9:41</span>
+            <span class="status-right">🔋 100%</span>
+        </div>
+
+        <a href="pet-selection.html" class="nav-btn back-btn">←</a>
+        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
+
+        <div class="bg-circles">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+        </div>
+
+        <div class="pet-details-screen">
+            <div class="header-section">
+                <div class="doppy-logo-small">
+                    <div class="logo-d-small">D</div>
+                    <span class="logo-text-small">oppy</span>
+                </div>
+                <h2 class="screen-title">Pet selected:</h2>
+            </div>
+
+            <div class="selected-pet-section">
+                <div class="selected-pet-display">
+                    <div class="selected-pet-icon" id="selectedPetIcon">🐶</div>
+                    <div class="selected-pet-name" id="selectedPetName">Dog</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <form id="petDetailsForm">
+                    <input type="text" class="form-input" placeholder="Pet's name" id="petName" required>
+                    <input type="text" class="form-input" placeholder="Pet's age" id="petAge" required>
+                    <input type="text" class="form-input" placeholder="Pet's race" id="petRace" required>
+                    <select class="form-input" id="petGender" required>
+                        <option value="">Pet's gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="final-section">
+                <div class="final-logo-section">
+                    <div class="doppy-logo-final">
+                        <div class="logo-d-final">D</div>
+                        <span class="logo-text-final">oppy</span>
+                    </div>
+                </div>
+
+                <h3 class="final-title">Enter your Gmail</h3>
+                <input type="email" class="form-input" placeholder="your.email@gmail.com" id="userEmail">
+
+                <h3 class="final-title">Enter your Password</h3>
+                <input type="password" class="form-input" placeholder="Your secure password" id="userPassword">
+
+                <div class="completion-message" id="completionMessage">
+                    <h3>🎉 Registration Complete!</h3>
+                    <p>Welcome to Doppy! Your pet care journey starts now.</p>
+                </div>
+
+                <button class="btn-done" id="doneBtn" onclick="completeRegistration()">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initPetDetailsScreen();
+            setupFormHandling();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initPetDetailsScreen() {
+            // Load selected pet data
+            const selectedPet = getUserData('selectedPet');
+            const userData = getUserData('userData');
+            
+            if (selectedPet) {
+                document.getElementById('selectedPetIcon').textContent = selectedPet.icon || '🐾';
+                document.getElementById('selectedPetName').textContent = selectedPet.name || 'Pet';
+            }
+
+            // Pre-fill email if available
+            if (userData && userData.email) {
+                document.getElementById('userEmail').value = userData.email;
+            }
+
+            // Update registration data
+            const registrationData = getUserData('registrationData') || {};
+            registrationData.currentStep = 'pet-details';
+            registrationData.petDetailsPageLoaded = new Date().toISOString();
+            saveUserData('registrationData', registrationData);
+        }
+
+        function setupFormHandling() {
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('blur', () => validateField(input));
+                input.addEventListener('input', () => clearError(input));
+            });
+        }
+
+        function validateField(input) {
+            const value = input.value.trim();
+            const fieldId = input.id;
+            
+            clearError(input);
+            
+            if (!value && input.hasAttribute('required')) {
+                showFieldError(input);
+                return false;
+            }
+
+            if (fieldId === 'userEmail' && value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    showFieldError(input);
+                    return false;
+                }
+            }
+
+            if (fieldId === 'petAge' && value) {
+                const age = parseInt(value);
+                if (isNaN(age) || age < 0 || age > 30) {
+                    showFieldError(input);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function showFieldError(input) {
+            input.classList.add('input-error');
+        }
+
+        function clearError(input) {
+            input.classList.remove('input-error');
+        }
+
+        function completeRegistration() {
+            const doneBtn = document.getElementById('doneBtn');
+            
+            // Validate required fields
+            const requiredFields = [
+                'petName', 'petAge', 'petRace', 'petGender', 
+                'userEmail', 'userPassword'
+            ];
+            
+            let isValid = true;
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showNotification('Please fill in all required fields correctly', 'error');
+                return;
+            }
+
+            // Add loading state
+            doneBtn.classList.add('loading');
+            doneBtn.textContent = 'Completing registration...';
+
+            // Collect all data
+            const petDetails = {
+                name: document.getElementById('petName').value.trim(),
+                age: document.getElementById('petAge').value.trim(),
+                race: document.getElementById('petRace').value.trim(),
+                gender: document.getElementById('petGender').value
+            };
+
+            const finalCredentials = {
+                email: document.getElementById('userEmail').value.trim(),
+                password: document.getElementById('userPassword').value
+            };
+
+            // Save complete registration data
+            const registrationData = getUserData('registrationData') || {};
+            const selectedPet = getUserData('selectedPet');
+            const userData = getUserData('userData');
+
+            const completeRegistration = {
+                user: userData,
+                pet: {
+                    type: selectedPet.type,
+                    ...petDetails
+                },
+                credentials: finalCredentials,
+                registrationFlow: registrationData,
+                completedAt: new Date().toISOString(),
+                status: 'completed'
+            };
+
+            saveUserData('completeRegistration', completeRegistration);
+
+            // Add ripple effect
+            addRippleEffect(doneBtn);
+
+            // Show success message
+            setTimeout(() => {
+                doneBtn.style.animation = 'success 0.6s ease';
+                doneBtn.textContent = '✓ Registration Complete!';
+                doneBtn.style.background = '#4CAF50';
+                
+                const completionMessage = document.getElementById('completionMessage');
+                completionMessage.classList.add('visible');
+                
+                showNotification('🎉 Welcome to Doppy! Registration completed successfully.', 'success');
+            }, 1000);
+
+            // Final success state
+            setTimeout(() => {
+                doneBtn.textContent = '🚀 Start Using Doppy';
+                doneBtn.style.background = '#FFC107';
+                doneBtn.classList.remove('loading');
+                
+                // In a real app, this would navigate to the main dashboard
+                doneBtn.onclick = () => {
+                    showNotification('🎊 Thank you! This completes the Doppy registration demo.', 'success');
+                };
+            }, 3000);
+        }
+
+        function addRippleEffect(button) {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (rect.width / 2 - size / 2) + 'px';
+            ripple.style.top = (rect.height / 2 - size / 2) + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255,255,255,0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.pointerEvents = 'none';
+            
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 600);
+        }
+
+        function showHelp() {
+            showNotification('Complete your pet details and credentials to finish registration!', 'info');
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ff4444' : type === 'success' ? '#4CAF50' : '#2196F3'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: fadeInDown 0.3s ease-out;
+                max-width: 320px;
+                text-align: center;
+                line-height: 1.4;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, type === 'success' ? 4000 : 3000);
+        }
+
+        function saveUserData(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                console.error('Error saving data:', error);
+                return false;
+            }
+        }
+
+        function getUserData(key) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+                return null;
+            }
+        }
+
+        console.log('Doppy Pet Details Screen loaded');
+    </script>
+</body>
+</html>
