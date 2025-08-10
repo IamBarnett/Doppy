@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Veterinary App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+        }
+
+        .screen.active {
+            opacity: 1;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            color: white;
+            padding: 0;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-top {
+            margin-top: 120px;
+            z-index: 2;
+        }
+
+        .welcome-text h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 0;
+            letter-spacing: 3px;
+            line-height: 1.1;
+        }
+
+        .welcome-text h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 3px;
+        }
+
+        .welcome-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            margin-top: -50px;
+        }
+
+        .doppy-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .logo-d {
+            width: 60px;
+            height: 60px;
+            background: #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #1976D2;
+            margin-right: 10px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .logo-circles {
+            position: absolute;
+            right: -5px;
+            top: -5px;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            background: #FFC107;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .circle:nth-child(1) { top: 0; right: 0; }
+        .circle:nth-child(2) { top: 25px; right: 5px; }
+        .circle:nth-child(3) { top: 50px; right: -5px; }
+        .circle:nth-child(4) { top: 70px; right: 15px; }
+
+        .doppy-text {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-left: 30px;
+            color: white;
+        }
+
+        .welcome-bottom {
+            margin-bottom: 100px;
+            z-index: 2;
+        }
+
+        .start-button {
+            background: #FFC107;
+            color: #1976D2;
+            border: none;
+            padding: 18px 60px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.6);
+        }
+
+        .welcome-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .bg-circle-1 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -100px;
+            background: rgba(30, 136, 229, 0.3);
+        }
+
+        .bg-circle-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -100px;
+            left: -150px;
+            background: rgba(30, 136, 229, 0.2);
+        }
+
+        .bg-circle-3 {
+            width: 200px;
+            height: 200px;
+            bottom: 100px;
+            right: 50px;
+            background: rgba(30, 136, 229, 0.15);
+        }
+
+        .bg-circle-4 {
+            width: 150px;
+            height: 150px;
+            bottom: 50px;
+            left: 30px;
+            background: rgba(30, 136, 229, 0.1);
+        }
+
+        .btn-primary {
+            background: #FFC107;
+            color: #4A90E2;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.6);
+        }
+
+        /* Login Screen */
+        .login-screen {
+            padding: 40px;
+            color: white;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .login-header .logo {
+            width: 80px;
+            height: 80px;
+            font-size: 32px;
+            margin: 0 auto 20px;
+        }
+
+        .login-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .pet-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .pet-card {
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .pet-card:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .pet-icon {
+            width: 60px;
+            height: 60px;
+            background: #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 24px;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            background: white;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            color: white;
+            padding: 50px 20px 30px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .date-info {
+            text-align: center;
+        }
+
+        .date-info h2 {
+            font-size: 36px;
+            font-weight: 300;
+        }
+
+        .date-info p {
+            opacity: 0.9;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 30px 20px;
+        }
+
+        .action-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            border-color: #4A90E2;
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            background: #4A90E2;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 20px;
+        }
+
+        /* Calendar */
+        .calendar-header {
+            padding: 20px;
+            text-align: center;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #eee;
+            padding: 20px;
+        }
+
+        .calendar-day {
+            background: white;
+            padding: 15px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: #f0f8ff;
+        }
+
+        .calendar-day.today {
+            background: #4A90E2;
+            color: white;
+        }
+
+        /* Appointments */
+        .appointments-list {
+            padding: 20px;
+        }
+
+        .appointment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #4A90E2;
+        }
+
+        /* Pets List */
+        .pets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .pet-profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .pet-profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pet-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #4A90E2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+        }
+
+        /* Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            color: #999;
+        }
+
+        .nav-item.active {
+            color: #4A90E2;
+        }
+
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav-text {
+            font-size: 12px;
+        }
+
+        /* Profile */
+        .profile-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #4A90E2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+        }
+
+        .profile-menu {
+            padding: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #f8f9fa;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f8ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #4A90E2;
+        }
+
+        /* Settings */
+        .settings-section {
+            padding: 20px;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .toggle-switch.active {
+            background: #4A90E2;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #FF4444;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Screen 1: Welcome -->
+        <div class="screen active" id="welcome">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div class="welcome-screen">
+                <div class="welcome-circles">
+                    <div class="bg-circle bg-circle-1"></div>
+                    <div class="bg-circle bg-circle-2"></div>
+                    <div class="bg-circle bg-circle-3"></div>
+                    <div class="bg-circle bg-circle-4"></div>
+                </div>
+                
+                <div class="welcome-top">
+                    <div class="welcome-text">
+                        <h1>WELCOME</h1>
+                        <h2>TO</h2>
+                    </div>
+                </div>
+
+                <div class="welcome-center">
+                    <div class="doppy-logo">
+                        <div class="logo-d">D</div>
+                        <div class="logo-circles">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                        <div class="doppy-text">oppy</div>
+                    </div>
+                </div>
+
+                <div class="welcome-bottom">
+                    <button class="start-button" onclick="showScreen('login')">Start now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Login -->
+        <div class="screen" id="login">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <button class="back-button" onclick="showScreen('welcome')">←</button>
+            <div class="login-screen">
+                <div class="login-header">
+                    <div class="logo">🐾</div>
+                    <h2>Create your account</h2>
+                </div>
+                <div class="login-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter your email">
+                    </div>
+                    <button class="btn-primary" onclick="showScreen('pet-select')" style="width: 100%; margin-top: 20px;">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Pet Selection -->
+        <div class="screen" id="pet-select">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <button class="back-button" onclick="showScreen('login')">←</button>
+            <div class="login-screen">
+                <div class="login-header">
+                    <div class="logo">🐾</div>
+                    <h2>Choose your pet type</h2>
+                </div>
+                <div class="pet-selection">
+                    <div class="pet-card" onclick="showScreen('password')">
+                        <div class="pet-icon">🐕</div>
+                        <p>Dog</p>
+                    </div>
+                    <div class="pet-card" onclick="showScreen('password')">
+                        <div class="pet-icon">🐱</div>
+                        <p>Cat</p>
+                    </div>
+                    <div class="pet-card" onclick="showScreen('password')">
+                        <div class="pet-icon">🐰</div>
+                        <p>Rabbit</p>
+                    </div>
+                    <div class="pet-card" onclick="showScreen('password')">
+                        <div class="pet-icon">🐦</div>
+                        <p>Bird</p>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="showScreen('password')" style="width: 100%; margin-top: 20px;">Next</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: Password -->
+        <div class="screen" id="password">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <button class="back-button" onclick="showScreen('pet-select')">←</button>
+            <div class="login-screen">
+                <div class="login-header">
+                    <div class="logo">🐾</div>
+                    <h2>Pet categories</h2>
+                </div>
+                <div class="login-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter your breed">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Enter your Password">
+                    </div>
+                    <button class="btn-primary" onclick="showScreen('dashboard')" style="width: 100%; margin-top: 20px;">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Dashboard -->
+        <div class="screen" id="dashboard">
+            <div class="status-bar" style="color: #333;">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div class="dashboard">
+                <div class="header">
+                    <div class="header-top">
+                        <div>
+                            <h3>Good morning</h3>
+                            <p>Dr. Name</p>
+                        </div>
+                        <div style="position: relative;">
+                            <span style="font-size: 24px;">🔔</span>
+                            <div class="notification-badge">3</div>
+                        </div>
+                    </div>
+                    <div class="date-info">
+                        <h2>MON<br>15<br>JUN</h2>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <div class="action-card" onclick="showScreen('appointments')">
+                        <div class="action-icon">📅</div>
+                        <h4>Appointments</h4>
+                        <p>Schedule & manage</p>
+                    </div>
+                    <div class="action-card" onclick="showScreen('pets')">
+                        <div class="action-icon">🐾</div>
+                        <h4>Pet Records</h4>
+                        <p>Medical history</p>
+                    </div>
+                    <div class="action-card" onclick="showScreen('calendar')">
+                        <div class="action-icon">🗓️</div>
+                        <h4>Calendar</h4>
+                        <p>View schedule</p>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">💊</div>
+                        <h4>Medications</h4>
+                        <p>Track treatments</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="showScreen('dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-text">Home</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('calendar')">
+                    <div class="nav-icon">📅</div>
+                    <div class="nav-text">Calendar</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('appointments')">
+                    <div class="nav-icon">🩺</div>
+                    <div class="nav-text">Health</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('pets')">
+                    <div class="nav-icon">🐾</div>
+                    <div class="nav-text">Pets</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-text">Profile</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: Calendar -->
+        <div class="screen" id="calendar">
+            <div class="status-bar" style="color: #333;">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: white; height: 100%;">
+                <div class="calendar-header">
+                    <h2>January 2025</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); padding: 10px 20px; background: #f8f9fa;">
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">S</div>
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">M</div>
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">T</div>
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">W</div>
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">T</div>
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">F</div>
+                    <div style="text-align: center; font-weight: 600; padding: 10px; color: #666;">S</div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day today">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-text">Home</div>
+                </div>
+                <div class="nav-item active" onclick="showScreen('calendar')">
+                    <div class="nav-icon">📅</div>
+                    <div class="nav-text">Calendar</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('appointments')">
+                    <div class="nav-icon">🩺</div>
+                    <div class="nav-text">Health</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('pets')">
+                    <div class="nav-icon">🐾</div>
+                    <div class="nav-text">Pets</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-text">Profile</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: Appointments -->
+        <div class="screen" id="appointments">
+            <div class="status-bar" style="color: #333;">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: white; height: 100%; padding-top: 20px;">
+                <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                    <h2 class="section-title">Appointments</h2>
+                </div>
+                <div class="appointments-list">
+                    <div class="appointment-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4>Bruno - Checkup</h4>
+                            <span style="background: #4A90E2; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Today</span>
+                        </div>
+                        <p style="color: #666; margin-bottom: 5px;">📅 11:00 AM - 11:30 AM</p>
+                        <p style="color: #666;">Dr. Smith • General Consultation</p>
+                    </div>
+                    <div class="appointment-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4>Lina - Vaccination</h4>
+                            <span style="background: #FFC107; color: #333; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Tomorrow</span>
+                        </div>
+                        <p style="color: #666; margin-bottom: 5px;">📅 2:00 PM - 2:30 PM</p>
+                        <p style="color: #666;">Dr. Johnson • Vaccination</p>
+                    </div>
+                    <div class="appointment-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h4>Pepe - Surgery</h4>
+                            <span style="background: #FF6B6B; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">Urgent</span>
+                        </div>
+                        <p style="color: #666; margin-bottom: 5px;">📅 Friday 9:00 AM - 11:00 AM</p>
+                        <p style="color: #666;">Dr. Williams • Minor Surgery</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-text">Home</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('calendar')">
+                    <div class="nav-icon">📅</div>
+                    <div class="nav-text">Calendar</div>
+                </div>
+                <div class="nav-item active" onclick="showScreen('appointments')">
+                    <div class="nav-icon">🩺</div>
+                    <div class="nav-text">Health</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('pets')">
+                    <div class="nav-icon">🐾</div>
+                    <div class="nav-text">Pets</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-text">Profile</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 8: Pets -->
+        <div class="screen" id="pets">
+            <div class="status-bar" style="color: #333;">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: white; height: 100%; padding-top: 20px;">
+                <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                    <h2 class="section-title">Your Pet Profile</h2>
+                </div>
+                <div class="pets-grid">
+                    <div class="pet-profile-card">
+                        <div class="pet-avatar">🐕</div>
+                        <h4>Bruno</h4>
+                        <p style="color: #666; font-size: 14px;">Golden Retriever</p>
+                        <p style="color: #4A90E2; font-size: 12px;">Next appointment: 17/01/2025</p>
+                    </div>
+                    <div class="pet-profile-card">
+                        <div class="pet-avatar">🐱</div>
+                        <h4>Lina</h4>
+                        <p style="color: #666; font-size: 14px;">Persian Cat</p>
+                        <p style="color: #4A90E2; font-size: 12px;">Next appointment: 17/01/2025</p>
+                    </div>
+                    <div class="pet-profile-card">
+                        <div class="pet-avatar">🐦</div>
+                        <h4>Pepe</h4>
+                        <p style="color: #666; font-size: 14px;">Canary</p>
+                        <p style="color: #4A90E2; font-size: 12px;">Next appointment: 17/01/2025</p>
+                    </div>
+                    <div class="pet-profile-card">
+                        <div class="pet-avatar">🐱</div>
+                        <h4>Katina</h4>
+                        <p style="color: #666; font-size: 14px;">Siamese Cat</p>
+                        <p style="color: #4A90E2; font-size: 12px;">Next appointment: 17/01/2025</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-text">Home</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('calendar')">
+                    <div class="nav-icon">📅</div>
+                    <div class="nav-text">Calendar</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('appointments')">
+                    <div class="nav-icon">🩺</div>
+                    <div class="nav-text">Health</div>
+                </div>
+                <div class="nav-item active" onclick="showScreen('pets')">
+                    <div class="nav-icon">🐾</div>
+                    <div class="nav-text">Pets</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-text">Profile</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 9: Profile -->
+        <div class="screen" id="profile">
+            <div class="status-bar" style="color: #333;">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: white; height: 100%;">
+                <div class="profile-header">
+                    <div class="profile-avatar">👤</div>
+                    <h3>Dr. Name</h3>
+                    <p style="color: #666;">Veterinarian</p>
+                </div>
+                <div class="profile-menu">
+                    <div class="menu-item">
+                        <div class="menu-icon">📊</div>
+                        <div>
+                            <h4>Professional Statistics</h4>
+                            <p style="color: #666; font-size: 14px;">View your performance metrics</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">📱</div>
+                        <div>
+                            <h4>NEW SUMMER VET FESTIVAL IN THE CITY</h4>
+                            <p style="color: #666; font-size: 14px;">Join the biggest veterinary event</p>
+                        </div>
+                    </div>
+                    <div class="menu-item" onclick="showScreen('settings')">
+                        <div class="menu-icon">⚙️</div>
+                        <div>
+                            <h4>Settings</h4>
+                            <p style="color: #666; font-size: 14px;">App preferences and account</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">❓</div>
+                        <div>
+                            <h4>Help & Support</h4>
+                            <p style="color: #666; font-size: 14px;">FAQs and contact support</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon">🚪</div>
+                        <div>
+                            <h4>Logout</h4>
+                            <p style="color: #666; font-size: 14px;">Sign out of your account</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-text">Home</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('calendar')">
+                    <div class="nav-icon">📅</div>
+                    <div class="nav-text">Calendar</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('appointments')">
+                    <div class="nav-icon">🩺</div>
+                    <div class="nav-text">Health</div>
+                </div>
+                <div class="nav-item" onclick="showScreen('pets')">
+                    <div class="nav-icon">🐾</div>
+                    <div class="nav-text">Pets</div>
+                </div>
+                <div class="nav-item active" onclick="showScreen('profile')">
+                    <div class="nav-icon">👤</div>
+                    <div class="nav-text">Profile</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 10: Settings -->
+        <div class="screen" id="settings">
+            <div class="status-bar" style="color: #333;">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: white; height: 100%; padding-top: 20px;">
+                <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; align-items: center;">
+                    <button style="background: none; border: none; font-size: 18px; margin-right: 15px; cursor: pointer;" onclick="showScreen('profile')">←</button>
+                    <h2 class="section-title" style="margin: 0;">Settings</h2>
+                </div>
+                <div class="settings-section">
+                    <h3 style="color: #666; font-size: 14px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">GENERAL SETTINGS</h3>
+                    <div class="settings-item">
+                        <div>
+                            <h4>Notifications</h4>
+                            <p style="color: #666; font-size: 14px;">Push notifications for appointments</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <h4>Location Services</h4>
+                            <p style="color: #666; font-size: 14px;">Access to your location</p>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <h4>Dark Mode</h4>
+                            <p style="color: #666; font-size: 14px;">Switch to dark theme</p>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3 style="color: #666; font-size: 14px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">COMMUNICATION SETTINGS</h3>
+                    <div class="settings-item">
+                        <div>
+                            <h4>Email Notifications</h4>
+                            <p style="color: #666; font-size: 14px;">Receive updates via email</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <h4>SMS Alerts</h4>
+                            <p style="color: #666; font-size: 14px;">Text message reminders</p>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3 style="color: #666; font-size: 14px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">PRIVACY & SECURITY</h3>
+                    <div class="settings-item">
+                        <div>
+                            <h4>Face ID / Touch ID</h4>
+                            <p style="color: #666; font-size: 14px;">Biometric authentication</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div>
+                            <h4>Data Sharing</h4>
+                            <p style="color: #666; font-size: 14px;">Share anonymized data</p>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Update navigation active state
+            updateNavigation(screenId);
+        }
+
+        function updateNavigation(screenId) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Map screen IDs to navigation items
+            const navMapping = {
+                'dashboard': 0,
+                'calendar': 1,
+                'appointments': 2,
+                'pets': 3,
+                'profile': 4
+            };
+
+            if (navMapping.hasOwnProperty(screenId)) {
+                const activeNavIndex = navMapping[screenId];
+                const bottomNavs = document.querySelectorAll('.bottom-nav');
+                bottomNavs.forEach(nav => {
+                    const navItems = nav.querySelectorAll('.nav-item');
+                    if (navItems[activeNavIndex]) {
+                        navItems[activeNavIndex].classList.add('active');
+                    }
+                });
+            }
+        }
+
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effects to cards
+            const cards = document.querySelectorAll('.action-card, .pet-profile-card, .appointment-card, .pet-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Add calendar day interactions
+            const calendarDays = document.querySelectorAll('.calendar-day');
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    // Remove previous selection
+                    calendarDays.forEach(d => d.classList.remove('today'));
+                    // Add selection to clicked day
+                    if (this.textContent.trim()) {
+                        this.classList.add('today');
+                    }
+                });
+            });
+
+            // Add smooth transitions
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            });
+        });
+
+        // Add swipe functionality for mobile
+        let startX = 0;
+        let startY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (!startX || !startY) return;
+
+            let endX = e.changedTouches[0].clientX;
+            let endY = e.changedTouches[0].clientY;
+
+            let diffX = startX - endX;
+            let diffY = startY - endY;
+
+            // Only handle horizontal swipes
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                const currentScreen = document.querySelector('.screen.active');
+                const screens = ['welcome', 'login', 'pet-select', 'password', 'dashboard', 'calendar', 'appointments', 'pets', 'profile', 'settings'];
+                const currentIndex = screens.indexOf(currentScreen.id);
+
+                if (diffX > 0 && currentIndex < screens.length - 1) {
+                    // Swipe left - next screen
+                    showScreen(screens[currentIndex + 1]);
+                } else if (diffX < 0 && currentIndex > 0) {
+                    // Swipe right - previous screen
+                    showScreen(screens[currentIndex - 1]);
+                }
+            }
+
+            startX = 0;
+            startY = 0;
+        });
+    </script>
+</body>
+</html>
