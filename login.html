@@ -32,7 +32,6 @@
             position: relative;
         }
 
-        /* Status Bar */
         .status-bar {
             height: 44px;
             display: flex;
@@ -46,7 +45,6 @@
             z-index: 100;
         }
 
-        /* Navigation Buttons */
         .nav-btn {
             position: absolute;
             width: 40px;
@@ -67,34 +65,19 @@
             text-decoration: none;
         }
 
-        .back-btn {
-            top: 50px;
-            left: 20px;
-        }
+        .back-btn { top: 50px; left: 20px; }
+        .help-btn { top: 50px; right: 20px; }
+        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
 
-        .help-btn {
-            top: 50px;
-            right: 20px;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-
-        /* Login Screen */
         .login-screen {
             height: calc(100% - 44px);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             position: relative;
             z-index: 10;
-            padding: 60px 40px;
+            padding: 40px 30px;
         }
 
-        /* Background Circles */
         .bg-circles {
             position: absolute;
             width: 100%;
@@ -125,10 +108,9 @@
             background: rgba(30, 136, 229, 0.15);
         }
 
-        /* Header Section */
-        .login-header {
+        .header-section {
             text-align: center;
-            margin-bottom: 60px;
+            margin: 60px 0 50px 0;
             animation: fadeInDown 0.8s ease-out;
         }
 
@@ -162,130 +144,135 @@
             letter-spacing: 1px;
         }
 
+        .screen-title {
+            color: white;
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
         .subtitle {
             color: white;
             font-size: 16px;
             font-weight: 300;
             text-align: center;
-            margin-top: 20px;
             line-height: 1.4;
             opacity: 0.9;
-            max-width: 250px;
+            max-width: 280px;
+            margin: 0 auto;
         }
 
-        /* Buttons Section */
-        .auth-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            max-width: 280px;
+        .form-section {
+            flex: 1;
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
 
-        .btn {
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
             border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            position: relative;
+            z-index: 100;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 5px 20px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(51,51,51,0.6);
+        }
+
+        .btn-login {
+            width: 100%;
+            background: #FFC107;
+            color: #1976D2;
+            border: none;
+            padding: 16px;
             border-radius: 25px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 16px 40px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            font-family: inherit;
-            width: 100%;
-        }
-
-        .btn-signup {
-            background: #FFC107;
-            color: #1976D2;
+            margin-top: 30px;
             box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-        }
-
-        .btn-login {
-            background: rgba(255,255,255,0.9);
-            color: #1976D2;
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-        }
-
-        .btn-signup:hover {
-            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 100;
         }
 
         .btn-login:hover {
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
         }
 
-        .btn:active {
+        .btn-login:active {
             transform: translateY(0) scale(0.98);
         }
 
-        /* Logo Hover Effect */
-        .logo-d-small:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 6px 15px rgba(255, 193, 7, 0.5);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Loading state */
-        .btn.loading {
+        .btn-login.loading {
             opacity: 0.7;
             pointer-events: none;
         }
 
-        .btn.loading::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-left: 10px;
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .signup-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            opacity: 0.9;
         }
 
-        /* Responsive */
+        .signup-link a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        .input-error {
+            border: 2px solid #ff4444 !important;
+            background: rgba(255, 68, 68, 0.1) !important;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
         @media (max-width: 480px) {
             .phone-container {
                 width: 100vw;
@@ -294,54 +281,57 @@
             }
             
             .login-screen {
-                padding: 40px 30px;
-            }
-            
-            .auth-buttons {
-                max-width: 100%;
+                padding: 30px 25px;
             }
         }
     </style>
 </head>
 <body>
     <div class="phone-container">
-        <!-- Status Bar -->
         <div class="status-bar">
             <span class="status-left">9:41</span>
             <span class="status-right">🔋 100%</span>
         </div>
 
-        <!-- Navigation Buttons -->
         <button class="nav-btn back-btn" onclick="goBack()">←</button>
         <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-        <!-- Background Circles -->
         <div class="bg-circles">
             <div class="bg-circle bg-circle-1"></div>
             <div class="bg-circle bg-circle-2"></div>
         </div>
 
-        <!-- Login Screen Content -->
         <div class="login-screen">
-            <div class="login-header">
+            <div class="header-section">
                 <div class="doppy-logo-small">
                     <div class="logo-d-small">D</div>
                     <span class="logo-text-small">oppy</span>
                 </div>
-                <p class="subtitle">Your Pet's Best Care, Anytime, Anywhere.</p>
+                <h2 class="screen-title">Welcome back!</h2>
+                <p class="subtitle">Login to your Doppy account</p>
             </div>
 
-            <div class="auth-buttons">
-                <button class="btn btn-signup" onclick="goToCreateAccount('signup')">Sign up</button>
-                <button class="btn btn-login" onclick="goToCreateAccount('login')">Login</button>
+            <div class="form-section">
+                <input type="email" class="form-input" placeholder="Email address" id="loginEmail" autocomplete="email">
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+                
+                <input type="password" class="form-input" placeholder="Password" id="loginPassword" autocomplete="current-password">
+                <div class="error-message" id="passwordError">Please enter your password</div>
+
+                <button class="btn-login" id="loginBtn" onclick="handleLogin()">Login</button>
+
+                <div class="signup-link">
+                    <a href="signup.html">Don't have an account? Sign up</a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Login Screen JavaScript
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Login page loaded');
             initLoginScreen();
+            setupFormHandling();
             updateStatusTime();
             setInterval(updateStatusTime, 60000);
         });
@@ -353,29 +343,177 @@
             saveUserData('registrationData', registrationData);
         }
 
-        function goToCreateAccount(action) {
-            console.log('Going to create account:', action);
-            
-            // Save action data
-            const registrationData = getUserData('registrationData') || {};
-            registrationData.loginAction = {
-                action: action,
-                timestamp: new Date().toISOString()
-            };
-            registrationData.currentStep = 'create-account';
-            saveUserData('registrationData', registrationData);
-            
-            // Navigate to create account
-            window.location.href = 'create-account.html';
+        function setupFormHandling() {
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                input.addEventListener('input', function() {
+                    clearError(this);
+                });
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        handleLogin();
+                    }
+                });
+            });
         }
 
-        function goBack() {
-            console.log('Going back to welcome page');
-            window.location.href = 'index.html';
+        function validateField(input) {
+            const value = input.value.trim();
+            const fieldName = input.id;
+            let isValid = true;
+
+            clearError(input);
+
+            switch(fieldName) {
+                case 'loginEmail':
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!value) {
+                        showFieldError(input, 'Email is required');
+                        isValid = false;
+                    } else if (!emailRegex.test(value)) {
+                        showFieldError(input, 'Please enter a valid email');
+                        isValid = false;
+                    }
+                    break;
+
+                case 'loginPassword':
+                    if (!value) {
+                        showFieldError(input, 'Password is required');
+                        isValid = false;
+                    }
+                    break;
+            }
+
+            return isValid;
+        }
+
+        function showFieldError(input, message) {
+            input.classList.add('input-error');
+            const errorElement = document.getElementById(input.id.replace('login', '').toLowerCase() + 'Error');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('visible');
+            }
+        }
+
+        function clearError(input) {
+            input.classList.remove('input-error');
+            const errorElement = document.getElementById(input.id.replace('login', '').toLowerCase() + 'Error');
+            if (errorElement) {
+                errorElement.classList.remove('visible');
+            }
+        }
+
+        function handleLogin() {
+            console.log('Login attempt');
+            const emailInput = document.getElementById('loginEmail');
+            const passwordInput = document.getElementById('loginPassword');
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Validate fields
+            const emailValid = validateField(emailInput);
+            const passwordValid = validateField(passwordInput);
+
+            if (!emailValid || !passwordValid) {
+                showNotification('Please fill in all fields correctly', 'error');
+                return;
+            }
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Check if user exists
+            const userAccounts = getUserData('userAccounts') || [];
+            const userAccount = userAccounts.find(account => 
+                account.email === email && account.password === password
+            );
+
+            if (!userAccount) {
+                showFieldError(emailInput, 'Invalid email or password');
+                showFieldError(passwordInput, 'Invalid email or password');
+                showNotification('Invalid email or password', 'error');
+                return;
+            }
+
+            // Add loading state
+            loginBtn.classList.add('loading');
+            loginBtn.textContent = 'Logging in...';
+
+            // Save current session
+            const sessionData = {
+                email: userAccount.email,
+                fullName: userAccount.fullName,
+                loginTime: new Date().toISOString(),
+                accountType: 'existing'
+            };
+            saveUserData('userData', sessionData);
+
+            // Check if user has completed registration
+            const existingRegistration = getUserData('completeRegistration');
+            const userPetData = getUserData('selectedPet');
+
+            // Add ripple effect
+            addRippleEffect(loginBtn);
+
+            setTimeout(() => {
+                if (existingRegistration && existingRegistration.user && 
+                    existingRegistration.user.email === email) {
+                    // User has completed registration, show success
+                    showNotification('Welcome back! Registration already complete.', 'success');
+                    loginBtn.textContent = '✓ Welcome back!';
+                    loginBtn.style.background = '#4CAF50';
+                    
+                    setTimeout(() => {
+                        showNotification('🎊 Demo complete! In a real app, this would go to the main dashboard.', 'success');
+                    }, 2000);
+                } else {
+                    // User exists but hasn't completed pet registration
+                    const registrationData = getUserData('registrationData') || {};
+                    registrationData.currentStep = 'pet-selection';
+                    registrationData.loginSuccess = new Date().toISOString();
+                    saveUserData('registrationData', registrationData);
+                    
+                    window.location.href = 'pet-selection.html';
+                }
+            }, 1500);
+        }
+
+        function addRippleEffect(button) {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (rect.width / 2 - size / 2) + 'px';
+            ripple.style.top = (rect.height / 2 - size / 2) + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255,255,255,0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.pointerEvents = 'none';
+            
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 600);
         }
 
         function showHelp() {
-            showNotification('Choose Sign up to create a new account or Login if you already have one', 'info');
+            showNotification('Enter your email and password to login to your existing Doppy account', 'info');
+        }
+
+        function goBack() {
+            console.log('Going back to login options');
+            window.location.href = 'login-options.html';
         }
 
         function updateStatusTime() {
@@ -393,14 +531,13 @@
 
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
             notification.textContent = message;
             notification.style.cssText = `
                 position: fixed;
                 top: 70px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: ${type === 'error' ? '#ff4444' : '#4CAF50'};
+                background: ${type === 'error' ? '#ff4444' : type === 'success' ? '#4CAF50' : '#2196F3'};
                 color: white;
                 padding: 12px 24px;
                 border-radius: 8px;
@@ -408,24 +545,24 @@
                 font-size: 14px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.3);
                 animation: fadeInDown 0.3s ease-out;
+                max-width: 300px;
+                text-align: center;
+                line-height: 1.4;
             `;
             
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.animation = 'fadeInUp 0.3s ease-out reverse';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, type === 'success' ? 4000 : 3000);
         }
 
-        // Utility functions
         function saveUserData(key, value) {
             try {
                 localStorage.setItem(key, JSON.stringify(value));
+                console.log('Data saved:', key);
                 return true;
             } catch (error) {
                 console.error('Error saving data:', error);
@@ -443,8 +580,7 @@
             }
         }
 
-        // Debug info
-        console.log('Doppy Login Screen loaded successfully');
+        console.log('Doppy Login Screen loaded');
     </script>
 </body>
 </html>
