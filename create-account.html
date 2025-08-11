@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doppy - Login</title>
+    <title>Doppy - Create Account</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,6 @@
             position: relative;
         }
 
-        /* Status Bar */
         .status-bar {
             height: 44px;
             display: flex;
@@ -46,7 +45,6 @@
             z-index: 100;
         }
 
-        /* Navigation Buttons */
         .nav-btn {
             position: absolute;
             width: 40px;
@@ -60,41 +58,27 @@
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            z-index: 100;
+            z-index: 1000;
             color: white;
             font-size: 18px;
             font-weight: 600;
             text-decoration: none;
         }
 
-        .back-btn {
-            top: 50px;
-            left: 20px;
-        }
+        .back-btn { top: 50px; left: 20px; }
+        .help-btn { top: 50px; right: 20px; }
+        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
 
-        .help-btn {
-            top: 50px;
-            right: 20px;
-        }
-
-        .nav-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-
-        /* Login Screen */
-        .login-screen {
+        .create-account-screen {
             height: calc(100% - 44px);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             position: relative;
             z-index: 10;
-            padding: 60px 40px;
+            padding: 20px 30px 40px 30px;
+            overflow-y: auto;
         }
 
-        /* Background Circles */
         .bg-circles {
             position: absolute;
             width: 100%;
@@ -110,25 +94,24 @@
         }
 
         .bg-circle-1 {
-            width: 350px;
-            height: 350px;
-            bottom: -150px;
-            right: -100px;
+            width: 300px;
+            height: 300px;
+            bottom: -100px;
+            right: -80px;
             background: rgba(30, 136, 229, 0.2);
         }
 
         .bg-circle-2 {
-            width: 250px;
-            height: 250px;
-            bottom: -80px;
-            left: -120px;
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            left: -100px;
             background: rgba(30, 136, 229, 0.15);
         }
 
-        /* Header Section */
-        .login-header {
+        .header-section {
             text-align: center;
-            margin-bottom: 60px;
+            margin: 40px 0 30px 0;
             animation: fadeInDown 0.8s ease-out;
         }
 
@@ -140,152 +123,165 @@
         }
 
         .logo-d-small {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: #FFC107;
-            border-radius: 15px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             color: #1976D2;
-            margin-right: 10px;
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+            margin-right: 8px;
+            box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
             transition: all 0.3s ease;
         }
 
         .logo-text-small {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 300;
             color: white;
             letter-spacing: 1px;
         }
 
-        .subtitle {
+        .screen-title {
             color: white;
-            font-size: 16px;
-            font-weight: 300;
-            text-align: center;
-            margin-top: 20px;
-            line-height: 1.4;
-            opacity: 0.9;
-            max-width: 250px;
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 30px;
         }
 
-        /* Buttons Section */
-        .auth-buttons {
+        .avatar-section {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            max-width: 280px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+            justify-content: center;
+            margin-bottom: 40px;
+            animation: zoomIn 0.6s ease-out 0.2s both;
         }
 
-        .btn {
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+        }
+
+        .avatar-icon {
+            width: 40px;
+            height: 40px;
+            color: #666;
+        }
+
+        .form-section {
+            flex: 1;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
             border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            position: relative;
+            z-index: 100;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 5px 20px rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(51,51,51,0.6);
+        }
+
+        .btn-continue {
+            width: 100%;
+            background: #FFC107;
+            color: #1976D2;
+            border: none;
+            padding: 16px;
             border-radius: 25px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 16px 40px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            font-family: inherit;
-            width: 100%;
-        }
-
-        .btn-signup {
-            background: #FFC107;
-            color: #1976D2;
+            margin-top: 30px;
             box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 100;
         }
 
-        .btn-login {
-            background: rgba(255,255,255,0.9);
-            color: #1976D2;
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .btn:hover {
+        .btn-continue:hover {
             transform: translateY(-3px);
-        }
-
-        .btn-signup:hover {
             box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
         }
 
-        .btn-login:hover {
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.5);
-        }
-
-        .btn:active {
+        .btn-continue:active {
             transform: translateY(0) scale(0.98);
         }
 
-        /* Logo Hover Effect */
-        .logo-d-small:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 6px 15px rgba(255, 193, 7, 0.5);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Loading state */
-        .btn.loading {
+        .btn-continue.loading {
             opacity: 0.7;
             pointer-events: none;
         }
 
-        .btn.loading::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-left: 10px;
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        .input-error {
+            border: 2px solid #ff4444 !important;
+            background: rgba(255, 68, 68, 0.1) !important;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            margin-left: 5px;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
         @media (max-width: 480px) {
             .phone-container {
                 width: 100vw;
@@ -293,144 +289,229 @@
                 border-radius: 0;
             }
             
-            .login-screen {
-                padding: 40px 30px;
-            }
-            
-            .auth-buttons {
-                max-width: 100%;
+            .create-account-screen {
+                padding: 15px 25px 30px 25px;
             }
         }
     </style>
 </head>
 <body>
     <div class="phone-container">
-        <!-- Status Bar -->
         <div class="status-bar">
             <span class="status-left">9:41</span>
             <span class="status-right">🔋 100%</span>
         </div>
 
-        <!-- Navigation Buttons -->
-        <a href="index.html" class="nav-btn back-btn" id="backBtn">←</a>
-        <button class="nav-btn help-btn" id="helpBtn">?</button>
+        <!-- Navigation buttons fixed -->
+        <button class="nav-btn back-btn" onclick="goBack()">←</button>
+        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-        <!-- Background Circles -->
         <div class="bg-circles">
             <div class="bg-circle bg-circle-1"></div>
             <div class="bg-circle bg-circle-2"></div>
         </div>
 
-        <!-- Login Screen Content -->
-        <div class="login-screen">
-            <div class="login-header">
+        <div class="create-account-screen">
+            <div class="header-section">
                 <div class="doppy-logo-small">
                     <div class="logo-d-small">D</div>
                     <span class="logo-text-small">oppy</span>
                 </div>
-                <p class="subtitle">Your Pet's Best Care, Anytime, Anywhere.</p>
+                <h2 class="screen-title">Create your account</h2>
             </div>
 
-            <div class="auth-buttons">
-                <button class="btn btn-signup" id="signupBtn">Sign up</button>
-                <button class="btn btn-login" id="loginBtn">Login</button>
+            <div class="avatar-section">
+                <div class="user-avatar" onclick="changeAvatar()">
+                    <svg class="avatar-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <input type="text" class="form-input" placeholder="Full name" id="fullName" autocomplete="name">
+                <div class="error-message" id="nameError">Please enter your full name</div>
+                
+                <input type="email" class="form-input" placeholder="Email address/ phone number" id="email" autocomplete="email">
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+                
+                <input type="password" class="form-input" placeholder="Secure password" id="password" autocomplete="new-password">
+                <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                
+                <input type="password" class="form-input" placeholder="Confirm password" id="confirmPassword" autocomplete="new-password">
+                <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+
+                <button class="btn-continue" id="continueBtn" onclick="handleFormSubmit()">Sign in</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Login Screen JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            initLoginScreen();
-            setupEffects();
+            console.log('Create Account page loaded');
+            initCreateAccountScreen();
+            setupFormHandling();
             updateStatusTime();
-            
-            // Update time every minute
             setInterval(updateStatusTime, 60000);
         });
 
-        function initLoginScreen() {
-            // Load registration data
+        function initCreateAccountScreen() {
             const registrationData = getUserData('registrationData') || {};
-            console.log('Login: Registration data loaded', registrationData);
-            
-            // Update current step
-            registrationData.currentStep = 'login';
-            registrationData.loginPageLoaded = new Date().toISOString();
+            registrationData.currentStep = 'create-account';
+            registrationData.createAccountPageLoaded = new Date().toISOString();
             saveUserData('registrationData', registrationData);
+            
+            // Pre-fill form if data exists
+            const userData = getUserData('userData');
+            if (userData) {
+                const fullNameInput = document.getElementById('fullName');
+                const emailInput = document.getElementById('email');
+                if (fullNameInput && userData.fullName) fullNameInput.value = userData.fullName;
+                if (emailInput && userData.email) emailInput.value = userData.email;
+            }
         }
 
-        function setupEffects() {
-            const signupBtn = document.getElementById('signupBtn');
-            const loginBtn = document.getElementById('loginBtn');
-            const helpBtn = document.getElementById('helpBtn');
-            const backBtn = document.getElementById('backBtn');
-
-            // Sign up button
-            if (signupBtn) {
-                signupBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleButtonClick(this, 'signup', 'create-account.html');
+        function setupFormHandling() {
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateField(this);
                 });
-            }
-
-            // Login button (for now, goes to same create account page)
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleButtonClick(this, 'login', 'create-account.html');
+                input.addEventListener('input', function() {
+                    clearError(this);
                 });
-            }
-
-            // Help button
-            if (helpBtn) {
-                helpBtn.addEventListener('click', function() {
-                    showNotification('Help: Contact support at help@doppy.com', 'info');
-                });
-            }
-
-            // Back button effect
-            if (backBtn) {
-                backBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Add loading effect
-                    this.style.opacity = '0.7';
-                    
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 300);
-                });
-            }
-
-            // Logo interaction
-            const logoD = document.querySelector('.logo-d-small');
-            if (logoD) {
-                logoD.addEventListener('click', function() {
-                    this.style.transform = 'scale(1.2) rotate(360deg)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 600);
-                });
-            }
-
-            // Parallax effect for background circles
-            document.addEventListener('mousemove', function(e) {
-                const circles = document.querySelectorAll('.bg-circle');
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-
-                circles.forEach((circle, index) => {
-                    const speed = (index + 1) * 0.3;
-                    const x = (mouseX - 0.5) * speed;
-                    const y = (mouseY - 0.5) * speed;
-                    circle.style.transform = `translate(${x}px, ${y}px)`;
+                input.addEventListener('focus', function() {
+                    console.log('Input focused:', this.id);
                 });
             });
         }
 
-        function handleButtonClick(button, action, nextPage) {
+        function validateField(input) {
+            const value = input.value.trim();
+            const fieldName = input.id;
+            let isValid = true;
+
+            clearError(input);
+
+            switch(fieldName) {
+                case 'fullName':
+                    if (!value) {
+                        showFieldError(input, 'Full name is required');
+                        isValid = false;
+                    } else if (value.length < 2) {
+                        showFieldError(input, 'Name must be at least 2 characters');
+                        isValid = false;
+                    }
+                    break;
+
+                case 'email':
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!value) {
+                        showFieldError(input, 'Email is required');
+                        isValid = false;
+                    } else if (!emailRegex.test(value)) {
+                        showFieldError(input, 'Please enter a valid email');
+                        isValid = false;
+                    }
+                    break;
+
+                case 'password':
+                    if (!value) {
+                        showFieldError(input, 'Password is required');
+                        isValid = false;
+                    } else if (value.length < 6) {
+                        showFieldError(input, 'Password must be at least 6 characters');
+                        isValid = false;
+                    }
+                    break;
+
+                case 'confirmPassword':
+                    const password = document.getElementById('password').value;
+                    if (!value) {
+                        showFieldError(input, 'Please confirm your password');
+                        isValid = false;
+                    } else if (value !== password) {
+                        showFieldError(input, 'Passwords do not match');
+                        isValid = false;
+                    }
+                    break;
+            }
+
+            return isValid;
+        }
+
+        function showFieldError(input, message) {
+            input.classList.add('input-error');
+            const errorElement = document.getElementById(input.id + 'Error');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('visible');
+            }
+        }
+
+        function clearError(input) {
+            input.classList.remove('input-error');
+            const errorElement = document.getElementById(input.id + 'Error');
+            if (errorElement) {
+                errorElement.classList.remove('visible');
+            }
+        }
+
+        function handleFormSubmit() {
+            console.log('Form submit clicked');
+            const inputs = document.querySelectorAll('.form-input');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            let isFormValid = true;
+
+            // Validate all fields
+            inputs.forEach(input => {
+                if (!validateField(input)) {
+                    isFormValid = false;
+                }
+            });
+
+            if (!isFormValid) {
+                showNotification('Please fix the errors above', 'error');
+                return;
+            }
+
+            // Add loading state
+            continueBtn.classList.add('loading');
+            continueBtn.textContent = 'Creating account...';
+
+            // Collect form data
+            const formData = {
+                fullName: document.getElementById('fullName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
+                createdAt: new Date().toISOString()
+            };
+
+            // Save user data
+            saveUserData('userData', formData);
+
+            // Update registration progress
+            const registrationData = getUserData('registrationData') || {};
+            registrationData.accountCreated = true;
+            registrationData.currentStep = 'pet-selection';
+            registrationData.accountData = {
+                fullName: formData.fullName,
+                email: formData.email,
+                createdAt: formData.createdAt
+            };
+            saveUserData('registrationData', registrationData);
+
             // Add ripple effect
+            addRippleEffect(continueBtn);
+
+            // Navigate after delay
+            setTimeout(() => {
+                window.location.href = 'pet-selection.html';
+            }, 1500);
+        }
+
+        function addRippleEffect(button) {
             const ripple = document.createElement('span');
             const rect = button.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
@@ -449,31 +530,29 @@
             button.style.overflow = 'hidden';
             button.appendChild(ripple);
             
-            // Add loading state
-            button.classList.add('loading');
-            const originalText = button.textContent;
-            button.textContent = 'Loading';
-            
-            // Save action data
-            const registrationData = getUserData('registrationData') || {};
-            registrationData.loginAction = {
-                action: action,
-                timestamp: new Date().toISOString()
-            };
-            registrationData.currentStep = 'create-account';
-            saveUserData('registrationData', registrationData);
-            
-            // Navigate after animation
-            setTimeout(() => {
-                window.location.href = nextPage;
-            }, 1000);
-            
-            // Clean up ripple
             setTimeout(() => {
                 if (ripple.parentNode) {
                     ripple.parentNode.removeChild(ripple);
                 }
             }, 600);
+        }
+
+        function changeAvatar() {
+            const avatar = document.querySelector('.user-avatar');
+            avatar.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                avatar.style.transform = '';
+            }, 600);
+            showNotification('Avatar selection coming soon!', 'info');
+        }
+
+        function showHelp() {
+            showNotification('Fill in your details to create your Doppy account', 'info');
+        }
+
+        function goBack() {
+            console.log('Going back to login page');
+            window.location.href = 'login.html';
         }
 
         function updateStatusTime() {
@@ -491,7 +570,6 @@
 
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
             notification.textContent = message;
             notification.style.cssText = `
                 position: fixed;
@@ -502,28 +580,27 @@
                 color: white;
                 padding: 12px 24px;
                 border-radius: 8px;
-                z-index: 1000;
+                z-index: 10000;
                 font-size: 14px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.3);
                 animation: fadeInDown 0.3s ease-out;
+                max-width: 300px;
+                text-align: center;
             `;
             
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.animation = 'fadeInUp 0.3s ease-out reverse';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
             }, 3000);
         }
 
-        // Utility functions
         function saveUserData(key, value) {
             try {
                 localStorage.setItem(key, JSON.stringify(value));
+                console.log('Data saved:', key, value);
                 return true;
             } catch (error) {
                 console.error('Error saving data:', error);
@@ -541,8 +618,7 @@
             }
         }
 
-        // Debug info
-        console.log('Doppy Login Screen loaded successfully');
+        console.log('Doppy Create Account Script loaded');
     </script>
 </body>
 </html>

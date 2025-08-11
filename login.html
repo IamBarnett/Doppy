@@ -312,8 +312,8 @@
         </div>
 
         <!-- Navigation Buttons -->
-        <a href="index.html" class="nav-btn back-btn" id="backBtn">←</a>
-        <button class="nav-btn help-btn" id="helpBtn">?</button>
+        <button class="nav-btn back-btn" onclick="goBack()">←</button>
+        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
         <!-- Background Circles -->
         <div class="bg-circles">
@@ -332,8 +332,8 @@
             </div>
 
             <div class="auth-buttons">
-                <button class="btn btn-signup" id="signupBtn">Sign up</button>
-                <button class="btn btn-login" id="loginBtn">Login</button>
+                <button class="btn btn-signup" onclick="goToCreateAccount('signup')">Sign up</button>
+                <button class="btn btn-login" onclick="goToCreateAccount('login')">Login</button>
             </div>
         </div>
     </div>
@@ -342,117 +342,19 @@
         // Login Screen JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             initLoginScreen();
-            setupEffects();
             updateStatusTime();
-            
-            // Update time every minute
             setInterval(updateStatusTime, 60000);
         });
 
         function initLoginScreen() {
-            // Load registration data
             const registrationData = getUserData('registrationData') || {};
-            console.log('Login: Registration data loaded', registrationData);
-            
-            // Update current step
             registrationData.currentStep = 'login';
             registrationData.loginPageLoaded = new Date().toISOString();
             saveUserData('registrationData', registrationData);
         }
 
-        function setupEffects() {
-            const signupBtn = document.getElementById('signupBtn');
-            const loginBtn = document.getElementById('loginBtn');
-            const helpBtn = document.getElementById('helpBtn');
-            const backBtn = document.getElementById('backBtn');
-
-            // Sign up button
-            if (signupBtn) {
-                signupBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleButtonClick(this, 'signup', 'create-account.html');
-                });
-            }
-
-            // Login button (for now, goes to same create account page)
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleButtonClick(this, 'login', 'create-account.html');
-                });
-            }
-
-            // Help button
-            if (helpBtn) {
-                helpBtn.addEventListener('click', function() {
-                    showNotification('Help: Contact support at help@doppy.com', 'info');
-                });
-            }
-
-            // Back button effect
-            if (backBtn) {
-                backBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Add loading effect
-                    this.style.opacity = '0.7';
-                    
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 300);
-                });
-            }
-
-            // Logo interaction
-            const logoD = document.querySelector('.logo-d-small');
-            if (logoD) {
-                logoD.addEventListener('click', function() {
-                    this.style.transform = 'scale(1.2) rotate(360deg)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 600);
-                });
-            }
-
-            // Parallax effect for background circles
-            document.addEventListener('mousemove', function(e) {
-                const circles = document.querySelectorAll('.bg-circle');
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-
-                circles.forEach((circle, index) => {
-                    const speed = (index + 1) * 0.3;
-                    const x = (mouseX - 0.5) * speed;
-                    const y = (mouseY - 0.5) * speed;
-                    circle.style.transform = `translate(${x}px, ${y}px)`;
-                });
-            });
-        }
-
-        function handleButtonClick(button, action, nextPage) {
-            // Add ripple effect
-            const ripple = document.createElement('span');
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = (rect.width / 2 - size / 2) + 'px';
-            ripple.style.top = (rect.height / 2 - size / 2) + 'px';
-            ripple.style.position = 'absolute';
-            ripple.style.borderRadius = '50%';
-            ripple.style.background = 'rgba(255,255,255,0.3)';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.animation = 'ripple 0.6s linear';
-            ripple.style.pointerEvents = 'none';
-            
-            button.style.position = 'relative';
-            button.style.overflow = 'hidden';
-            button.appendChild(ripple);
-            
-            // Add loading state
-            button.classList.add('loading');
-            const originalText = button.textContent;
-            button.textContent = 'Loading';
+        function goToCreateAccount(action) {
+            console.log('Going to create account:', action);
             
             // Save action data
             const registrationData = getUserData('registrationData') || {};
@@ -463,17 +365,17 @@
             registrationData.currentStep = 'create-account';
             saveUserData('registrationData', registrationData);
             
-            // Navigate after animation
-            setTimeout(() => {
-                window.location.href = nextPage;
-            }, 1000);
-            
-            // Clean up ripple
-            setTimeout(() => {
-                if (ripple.parentNode) {
-                    ripple.parentNode.removeChild(ripple);
-                }
-            }, 600);
+            // Navigate to create account
+            window.location.href = 'create-account.html';
+        }
+
+        function goBack() {
+            console.log('Going back to welcome page');
+            window.location.href = 'index.html';
+        }
+
+        function showHelp() {
+            showNotification('Choose Sign up to create a new account or Login if you already have one', 'info');
         }
 
         function updateStatusTime() {
