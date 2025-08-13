@@ -1,162 +1,167 @@
-/* Phone Frame Styles */
+/* Fondo decorativo simple */
+body {
+    background-image: url('assets/background/Doppy.JPG');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Contenedor principal centrado */
 .phone-frame-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('/assets/background/Doppy.JPG');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: -10;
+    z-index: 1;
 }
 
+/* Marco del teléfono - solo visual, sin interferir */
 .phone-frame {
-    width: 320px; /* Ajustado al tamaño real del teléfono */
-    height: 640px; /* Ajustado al tamaño real del teléfono */
+    width: 380px;
+    height: 760px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none; /* La imagen del frame no debe interceptar clicks */
-}
-
-/* Imagen del teléfono como overlay decorativo */
-.phone-frame::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/assets/background/phone.png');
-    background-size: cover; /* Cambiar a cover para que se ajuste mejor */
+    background-image: url('assets/background/phone.png');
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    pointer-events: none; /* Asegurar que no bloquee clicks */
-    z-index: 10; /* Por encima de la pantalla pero debajo del contenido */
+    /* NO pointer-events aquí - permitir que pase a través */
 }
 
+/* Pantalla de la app - totalmente interactiva */
 .phone-screen {
-    width: 280px; /* Ajustado para que encaje perfectamente en el marco interior */
-    height: 560px; /* Ajustado para que encaje perfectamente en el marco interior */
-    border-radius: 20px; /* Radius que coincida con la forma del teléfono */
+    width: 320px;
+    height: 640px;
+    border-radius: 25px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    pointer-events: auto; /* La pantalla SÍ debe recibir clicks */
-    z-index: 20; /* Por encima del frame del teléfono */
-    margin-top: -10px; /* Ajuste fino para centrar en el marco */
+    z-index: 10;
+    /* Asegurar que todos los eventos pasen a través */
 }
 
-/* Actualizar el contenedor del teléfono existente */
+/* Contenedor de la app - totalmente funcional */
 .phone-container {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
-    border-radius: 20px;
+    border-radius: 25px;
     overflow: hidden;
     position: relative;
-    box-shadow: none;
-    pointer-events: auto; /* Contenido interactivo */
+    /* Todos los eventos de mouse/touch funcionan normalmente */
 }
 
-/* Ajustar el status bar para el nuevo tamaño */
-.status-bar {
-    height: 40px; /* Reducido ligeramente */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px; /* Reducido para pantalla más pequeña */
-    color: white;
-    font-size: 13px; /* Reducido ligeramente */
-    font-weight: 600;
-    position: relative;
-    z-index: 100;
-}
-
-/* Ajustar botones de navegación para el nuevo tamaño */
-.nav-btn {
-    width: 35px; /* Reducido ligeramente */
-    height: 35px; /* Reducido ligeramente */
-    font-size: 16px; /* Reducido ligeramente */
-}
-
-.back-btn { top: 45px; left: 15px; } /* Ajustado para nuevo tamaño */
-.help-btn { top: 45px; right: 15px; } /* Ajustado para nuevo tamaño */
-
-/* Ajustar padding de las pantallas principales */
-.welcome-screen, .login-options-screen, .signup-screen, 
-.login-screen, .pet-selection-screen, .pet-details-screen, .selector-screen {
-    padding: 50px 25px 60px 25px; /* Ajustado para pantalla más pequeña */
-}
-
-/* Asegurar que todos los elementos interactivos tengan z-index alto */
-.nav-btn, .btn, .form-input, .btn-continue, .btn-login, .btn-done, 
-.btn-start, .btn-signup, .btn-user-type, .pet-option {
-    position: relative;
-    z-index: 100 !important;
+/* Asegurar que TODOS los elementos sean clickeables */
+* {
     pointer-events: auto !important;
 }
 
-/* Ajustar tamaños de fuente para pantalla más pequeña */
-.welcome-title {
-    font-size: 40px !important; /* Reducido */
-    letter-spacing: 3px !important;
+/* Solo el marco del teléfono no debe interceptar */
+.phone-frame {
+    pointer-events: none;
 }
 
-.logo-text {
-    font-size: 40px !important; /* Reducido */
+/* Pero su contenido SÍ debe ser interactivo */
+.phone-screen, .phone-container {
+    pointer-events: auto;
+}
+
+/* Ajustes para pantalla más pequeña */
+.status-bar {
+    height: 35px;
+    padding: 0 15px;
+    font-size: 12px;
+}
+
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    top: 40px;
+}
+
+.back-btn { left: 15px; }
+.help-btn { right: 15px; }
+
+/* Ajustar contenido para pantalla más pequeña */
+.welcome-screen, .login-options-screen, .signup-screen, 
+.login-screen, .pet-selection-screen, .pet-details-screen, .selector-screen {
+    padding: 40px 20px 50px 20px;
+}
+
+/* Ajustar tamaños de texto */
+.welcome-title {
+    font-size: 32px !important;
+    letter-spacing: 2px !important;
+}
+
+.logo-text, .logo-text-small, .logo-text-second {
+    font-size: 32px !important;
 }
 
 .logo-d {
-    width: 70px !important; /* Reducido */
-    height: 70px !important;
-    font-size: 36px !important;
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 30px !important;
+}
+
+.logo-d-small, .logo-d-second {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 20px !important;
+}
+
+/* Ajustar formularios */
+.form-input, .credentials-input {
+    padding: 12px 15px;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.btn, .btn-continue, .btn-login, .btn-done, .btn-start, .btn-signup, .btn-user-type {
+    padding: 12px 20px;
+    font-size: 16px;
 }
 
 /* Ajustar grid de mascotas */
 .pets-grid {
-    gap: 15px; /* Reducido */
+    gap: 12px;
 }
 
 .pet-option {
-    padding: 20px 15px; /* Reducido */
-    min-height: 100px; /* Reducido */
+    padding: 15px 10px;
+    min-height: 90px;
 }
 
 .pet-icon {
-    width: 50px; /* Reducido */
-    height: 50px;
-    font-size: 24px; /* Reducido */
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 8px;
 }
 
-/* Responsive adjustments */
+.pet-name {
+    font-size: 14px;
+}
+
+/* Responsive - móviles */
 @media (max-width: 480px) {
-    .phone-frame-container {
-        background-image: url('/assets/background/Doppy.JPG');
-        background-size: cover;
-    }
-    
     .phone-frame {
         width: 100vw;
         height: 100vh;
-    }
-    
-    .phone-frame::before {
-        display: none; /* Ocultar el marco del teléfono en móviles */
+        background: none; /* Sin marco en móvil */
     }
     
     .phone-screen {
         width: 100vw;
         height: 100vh;
         border-radius: 0;
-        box-shadow: none;
-        margin-top: 0;
     }
     
     .phone-container {
@@ -164,11 +169,6 @@
     }
 
     /* Restaurar tamaños originales en móvil */
-    .welcome-screen, .login-options-screen, .signup-screen, 
-    .login-screen, .pet-selection-screen, .pet-details-screen, .selector-screen {
-        padding: 80px 40px 100px 40px;
-    }
-
     .status-bar {
         height: 44px;
         padding: 0 20px;
@@ -179,17 +179,23 @@
         width: 40px;
         height: 40px;
         font-size: 18px;
+        top: 50px;
     }
 
-    .back-btn { top: 50px; left: 20px; }
-    .help-btn { top: 50px; right: 20px; }
+    .back-btn { left: 20px; }
+    .help-btn { right: 20px; }
+
+    .welcome-screen, .login-options-screen, .signup-screen, 
+    .login-screen, .pet-selection-screen, .pet-details-screen, .selector-screen {
+        padding: 80px 40px 100px 40px;
+    }
 
     .welcome-title {
         font-size: 48px !important;
         letter-spacing: 4px !important;
     }
 
-    .logo-text {
+    .logo-text, .logo-text-small, .logo-text-second {
         font-size: 48px !important;
     }
 
@@ -197,5 +203,31 @@
         width: 80px !important;
         height: 80px !important;
         font-size: 42px !important;
+    }
+
+    .form-input, .credentials-input {
+        padding: 16px 20px;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .pets-grid {
+        gap: 20px;
+    }
+
+    .pet-option {
+        padding: 25px 20px;
+        min-height: 120px;
+    }
+
+    .pet-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .pet-name {
+        font-size: 16px;
     }
 }
