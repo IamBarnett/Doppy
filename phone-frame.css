@@ -28,8 +28,8 @@ body {
 
 /* Marco del iPhone - OVERLAY SEPARADO */
 .phone-frame {
-    width: 450px;
-    height: 900px;
+    width: 670px;
+    height: 1400px;
     position: relative;
     display: flex;
     justify-content: center;
