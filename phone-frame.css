@@ -1,6 +1,6 @@
 /* Fondo decorativo simple */
 body {
-    background-image: url('assets/background/Doppy.JPG');
+    background-image: url('/assets/background/Doppy.JPG');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -28,7 +28,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('assets/background/phone.png');
+    background-image: url('/assets/background/phone.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
