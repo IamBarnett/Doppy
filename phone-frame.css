@@ -1,0 +1,65 @@
+/* Phone Frame Styles */
+.phone-frame-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+.phone-frame {
+    width: 400px;
+    height: 850px;
+    background-image: url('assets/background/phone.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone-screen {
+    width: 375px;
+    height: 812px;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+/* Actualizar el contenedor del teléfono existente */
+.phone-container {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: none; /* Remover la sombra existente */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .phone-frame {
+        width: 100vw;
+        height: 100vh;
+        background: none;
+    }
+    
+    .phone-screen {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .phone-container {
+        border-radius: 0;
+    }
+}

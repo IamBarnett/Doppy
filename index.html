@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Choose User Type</title>
+    <link rel="stylesheet" href="phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -20,16 +21,6 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            overflow: hidden;
-            position: relative;
         }
 
         .status-bar {
@@ -213,9 +204,6 @@
 
         .btn-user-type:hover {
             transform: translateY(-3px) scale(1.05);
-        }
-
-        .btn-user-type:hover {
             box-shadow: 0 10px 30px rgba(255, 193, 7, 0.6);
         }
 
@@ -295,12 +283,6 @@
         }
 
         @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-            
             .welcome-title {
                 font-size: 42px;
                 letter-spacing: 3px;
@@ -323,49 +305,55 @@
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
 
-        <div class="bg-circles">
-            <div class="bg-circle bg-circle-1"></div>
-            <div class="bg-circle bg-circle-2"></div>
-            <div class="bg-circle bg-circle-3"></div>
-            <div class="bg-circle bg-circle-4"></div>
-        </div>
+                    <div class="bg-circles">
+                        <div class="bg-circle bg-circle-1"></div>
+                        <div class="bg-circle bg-circle-2"></div>
+                        <div class="bg-circle bg-circle-3"></div>
+                        <div class="bg-circle bg-circle-4"></div>
+                    </div>
 
-        <div class="selector-screen">
-            <div class="welcome-header">
-                <h1 class="welcome-title">WELCOME</h1>
-                <h2 class="welcome-title">TO</h2>
-            </div>
+                    <div class="selector-screen">
+                        <div class="welcome-header">
+                            <h1 class="welcome-title">WELCOME</h1>
+                            <h2 class="welcome-title">TO</h2>
+                        </div>
 
-            <div class="logo-section">
-                <div class="doppy-logo">
-                    <div class="logo-d">
-                        D
-                        <div class="logo-circles">
-                            <div class="logo-circle"></div>
-                            <div class="logo-circle"></div>
-                            <div class="logo-circle"></div>
-                            <div class="logo-circle"></div>
+                        <div class="logo-section">
+                            <div class="doppy-logo">
+                                <div class="logo-d">
+                                    D
+                                    <div class="logo-circles">
+                                        <div class="logo-circle"></div>
+                                        <div class="logo-circle"></div>
+                                        <div class="logo-circle"></div>
+                                        <div class="logo-circle"></div>
+                                    </div>
+                                </div>
+                                <span class="logo-text">oppy</span>
+                            </div>
+                        </div>
+
+                        <div class="user-type-buttons">
+                            <button class="btn-user-type" onclick="selectUserType('users')">
+                                <span class="user-icon">👤</span>
+                                <span>Users</span>
+                            </button>
+                            <button class="btn-user-type btn-veterinary" onclick="selectUserType('veterinary')">
+                                <span class="user-icon">🩺</span>
+                                <span>Veterinary</span>
+                            </button>
                         </div>
                     </div>
-                    <span class="logo-text">oppy</span>
                 </div>
-            </div>
-
-            <div class="user-type-buttons">
-                <button class="btn-user-type" onclick="selectUserType('users')">
-                    <span class="user-icon">👤</span>
-                    <span>Users</span>
-                </button>
-                <button class="btn-user-type btn-veterinary" onclick="selectUserType('veterinary')">
-                    <span class="user-icon">🩺</span>
-                    <span>Veterinary</span>
-                </button>
             </div>
         </div>
     </div>
