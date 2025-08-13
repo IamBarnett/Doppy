@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doppy - Welcome</title>
+    <title>Doppy - Choose User Type</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,6 @@
             position: relative;
         }
 
-        /* Status Bar */
         .status-bar {
             height: 44px;
             display: flex;
@@ -46,8 +45,7 @@
             z-index: 100;
         }
 
-        /* Welcome Screen */
-        .welcome-screen {
+        .selector-screen {
             height: calc(100% - 44px);
             display: flex;
             flex-direction: column;
@@ -58,7 +56,6 @@
             padding: 80px 40px 100px 40px;
         }
 
-        /* Background Circles */
         .bg-circles {
             position: absolute;
             width: 100%;
@@ -105,7 +102,6 @@
             background: rgba(30, 136, 229, 0.12);
         }
 
-        /* Welcome Header */
         .welcome-header {
             text-align: center;
             animation: slideInDown 1s ease-out;
@@ -121,7 +117,6 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* Logo Section */
         .logo-section {
             flex: 1;
             display: flex;
@@ -182,45 +177,65 @@
             letter-spacing: 2px;
         }
 
-        /* Button */
-        .welcome-footer {
+        .user-type-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 280px;
             animation: slideInUp 1s ease-out 0.6s both;
         }
 
-        .btn-start {
+        .btn-user-type {
             background: #FFC107;
             color: #1976D2;
             border: none;
-            padding: 18px 60px;
+            padding: 18px 40px;
             border-radius: 30px;
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
-            min-width: 200px;
-            text-align: center;
         }
 
-        .btn-start:hover {
+        .btn-veterinary {
+            background: rgba(255,255,255,0.9);
+            color: #1976D2;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-user-type:hover {
             transform: translateY(-3px) scale(1.05);
+        }
+
+        .btn-user-type:hover {
             box-shadow: 0 10px 30px rgba(255, 193, 7, 0.6);
         }
 
-        .btn-start:active {
+        .btn-veterinary:hover {
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-user-type:active {
             transform: translateY(0) scale(0.98);
         }
 
-        /* Logo Hover Effect */
+        .user-icon {
+            font-size: 24px;
+        }
+
         .logo-d:hover {
             transform: scale(1.1) rotate(5deg);
             box-shadow: 0 12px 25px rgba(255, 193, 7, 0.5);
         }
 
-        /* Animations */
         @keyframes slideInDown {
             from {
                 opacity: 0;
@@ -272,7 +287,6 @@
             }
         }
 
-        /* Ripple Effect */
         @keyframes ripple {
             to {
                 transform: scale(4);
@@ -280,7 +294,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 480px) {
             .phone-container {
                 width: 100vw;
@@ -303,7 +316,7 @@
                 font-size: 42px;
             }
             
-            .welcome-screen {
+            .selector-screen {
                 padding: 60px 30px 80px 30px;
             }
         }
@@ -311,13 +324,11 @@
 </head>
 <body>
     <div class="phone-container">
-        <!-- Status Bar -->
         <div class="status-bar">
             <span class="status-left">9:41</span>
             <span class="status-right">🔋 100%</span>
         </div>
 
-        <!-- Background Circles -->
         <div class="bg-circles">
             <div class="bg-circle bg-circle-1"></div>
             <div class="bg-circle bg-circle-2"></div>
@@ -325,8 +336,7 @@
             <div class="bg-circle bg-circle-4"></div>
         </div>
 
-        <!-- Welcome Screen Content -->
-        <div class="welcome-screen">
+        <div class="selector-screen">
             <div class="welcome-header">
                 <h1 class="welcome-title">WELCOME</h1>
                 <h2 class="welcome-title">TO</h2>
@@ -347,115 +357,42 @@
                 </div>
             </div>
 
-            <div class="welcome-footer">
-                <a href="login.html" class="btn-start" id="startBtn">Start now</a>
+            <div class="user-type-buttons">
+                <button class="btn-user-type" onclick="selectUserType('users')">
+                    <span class="user-icon">👤</span>
+                    <span>Users</span>
+                </button>
+                <button class="btn-user-type btn-veterinary" onclick="selectUserType('veterinary')">
+                    <span class="user-icon">🩺</span>
+                    <span>Veterinary</span>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Welcome Screen JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            initWelcomeScreen();
-            setupEffects();
             updateStatusTime();
-            
-            // Update time every minute
             setInterval(updateStatusTime, 60000);
         });
 
-        function initWelcomeScreen() {
-            // Clear any previous data when starting fresh
-            if (window.location.hash !== '#return') {
-                localStorage.clear();
-                console.log('Welcome: Starting fresh registration');
-            }
+        function selectUserType(userType) {
+            console.log('User type selected:', userType);
             
-            // Save welcome step
-            const welcomeData = {
-                step: 'welcome',
+            // Save user type selection
+            const selectionData = {
+                userType: userType,
                 timestamp: new Date().toISOString(),
-                completed: false
+                step: 'user-type-selection'
             };
-            localStorage.setItem('registrationData', JSON.stringify(welcomeData));
-        }
-
-        function setupEffects() {
-            const startBtn = document.getElementById('startBtn');
-            const logoD = document.querySelector('.logo-d');
-
-            // Enhanced button effects
-            if (startBtn) {
-                startBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Ripple effect
-                    const ripple = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    
-                    ripple.style.width = ripple.style.height = size + 'px';
-                    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-                    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-                    ripple.style.position = 'absolute';
-                    ripple.style.borderRadius = '50%';
-                    ripple.style.background = 'rgba(255,255,255,0.3)';
-                    ripple.style.transform = 'scale(0)';
-                    ripple.style.animation = 'ripple 0.6s linear';
-                    ripple.style.pointerEvents = 'none';
-                    
-                    this.style.position = 'relative';
-                    this.style.overflow = 'hidden';
-                    this.appendChild(ripple);
-                    
-                    // Loading state
-                    this.style.opacity = '0.8';
-                    this.textContent = 'Loading...';
-                    
-                    // Navigate after animation
-                    setTimeout(() => {
-                        // Update registration data
-                        const registrationData = JSON.parse(localStorage.getItem('registrationData') || '{}');
-                        registrationData.welcome = { completed: true, timestamp: new Date().toISOString() };
-                        registrationData.currentStep = 'login';
-                        localStorage.setItem('registrationData', JSON.stringify(registrationData));
-                        
-                        // Navigate to login options
-                        window.location.href = 'login-options.html';
-                    }, 800);
-                    
-                    // Clean up ripple
-                    setTimeout(() => {
-                        if (ripple.parentNode) {
-                            ripple.parentNode.removeChild(ripple);
-                        }
-                    }, 600);
-                });
+            localStorage.setItem('userTypeSelection', JSON.stringify(selectionData));
+            
+            // Navigate to appropriate welcome page
+            if (userType === 'users') {
+                window.location.href = 'User-pages/index.html';
+            } else if (userType === 'veterinary') {
+                window.location.href = 'Veterinary-pages/index.html';
             }
-
-            // Logo interaction
-            if (logoD) {
-                logoD.addEventListener('click', function() {
-                    this.style.animation = 'none';
-                    setTimeout(() => {
-                        this.style.animation = '';
-                    }, 100);
-                });
-            }
-
-            // Parallax effect for background circles
-            document.addEventListener('mousemove', function(e) {
-                const circles = document.querySelectorAll('.bg-circle');
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-
-                circles.forEach((circle, index) => {
-                    const speed = (index + 1) * 0.5;
-                    const x = (mouseX - 0.5) * speed;
-                    const y = (mouseY - 0.5) * speed;
-                    circle.style.transform = `translate(${x}px, ${y}px)`;
-                });
-            });
         }
 
         function updateStatusTime() {
@@ -471,7 +408,7 @@
             }
         }
 
-        // Utility functions for other pages
+        // Utility functions
         function saveUserData(key, value) {
             try {
                 localStorage.setItem(key, JSON.stringify(value));
@@ -492,8 +429,7 @@
             }
         }
 
-        // Debug info
-        console.log('Doppy Welcome Screen loaded successfully');
+        console.log('Doppy User Type Selector loaded');
     </script>
 </body>
 </html>
