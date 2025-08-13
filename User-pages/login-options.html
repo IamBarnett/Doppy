@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Login Options</title>
+    <link rel="stylesheet" href="../phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -20,16 +21,6 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            overflow: hidden;
-            position: relative;
         }
 
         .status-bar {
@@ -229,12 +220,6 @@
         }
 
         @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-            
             .login-options-screen {
                 padding: 40px 30px;
             }
@@ -246,32 +231,38 @@
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
 
-        <button class="nav-btn back-btn" onclick="goBack()">←</button>
-        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
+                    <button class="nav-btn back-btn" onclick="goBack()">←</button>
+                    <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-        <div class="bg-circles">
-            <div class="bg-circle bg-circle-1"></div>
-            <div class="bg-circle bg-circle-2"></div>
-        </div>
+                    <div class="bg-circles">
+                        <div class="bg-circle bg-circle-1"></div>
+                        <div class="bg-circle bg-circle-2"></div>
+                    </div>
 
-        <div class="login-options-screen">
-            <div class="header-section">
-                <div class="doppy-logo">
-                    <div class="logo-d">D</div>
-                    <span class="logo-text">oppy</span>
+                    <div class="login-options-screen">
+                        <div class="header-section">
+                            <div class="doppy-logo">
+                                <div class="logo-d">D</div>
+                                <span class="logo-text">oppy</span>
+                            </div>
+                            <p class="subtitle">Your Pet's Best Care, Anytime, Anywhere.</p>
+                        </div>
+
+                        <div class="auth-buttons">
+                            <button class="btn btn-signup" onclick="goToSignup()">Sign up</button>
+                            <button class="btn btn-login" onclick="goToLogin()">Login</button>
+                        </div>
+                    </div>
                 </div>
-                <p class="subtitle">Your Pet's Best Care, Anytime, Anywhere.</p>
-            </div>
-
-            <div class="auth-buttons">
-                <button class="btn btn-signup" onclick="goToSignup()">Sign up</button>
-                <button class="btn btn-login" onclick="goToLogin()">Login</button>
             </div>
         </div>
     </div>

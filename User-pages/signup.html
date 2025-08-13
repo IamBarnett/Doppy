@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Sign Up</title>
+    <link rel="stylesheet" href="../phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -20,16 +21,6 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            overflow: hidden;
-            position: relative;
         }
 
         .status-bar {
@@ -283,12 +274,6 @@
         }
 
         @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-            
             .signup-screen {
                 padding: 15px 25px 30px 25px;
             }
@@ -296,51 +281,57 @@
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
 
-        <button class="nav-btn back-btn" onclick="goBack()">←</button>
-        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
+                    <button class="nav-btn back-btn" onclick="goBack()">←</button>
+                    <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-        <div class="bg-circles">
-            <div class="bg-circle bg-circle-1"></div>
-            <div class="bg-circle bg-circle-2"></div>
-        </div>
+                    <div class="bg-circles">
+                        <div class="bg-circle bg-circle-1"></div>
+                        <div class="bg-circle bg-circle-2"></div>
+                    </div>
 
-        <div class="signup-screen">
-            <div class="header-section">
-                <div class="doppy-logo-small">
-                    <div class="logo-d-small">D</div>
-                    <span class="logo-text-small">oppy</span>
+                    <div class="signup-screen">
+                        <div class="header-section">
+                            <div class="doppy-logo-small">
+                                <div class="logo-d-small">D</div>
+                                <span class="logo-text-small">oppy</span>
+                            </div>
+                            <h2 class="screen-title">Create your account</h2>
+                        </div>
+
+                        <div class="avatar-section">
+                            <div class="user-avatar" onclick="changeAvatar()">
+                                <svg class="avatar-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <input type="text" class="form-input" placeholder="Full name" id="fullName" autocomplete="name">
+                            <div class="error-message" id="fullNameError">Please enter your full name</div>
+                            
+                            <input type="email" class="form-input" placeholder="Email address/ phone number" id="email" autocomplete="email">
+                            <div class="error-message" id="emailError">Please enter a valid email address</div>
+                            
+                            <input type="password" class="form-input" placeholder="Secure password" id="password" autocomplete="new-password">
+                            <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                            
+                            <input type="password" class="form-input" placeholder="Confirm password" id="confirmPassword" autocomplete="new-password">
+                            <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+
+                            <button class="btn-continue" id="continueBtn" onclick="handleSignup()">Sign up</button>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="screen-title">Create your account</h2>
-            </div>
-
-            <div class="avatar-section">
-                <div class="user-avatar" onclick="changeAvatar()">
-                    <svg class="avatar-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <input type="text" class="form-input" placeholder="Full name" id="fullName" autocomplete="name">
-                <div class="error-message" id="nameError">Please enter your full name</div>
-                
-                <input type="email" class="form-input" placeholder="Email address/ phone number" id="email" autocomplete="email">
-                <div class="error-message" id="emailError">Please enter a valid email address</div>
-                
-                <input type="password" class="form-input" placeholder="Secure password" id="password" autocomplete="new-password">
-                <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
-                
-                <input type="password" class="form-input" placeholder="Confirm password" id="confirmPassword" autocomplete="new-password">
-                <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
-
-                <button class="btn-continue" id="continueBtn" onclick="handleSignup()">Sign up</button>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Choose Pet Type</title>
+    <link rel="stylesheet" href="../phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -20,16 +21,6 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            overflow: hidden;
-            position: relative;
         }
 
         .status-bar {
@@ -303,12 +294,6 @@
         }
 
         @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-            
             .pet-selection-screen {
                 padding: 15px 25px 30px 25px;
             }
@@ -320,65 +305,71 @@
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
 
-        <button class="nav-btn back-btn" onclick="goBack()">←</button>
-        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
+                    <button class="nav-btn back-btn" onclick="goBack()">←</button>
+                    <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-        <div class="bg-circles">
-            <div class="bg-circle bg-circle-1"></div>
-            <div class="bg-circle bg-circle-2"></div>
-        </div>
+                    <div class="bg-circles">
+                        <div class="bg-circle bg-circle-1"></div>
+                        <div class="bg-circle bg-circle-2"></div>
+                    </div>
 
-        <div class="pet-selection-screen">
-            <div class="header-section">
-                <div class="doppy-logo-small">
-                    <div class="logo-d-small">D</div>
-                    <span class="logo-text-small">oppy</span>
-                </div>
-                <h2 class="screen-title">Choose your type of pet</h2>
-            </div>
+                    <div class="pet-selection-screen">
+                        <div class="header-section">
+                            <div class="doppy-logo-small">
+                                <div class="logo-d-small">D</div>
+                                <span class="logo-text-small">oppy</span>
+                            </div>
+                            <h2 class="screen-title">Choose your type of pet</h2>
+                        </div>
 
-            <div class="selection-indicator" id="selectionIndicator">
-                <div class="selection-text">Selected:</div>
-                <div class="selected-pet-display">
-                    <span class="selected-pet-name" id="selectedPetName">None</span>
-                </div>
-            </div>
+                        <div class="selection-indicator" id="selectionIndicator">
+                            <div class="selection-text">Selected:</div>
+                            <div class="selected-pet-display">
+                                <span class="selected-pet-name" id="selectedPetName">None</span>
+                            </div>
+                        </div>
 
-            <div class="pets-grid">
-                <div class="pet-option" data-pet="cat" onclick="selectPet('cat', this)">
-                    <div class="pet-icon">🐱</div>
-                    <div class="pet-name">Cat</div>
-                </div>
-                <div class="pet-option" data-pet="dog" onclick="selectPet('dog', this)">
-                    <div class="pet-icon">🐶</div>
-                    <div class="pet-name">Dog</div>
-                </div>
-                <div class="pet-option" data-pet="turtle" onclick="selectPet('turtle', this)">
-                    <div class="pet-icon">🐢</div>
-                    <div class="pet-name">Turtle</div>
-                </div>
-                <div class="pet-option" data-pet="bird" onclick="selectPet('bird', this)">
-                    <div class="pet-icon">🐦</div>
-                    <div class="pet-name">Bird</div>
-                </div>
-                <div class="pet-option" data-pet="rabbit" onclick="selectPet('rabbit', this)">
-                    <div class="pet-icon">🐰</div>
-                    <div class="pet-name">Rabbit</div>
-                </div>
-                <div class="pet-option" data-pet="lizard" onclick="selectPet('lizard', this)">
-                    <div class="pet-icon">🦎</div>
-                    <div class="pet-name">Lizard</div>
-                </div>
-            </div>
+                        <div class="pets-grid">
+                            <div class="pet-option" data-pet="cat" onclick="selectPet('cat', this)">
+                                <div class="pet-icon">🐱</div>
+                                <div class="pet-name">Cat</div>
+                            </div>
+                            <div class="pet-option" data-pet="dog" onclick="selectPet('dog', this)">
+                                <div class="pet-icon">🐶</div>
+                                <div class="pet-name">Dog</div>
+                            </div>
+                            <div class="pet-option" data-pet="turtle" onclick="selectPet('turtle', this)">
+                                <div class="pet-icon">🐢</div>
+                                <div class="pet-name">Turtle</div>
+                            </div>
+                            <div class="pet-option" data-pet="bird" onclick="selectPet('bird', this)">
+                                <div class="pet-icon">🐦</div>
+                                <div class="pet-name">Bird</div>
+                            </div>
+                            <div class="pet-option" data-pet="rabbit" onclick="selectPet('rabbit', this)">
+                                <div class="pet-icon">🐰</div>
+                                <div class="pet-name">Rabbit</div>
+                            </div>
+                            <div class="pet-option" data-pet="lizard" onclick="selectPet('lizard', this)">
+                                <div class="pet-icon">🦎</div>
+                                <div class="pet-name">Lizard</div>
+                            </div>
+                        </div>
 
-            <div class="done-section">
-                <button class="btn-done" id="doneBtn" onclick="proceedToNextStep()">Done</button>
+                        <div class="done-section">
+                            <button class="btn-done" id="doneBtn" onclick="proceedToNextStep()">Done</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
