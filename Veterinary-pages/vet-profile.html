@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Veterinary Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: #f8fafc;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background: white;
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .header {
+            padding: 15px 20px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .settings-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .profile-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 70px;
+        }
+
+        .profile-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+            color: white;
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+            font-size: 36px;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-title {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .profile-clinic {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .profile-sections {
+            padding: 20px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f9fafb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-item:last-child {
+            border-bottom: none;
+        }
+
+        .section-item:hover {
+            background: #f9fafb;
+        }
+
+        .item-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-blue { background: #dbeafe; }
+        .icon-green { background: #dcfce7; }
+        .icon-yellow { background: #fef3c7; }
+        .icon-purple { background: #e9d5ff; }
+        .icon-red { background: #fee2e2; }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .item-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .item-arrow {
+            color: #9ca3af;
+            font-size: 16px;
+        }
+
+        .badge {
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #d1d5db;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #1976D2;
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::before {
+            transform: translateX(20px);
+        }
+
+        .professional-details {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f9fafb;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .logout-section {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            background: #fecaca;
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        @media (max-width: 480px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="status-bar">
+            <span class="status-left">9:41</span>
+            <span class="status-right">🔋 100%</span>
+        </div>
+
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="header-title">Profile</div>
+            <button class="settings-btn" onclick="openSettings()">⚙️</button>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-header">
+                <div class="profile-avatar">👨‍⚕️</div>
+                <div class="profile-name" id="vetName">Dr. Name</div>
+                <div class="profile-title">Veterinarian</div>
+                <div class="profile-clinic">Happy Pets Veterinary Clinic</div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">150</div>
+                        <div class="stat-label">Patients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Years</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-sections">
+                <div class="professional-details">
+                    <div class="section-header">
+                        📋 Professional Details
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">License Number</div>
+                        <div class="detail-value">VET-2019-001234</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Specialization</div>
+                        <div class="detail-value">Small Animals</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Years of Experience</div>
+                        <div class="detail-value">5 years</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Clinic Code</div>
+                        <div class="detail-value" id="clinicCodeDisplay">HPVC</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        🏥 Clinic Management
+                    </div>
+                    <div class="section-item" onclick="manageSchedule()">
+                        <div class="item-content">
+                            <div class="item-icon icon-blue">📅</div>
+                            <div class="item-details">
+                                <div class="item-title">Schedule & Appointments</div>
+                                <div class="item-subtitle">Manage your calendar</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                    <div class="section-item" onclick="managePatients()">
+                        <div class="item-content">
+                            <div class="item-icon icon-green">🐾</div>
+                            <div class="item-details">
+                                <div class="item-title">Patient Records</div>
+                                <div class="item-subtitle">View and edit patient data</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                    <div class="section-item" onclick="viewReports()">
+                        <div class="item-content">
+                            <div class="item-icon icon-purple">📊</div>
+                            <div class="item-details">
+                                <div class="item-title">Reports & Analytics</div>
+                                <div class="item-subtitle">Clinic performance data</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        📱 App Settings
+                    </div>
+                    <div class="section-item" onclick="toggleNotifications()">
+                        <div class="item-content">
+                            <div class="item-icon icon-yellow">🔔</div>
+                            <div class="item-details">
+                                <div class="item-title">Notifications</div>
+                                <div class="item-subtitle">Push notifications</div>
+                            </div>
+                        </div>
+                        <div class="toggle-switch active" id="notificationToggle"></div>
+                    </div>
+                    <div class="section-item" onclick="manageAccount()">
+                        <div class="item-content">
+                            <div class="item-icon icon-blue">👤</div>
+                            <div class="item-details">
+                                <div class="item-title">Account Settings</div>
+                                <div class="item-subtitle">Personal information</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                    <div class="section-item" onclick="privacySecurity()">
+                        <div class="item-content">
+                            <div class="item-icon icon-red">🔒</div>
+                            <div class="item-details">
+                                <div class="item-title">Privacy & Security</div>
+                                <div class="item-subtitle">Data protection settings</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        ℹ️ Support & Information
+                    </div>
+                    <div class="section-item" onclick="getHelp()">
+                        <div class="item-content">
+                            <div class="item-icon icon-green">❓</div>
+                            <div class="item-details">
+                                <div class="item-title">Help & Support</div>
+                                <div class="item-subtitle">Get assistance</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                    <div class="section-item" onclick="viewDocumentation()">
+                        <div class="item-content">
+                            <div class="item-icon icon-purple">📖</div>
+                            <div class="item-details">
+                                <div class="item-title">Documentation</div>
+                                <div class="item-subtitle">User guide and tutorials</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                    <div class="section-item" onclick="aboutApp()">
+                        <div class="item-content">
+                            <div class="item-icon icon-blue">ℹ️</div>
+                            <div class="item-details">
+                                <div class="item-title">About Doppy</div>
+                                <div class="item-subtitle">Version 2.1.0</div>
+                            </div>
+                        </div>
+                        <div class="item-arrow">›</div>
+                    </div>
+                </div>
+
+                <div class="logout-section">
+                    <button class="logout-btn" onclick="logoutVet()">
+                        🚪 Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="selectNav('home')">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="selectNav('pets')">
+                <div class="nav-icon">🐾</div>
+                <div class="nav-label">Pets</div>
+            </div>
+            <div class="nav-item" onclick="selectNav('calendar')">
+                <div class="nav-icon">📅</div>
+                <div class="nav-label">Calendar</div>
+            </div>
+            <div class="nav-item" onclick="selectNav('documents')">
+                <div class="nav-icon">📋</div>
+                <div class="nav-label">Documents</div>
+            </div>
+            <div class="nav-item active" onclick="selectNav('profile')">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initVetProfile();
+            loadVetData();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initVetProfile() {
+            console.log('Veterinary Profile loaded');
+            
+            // Load vet data if available
+            const vetSession = getVetData('vetSession');
+            if (vetSession && vetSession.vetName) {
+                document.getElementById('vetName').textContent = vetSession.vetName;
+            }
+            
+            // Load clinic code
+            const clinicCode = getVetData('clinicCode');
+            if (clinicCode) {
+                document.getElementById('clinicCodeDisplay').textContent = clinicCode;
+            }
+        }
+
+        function loadVetData() {
+            // In a real app, this would load vet profile data from a server
+            const vetProfile = {
+                name: 'Dr. Sarah Mitchell',
+                specialization: 'Small Animals',
+                experience: '5 years',
+                license: 'VET-2019-001234',
+                rating: 4.9,
+                patients: 150,
+                clinicName: 'Happy Pets Veterinary Clinic'
+            };
+            
+            document.getElementById('vetName').textContent = vetProfile.name;
+        }
+
+        function manageSchedule() {
+            window.location.href = 'vet-calendar.html';
+        }
+
+        function managePatients() {
+            window.location.href = 'vet-pets.html';
+        }
+
+        function viewReports() {
+            showNotification('Reports & Analytics coming soon!', 'info');
+        }
+
+        function toggleNotifications() {
+            const toggle = document.getElementById('notificationToggle');
+            toggle.classList.toggle('active');
+            
+            const isActive = toggle.classList.contains('active');
+            showNotification(`Notifications ${isActive ? 'enabled' : 'disabled'}`, 'info');
+        }
+
+        function manageAccount() {
+            showNotification('Account settings: Edit personal information, change password, etc.', 'info');
+        }
+
+        function privacySecurity() {
+            showNotification('Privacy & Security: Data protection, permissions, etc.', 'info');
+        }
+
+        function getHelp() {
+            showNotification('Help & Support: Contact support, FAQs, live chat', 'info');
+        }
+
+        function viewDocumentation() {
+            showNotification('Opening user documentation and tutorials...', 'info');
+        }
+
+        function aboutApp() {
+            showNotification('Doppy Veterinary App v2.1.0 - Built for professional pet care', 'info');
+        }
+
+        function openSettings() {
+            showNotification('Opening general settings...', 'info');
+        }
+
+        function logoutVet() {
+            if (confirm('Are you sure you want to sign out?')) {
+                // Clear vet session data
+                localStorage.removeItem('vet_vetSession');
+                localStorage.removeItem('vet_clinicCode');
+                
+                showNotification('Signing out...', 'info');
+                
+                setTimeout(() => {
+                    // In a real app, this would go to vet login page
+                    // For demo purposes, go back to main app
+                    window.location.href = 'index.html';
+                }, 1000);
+            }
+        }
+
+        function selectNav(section) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            event.currentTarget.classList.add('active');
+            
+            switch(section) {
+                case 'home':
+                    window.location.href = 'vet-dashboard.html';
+                    break;
+                case 'pets':
+                    window.location.href = 'vet-pets.html';
+                    break;
+                case 'calendar':
+                    window.location.href = 'vet-calendar.html';
+                    break;
+                case 'documents':
+                    showNotification('Documents section coming soon!', 'info');
+                    break;
+                default:
+                    // Stay on profile page
+                    break;
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'vet-dashboard.html';
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                max-width: 320px;
+                text-align: center;
+                line-height: 1.4;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function saveVetData(key, value) {
+            try {
+                localStorage.setItem('vet_' + key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                console.error('Error saving vet data:', error);
+                return false;
+            }
+        }
+
+        function getVetData(key) {
+            try {
+                const data = localStorage.getItem('vet_' + key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('Error retrieving vet data:', error);
+                return null;
+            }
+        }
+
+        console.log('Doppy Veterinary Profile loaded successfully');
+    </script>
+</body>
+</html>
