@@ -487,31 +487,6 @@
                             <div class="error-message" id="petGenderError">Please select your pet's gender</div>
                         </div>
 
-                        <!-- Second Doppy Logo -->
-                        <div class="second-logo-section">
-                            <div class="doppy-logo-second">
-                                <div class="logo-d-second">D</div>
-                                <span class="logo-text-second">oppy</span>
-                            </div>
-                        </div>
-
-                        <!-- Final Credentials -->
-                        <div class="credentials-section">
-                            <h3 class="credentials-title">Enter your Gmail</h3>
-                            <input type="email" class="credentials-input" placeholder="" id="userEmail" autocomplete="email">
-                            <div class="error-message" id="emailError">Please enter a valid email address</div>
-
-                            <h3 class="credentials-title">Enter your Password</h3>
-                            <input type="password" class="credentials-input" placeholder="" id="userPassword" autocomplete="new-password">
-                            <div class="error-message" id="passwordError">Please enter your password</div>
-                        </div>
-
-                        <!-- Success Message (Hidden Initially) -->
-                        <div class="completion-message" id="completionMessage">
-                            <h3>🎉 Registration Complete!</h3>
-                            <p>Welcome to Doppy! Your pet care journey starts now.</p>
-                        </div>
-
                         <!-- Done Button -->
                         <div class="done-section">
                             <button class="btn-done" id="doneBtn" onclick="completeRegistration()">Done</button>
@@ -534,19 +509,12 @@
         function initPetDetailsScreen() {
             // Load selected pet data
             const selectedPet = getUserData('selectedPet');
-            const userData = getUserData('userData');
             
             if (selectedPet) {
                 const iconElement = document.getElementById('selectedPetIcon');
                 const nameElement = document.getElementById('selectedPetName');
                 if (iconElement) iconElement.textContent = selectedPet.icon || '🐾';
                 if (nameElement) nameElement.textContent = selectedPet.name || 'Pet';
-            }
-
-            // Pre-fill email if available
-            if (userData && userData.email) {
-                const emailInput = document.getElementById('userEmail');
-                if (emailInput) emailInput.value = userData.email;
             }
 
             // Update registration data
@@ -557,7 +525,7 @@
         }
 
         function setupFormHandling() {
-            const inputs = document.querySelectorAll('.form-input, .form-select, .credentials-input');
+            const inputs = document.querySelectorAll('.form-input, .form-select');
             inputs.forEach(input => {
                 input.addEventListener('blur', function() {
                     validateField(this);
@@ -582,25 +550,12 @@
                 return false;
             }
 
-            if (fieldId === 'userEmail' && value) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(value)) {
-                    showFieldError(input);
-                    return false;
-                }
-            }
-
             if (fieldId === 'petAge' && value) {
                 const age = parseInt(value);
                 if (isNaN(age) || age < 0 || age > 30) {
                     showFieldError(input);
                     return false;
                 }
-            }
-
-            if (fieldId === 'userPassword' && value.length < 6) {
-                showFieldError(input);
-                return false;
             }
 
             return true;
@@ -626,10 +581,9 @@
             console.log('Completing registration...');
             const doneBtn = document.getElementById('doneBtn');
             
-            // Validate all fields
+            // Validate pet detail fields only
             const requiredFields = [
-                'petName', 'petAge', 'petRace', 'petGender', 
-                'userEmail', 'userPassword'
+                'petName', 'petAge', 'petRace', 'petGender'
             ];
             
             let isValid = true;
@@ -641,25 +595,20 @@
             });
 
             if (!isValid) {
-                showNotification('Please fill in all required fields correctly', 'error');
+                showNotification('Please fill in all pet details correctly', 'error');
                 return;
             }
 
             // Add loading state
             doneBtn.classList.add('loading');
-            doneBtn.textContent = 'Completing registration...';
+            doneBtn.textContent = 'Saving pet details...';
 
-            // Collect all data
+            // Collect pet data
             const petDetails = {
                 name: document.getElementById('petName').value.trim(),
                 age: document.getElementById('petAge').value.trim(),
                 race: document.getElementById('petRace').value.trim(),
                 gender: document.getElementById('petGender').value
-            };
-
-            const finalCredentials = {
-                email: document.getElementById('userEmail').value.trim(),
-                password: document.getElementById('userPassword').value
             };
 
             // Save complete registration data
@@ -673,7 +622,6 @@
                     type: selectedPet ? selectedPet.type : 'unknown',
                     ...petDetails
                 },
-                credentials: finalCredentials,
                 registrationFlow: registrationData,
                 completedAt: new Date().toISOString(),
                 status: 'completed'
@@ -684,31 +632,19 @@
             // Add ripple effect
             addRippleEffect(doneBtn);
 
-            // Show success sequence
+            // Show success and navigate to dashboard
             setTimeout(() => {
                 doneBtn.style.animation = 'success 0.6s ease';
-                doneBtn.textContent = '✓ Registration Complete!';
+                doneBtn.textContent = '✓ Pet Details Saved!';
                 doneBtn.style.background = '#4CAF50';
                 
-                const completionMessage = document.getElementById('completionMessage');
-                if (completionMessage) {
-                    completionMessage.classList.add('visible');
-                }
-                
-                showNotification('🎉 Welcome to Doppy! Registration completed successfully.', 'success');
+                showNotification('🎉 Pet details saved! Welcome to Doppy!', 'success');
             }, 1000);
 
-            // Final success state
+            // Navigate to dashboard
             setTimeout(() => {
-                doneBtn.textContent = '🚀 Start Using Doppy';
-                doneBtn.style.background = '#FFC107';
-                doneBtn.classList.remove('loading');
-                
-                // In a real app, this would navigate to the main dashboard
-                doneBtn.onclick = () => {
-                    showNotification('🎊 Thank you! This completes the Doppy registration demo.', 'success');
-                };
-            }, 3000);
+                window.location.href = 'user-dashboard.html';
+            }, 2500);
         }
 
         function addRippleEffect(button) {
