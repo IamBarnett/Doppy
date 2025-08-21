@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Login</title>
-    <link rel="stylesheet" href="../phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -21,6 +20,16 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: #087cbf;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
         }
 
         .status-bar {
@@ -88,7 +97,7 @@
             height: 350px;
             bottom: -150px;
             right: -100px;
-            background: rgba(30, 136, 229, 0.2);
+            background:#41b8d5;
         }
 
         .bg-circle-2 {
@@ -96,7 +105,7 @@
             height: 250px;
             bottom: -80px;
             left: -120px;
-            background: rgba(30, 136, 229, 0.15);
+            background: #6ce5e8;
         }
 
         .header-section {
@@ -113,7 +122,7 @@
         }
 
         .logo-d-small {
-            width: 50px;
+            width: 5px;
             height: 50px;
             background: #FFC107;
             border-radius: 15px;
@@ -131,19 +140,19 @@
         .logo-text-small {
             font-size: 32px;
             font-weight: 300;
-            color: white;
+            color: #ffffff;
             letter-spacing: 1px;
         }
 
         .screen-title {
-            color: white;
+            color: #ffffff;
             font-size: 24px;
             font-weight: 400;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            color: white;
+            color: #ffffff;
             font-size: 16px;
             font-weight: 300;
             text-align: center;
@@ -162,7 +171,7 @@
             width: 100%;
             padding: 16px 20px;
             border: none;
-            border-radius: 12px;
+            border-radius: 50px;
             font-size: 16px;
             background: rgba(255,255,255,0.9);
             color: #333;
@@ -175,7 +184,7 @@
 
         .form-input:focus {
             outline: none;
-            background: white;
+            background: #ffffff;
             box-shadow: 0 5px 20px rgba(255,255,255,0.4);
             transform: translateY(-2px);
         }
@@ -186,8 +195,8 @@
 
         .btn-login {
             width: 100%;
-            background: #FFC107;
-            color: #1976D2;
+            background: #fbe157;
+            color: #666666;
             border: none;
             padding: 16px;
             border-radius: 25px;
@@ -195,7 +204,6 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 30px;
-            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
             transition: all 0.3s ease;
             position: relative;
             z-index: 100;
@@ -265,6 +273,12 @@
         }
 
         @media (max-width: 480px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
             .login-screen {
                 padding: 30px 25px;
             }
@@ -272,47 +286,40 @@
     </style>
 </head>
 <body>
-    <div class="phone-frame-container">
-        <div class="phone-frame">
-            <div class="phone-screen">
-                <div class="phone-container">
-                    <div class="status-bar">
-                        <span class="status-left">9:41</span>
-                        <span class="status-right">🔋 100%</span>
-                    </div>
+    <div class="phone-container">
+        <div class="status-bar">
+            <span class="status-left">9:41</span>
+            <span class="status-right">🔋 100%</span>
+        </div>
 
-                    <button class="nav-btn back-btn" onclick="goBack()">←</button>
-                    <button class="nav-btn help-btn" onclick="showHelp()">?</button>
+        <button class="nav-btn back-btn" onclick="goBack()">←</button>
+        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-                    <div class="bg-circles">
-                        <div class="bg-circle bg-circle-1"></div>
-                        <div class="bg-circle bg-circle-2"></div>
-                    </div>
+        <div class="bg-circles">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+        </div>
 
-                    <div class="login-screen">
-                        <div class="header-section">
-                            <div class="doppy-logo-small">
-                                <div class="logo-d-small">D</div>
-                                <span class="logo-text-small">oppy</span>
-                            </div>
-                            <h2 class="screen-title">Welcome back!</h2>
-                            <p class="subtitle">Login to your Doppy account</p>
-                        </div>
+        <div class="login-screen">
+            <div class="header-section">
+                <div class="doppy-logo-small">
+                <img src="/Doppy-main/assets/images/logo.png" alt="" width="330" height="120">
+                </div>
+                <h2 class="screen-title">Welcome back!</h2>
+                <p class="subtitle">Login to your Doppy account</p>
+            </div>
 
-                        <div class="form-section">
-                            <input type="email" class="form-input" placeholder="Email address" id="loginEmail" autocomplete="email">
-                            <div class="error-message" id="emailError">Please enter a valid email address</div>
-                            
-                            <input type="password" class="form-input" placeholder="Password" id="loginPassword" autocomplete="current-password">
-                            <div class="error-message" id="passwordError">Please enter your password</div>
+            <div class="form-section">
+                <input type="email" class="form-input" placeholder="Email address" id="loginEmail" autocomplete="email">
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+                
+                <input type="password" class="form-input" placeholder="Password" id="loginPassword" autocomplete="current-password">
+                <div class="error-message" id="passwordError">Please enter your password</div>
 
-                            <button class="btn-login" id="loginBtn" onclick="handleLogin()">Login</button>
+                <button class="btn-login" id="loginBtn" onclick="handleLogin()">Login</button>
 
-                            <div class="signup-link">
-                                <a href="signup.html">Don't have an account? Sign up</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="signup-link">
+                    <a href="signup.html">Don't have an account? Sign up</a>
                 </div>
             </div>
         </div>
