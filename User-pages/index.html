@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Welcome</title>
-    <link rel="stylesheet" href="../phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -21,6 +20,16 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: linear-gradient(135deg, #00a2ff 0%, #00a2ff 100%);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
         }
 
         /* Status Bar */
@@ -65,37 +74,36 @@
         }
 
         .bg-circle-1 {
-            width: 400px;
-            height: 400px;
-            bottom: -200px;
-            right: -120px;
-            background: rgba(30, 136, 229, 0.25);
+            width: 600px;
+            height: 800px;
+            bottom: -250px;
+            right: -110px;
+            background: #087cbf;
         }
 
         .bg-circle-2 {
-            width: 320px;
-            height: 320px;
-            bottom: -120px;
-            left: -160px;
-            background: rgba(30, 136, 229, 0.2);
+            width: 193px;
+            height: 193px;
+            bottom: 0px;
+            left: -45.5px;
+            background: #41b8d5;
         }
 
         .bg-circle-3 {
-            width: 220px;
-            height: 220px;
-            bottom: 140px;
-            right: 30px;
-            background: rgba(30, 136, 229, 0.15);
+     width: 193px;
+            height: 193px;
+            bottom: 0px;
+            right: -45.5px;
+            background: #41b8d5;
         }
 
         .bg-circle-4 {
-            width: 160px;
-            height: 160px;
-            bottom: 70px;
-            left: 10px;
-            background: rgba(30, 136, 229, 0.12);
+            width: 220px;
+            height: 220px;
+            bottom: -80px;
+            left: 89px;
+            background: #6ce5e8;
         }
-
         /* Welcome Header */
         .welcome-header {
             text-align: center;
@@ -145,27 +153,6 @@
             transition: all 0.3s ease;
         }
 
-        .logo-circles {
-            position: absolute;
-            right: -8px;
-            top: -8px;
-            animation: rotate 8s linear infinite;
-        }
-
-        .logo-circle {
-            width: 16px;
-            height: 16px;
-            background: #FFC107;
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: 0 2px 6px rgba(255, 193, 7, 0.4);
-        }
-
-        .logo-circle:nth-child(1) { top: 0; right: 0; }
-        .logo-circle:nth-child(2) { top: 20px; right: 4px; }
-        .logo-circle:nth-child(3) { top: 40px; right: -4px; }
-        .logo-circle:nth-child(4) { top: 56px; right: 12px; }
-
         .logo-text {
             font-size: 48px;
             font-weight: 300;
@@ -179,8 +166,8 @@
         }
 
         .btn-start {
-            background: #FFC107;
-            color: #1976D2;
+            background: #fbe157;
+            color: #00a2ff;
             border: none;
             padding: 18px 60px;
             border-radius: 30px;
@@ -212,27 +199,7 @@
         }
 
         /* Animations */
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+       
 
         @keyframes zoomIn {
             from {
@@ -244,25 +211,6 @@
                 transform: scale(1);
             }
         }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
         /* Ripple Effect */
         @keyframes ripple {
             to {
@@ -273,6 +221,12 @@
 
         /* Responsive */
         @media (max-width: 480px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
             .welcome-title {
                 font-size: 42px;
                 letter-spacing: 3px;
@@ -295,51 +249,34 @@
     </style>
 </head>
 <body>
-    <div class="phone-frame-container">
-        <div class="phone-frame">
-            <div class="phone-screen">
-                <div class="phone-container">
-                    <!-- Status Bar -->
-                    <div class="status-bar">
-                        <span class="status-left">9:41</span>
-                        <span class="status-right">🔋 100%</span>
-                    </div>
+    <div class="phone-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="status-left">9:41</span>
+            <span class="status-right">🔋 100%</span>
+        </div>
 
-                    <!-- Background Circles -->
-                    <div class="bg-circles">
-                        <div class="bg-circle bg-circle-1"></div>
-                        <div class="bg-circle bg-circle-2"></div>
-                        <div class="bg-circle bg-circle-3"></div>
-                        <div class="bg-circle bg-circle-4"></div>
-                    </div>
+        <!-- Background Circles -->
+        <div class="bg-circles">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+            <div class="bg-circle bg-circle-3"></div>
+            <div class="bg-circle bg-circle-4"></div>
+        </div>
 
-                    <!-- Welcome Screen Content -->
-                    <div class="welcome-screen">
-                        <div class="welcome-header">
-                            <h1 class="welcome-title">WELCOME</h1>
-                            <h2 class="welcome-title">TO</h2>
-                        </div>
+        <!-- Welcome Screen Content -->
+        <div class="welcome-screen">
+            <div class="welcome-header">
+                <h1 class="welcome-title">WELCOME</h1>
+                <h2 class="welcome-title">TO</h2>
+            </div>
 
-                        <div class="logo-section">
-                            <div class="doppy-logo">
-                                <div class="logo-d">
-                                    D
-                                    <div class="logo-circles">
-                                        <div class="logo-circle"></div>
-                                        <div class="logo-circle"></div>
-                                        <div class="logo-circle"></div>
-                                        <div class="logo-circle"></div>
-                                    </div>
-                                </div>
-                                <span class="logo-text">oppy</span>
-                            </div>
-                        </div>
+            <div class="logo-section">
+               <img src="/Doppy-main/assets/images/logo.png" alt="">
+            </div>
 
-                        <div class="welcome-footer">
-                            <a href="login-options.html" class="btn-start" id="startBtn">Start now</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="welcome-footer">
+                <a href="login.html" class="btn-start" id="startBtn">Start now</a>
             </div>
         </div>
     </div>
