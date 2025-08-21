@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +26,9 @@
         .phone-container {
             width: 375px;
             height: 812px;
-            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #087cbf 0%, #087cbf 100%);
             border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             overflow: hidden;
             position: relative;
         }
@@ -49,7 +50,7 @@
             position: absolute;
             width: 40px;
             height: 40px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             border-radius: 50%;
             display: flex;
@@ -65,9 +66,20 @@
             text-decoration: none;
         }
 
-        .back-btn { top: 50px; left: 20px; }
-        .help-btn { top: 50px; right: 20px; }
-        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+        .back-btn {
+            top: 50px;
+            left: 20px;
+        }
+
+        .help-btn {
+            top: 50px;
+            right: 20px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
 
         .create-account-screen {
             height: calc(100% - 44px);
@@ -81,33 +93,53 @@
 
         .bg-circles {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            width: 15;
+            height: 30%;
             z-index: 1;
             pointer-events: none;
         }
-
+        
+        
         .bg-circle {
-            position: absolute;
+            position: relative;
             border-radius: 50%;
         }
 
         .bg-circle-1 {
-            width: 300px;
-            height: 300px;
-            bottom: -100px;
-            right: -80px;
-            background: rgba(30, 136, 229, 0.2);
+            position: relative;
+            width: 190px;
+            height: 210px;
+            bottom:-635px;
+            background:rgb(93, 196, 255);
+            opacity: 0.5;
+            left: 198px;
+            
         }
 
         .bg-circle-2 {
-            width: 200px;
-            height: 200px;
-            bottom: -50px;
-            left: -100px;
-            background: rgba(30, 136, 229, 0.15);
+            position: relative;
+            width: 195px;
+            height: 210px;
+            bottom: -430px;
+            background:rgb(93, 196, 255);
+            opacity: 0.5;
+            right: 25px;
+           
         }
+
+        .bg-circle-3 {
+            position: absolute;
+            width: 180px;
+            height: 210px;
+            top: 730px;
+            left: 175px;
+            background:rgb(93, 196, 255);
+            opacity: 0.9;
+            transform:translate(-50%,-50%);
+
+        }
+      
+        
 
         .header-section {
             text-align: center;
@@ -115,17 +147,11 @@
             animation: fadeInDown 0.8s ease-out;
         }
 
-        .doppy-logo-small {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .logo-d-small {
+       
+       .logo-d-small {
             width: 45px;
             height: 45px;
-            background: #FFC107;
+            background: #fbe157;
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -137,6 +163,9 @@
             box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
             transition: all 0.3s ease;
         }
+
+    
+        
 
         .logo-text-small {
             font-size: 28px;
@@ -162,19 +191,19 @@
         .user-avatar {
             width: 80px;
             height: 80px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
         }
 
         .user-avatar:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
         }
 
         .avatar-icon {
@@ -194,7 +223,7 @@
             border: none;
             border-radius: 12px;
             font-size: 16px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             color: #333;
             margin-bottom: 15px;
             transition: all 0.3s ease;
@@ -206,17 +235,17 @@
         .form-input:focus {
             outline: none;
             background: white;
-            box-shadow: 0 5px 20px rgba(255,255,255,0.4);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
         }
 
         .form-input::placeholder {
-            color: rgba(51,51,51,0.6);
+            color: rgba(51, 51, 51, 0.6);
         }
 
         .btn-continue {
             width: 100%;
-            background: #FFC107;
+            background: #fbe157;
             color: #1976D2;
             border: none;
             padding: 16px;
@@ -225,7 +254,6 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 30px;
-            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
             transition: all 0.3s ease;
             position: relative;
             z-index: 100;
@@ -233,7 +261,7 @@
 
         .btn-continue:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+
         }
 
         .btn-continue:active {
@@ -246,22 +274,46 @@
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @keyframes ripple {
-            to { transform: scale(4); opacity: 0; }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         .input-error {
@@ -288,13 +340,14 @@
                 height: 100vh;
                 border-radius: 0;
             }
-            
+
             .create-account-screen {
                 padding: 15px 25px 30px 25px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="phone-container">
         <div class="status-bar">
@@ -309,13 +362,13 @@
         <div class="bg-circles">
             <div class="bg-circle bg-circle-1"></div>
             <div class="bg-circle bg-circle-2"></div>
+            <div class="bg-circle bg-circle-3"></div>
         </div>
 
         <div class="create-account-screen">
             <div class="header-section">
                 <div class="doppy-logo-small">
-                    <div class="logo-d-small">D</div>
-                    <span class="logo-text-small">oppy</span>
+                    <img src="/Doppy-main/assets/images/logo.png" alt="">
                 </div>
                 <h2 class="screen-title">Create your account</h2>
             </div>
@@ -323,7 +376,8 @@
             <div class="avatar-section">
                 <div class="user-avatar" onclick="changeAvatar()">
                     <svg class="avatar-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                     </svg>
                 </div>
             </div>
@@ -331,14 +385,17 @@
             <div class="form-section">
                 <input type="text" class="form-input" placeholder="Full name" id="fullName" autocomplete="name">
                 <div class="error-message" id="nameError">Please enter your full name</div>
-                
-                <input type="email" class="form-input" placeholder="Email address/ phone number" id="email" autocomplete="email">
+
+                <input type="email" class="form-input" placeholder="Email address/ phone number" id="email"
+                    autocomplete="email">
                 <div class="error-message" id="emailError">Please enter a valid email address</div>
-                
-                <input type="password" class="form-input" placeholder="Secure password" id="password" autocomplete="new-password">
+
+                <input type="password" class="form-input" placeholder="Secure password" id="password"
+                    autocomplete="new-password">
                 <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
-                
-                <input type="password" class="form-input" placeholder="Confirm password" id="confirmPassword" autocomplete="new-password">
+
+                <input type="password" class="form-input" placeholder="Confirm password" id="confirmPassword"
+                    autocomplete="new-password">
                 <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
 
                 <button class="btn-continue" id="continueBtn" onclick="handleFormSubmit()">Sign in</button>
