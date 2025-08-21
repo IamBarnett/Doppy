@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Pet Details</title>
-    <link rel="stylesheet" href="../phone-frame.css">
     <style>
         * {
             margin: 0;
@@ -21,6 +20,16 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: linear-gradient(135deg, #1E88E5 0%, #1976D2 100%);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
         }
 
         .status-bar {
@@ -188,7 +197,7 @@
             width: 100%;
             padding: 14px 18px;
             border: none;
-            border-radius: 12px;
+            border-radius: 50px;
             font-size: 16px;
             background: rgba(255,255,255,0.9);
             color: #333;
@@ -214,7 +223,7 @@
             width: 100%;
             padding: 14px 18px;
             border: none;
-            border-radius: 12px;
+            border-radius: 50px;
             font-size: 16px;
             background: rgba(255,255,255,0.9);
             color: #333;
@@ -426,6 +435,12 @@
 
         /* Responsive */
         @media (max-width: 480px) {
+            .phone-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
             .pet-details-screen {
                 padding: 15px 25px 15px 25px;
             }
@@ -433,66 +448,60 @@
     </style>
 </head>
 <body>
-    <div class="phone-frame-container">
-        <div class="phone-frame">
-            <div class="phone-screen">
-                <div class="phone-container">
-                    <div class="status-bar">
-                        <span class="status-left">9:41</span>
-                        <span class="status-right">🔋 100%</span>
-                    </div>
+    <div class="phone-container">
+        <div class="status-bar">
+            <span class="status-left">9:41</span>
+            <span class="status-right">🔋 100%</span>
+        </div>
 
-                    <button class="nav-btn back-btn" onclick="goBack()">←</button>
-                    <button class="nav-btn help-btn" onclick="showHelp()">?</button>
+        <button class="nav-btn back-btn" onclick="goBack()">←</button>
+        <button class="nav-btn help-btn" onclick="showHelp()">?</button>
 
-                    <div class="bg-circles">
-                        <div class="bg-circle bg-circle-1"></div>
-                        <div class="bg-circle bg-circle-2"></div>
-                    </div>
+        <div class="bg-circles">
+            <div class="bg-circle bg-circle-1"></div>
+            <div class="bg-circle bg-circle-2"></div>
+        </div>
 
-                    <div class="pet-details-screen">
-                        <!-- Header with Logo and Title -->
-                        <div class="header-section">
-                            <div class="doppy-logo-small">
-                                <div class="logo-d-small">D</div>
-                                <span class="logo-text-small">oppy</span>
-                            </div>
-                            <h2 class="screen-title">Pet selected:</h2>
-                        </div>
-
-                        <!-- Selected Pet Display -->
-                        <div class="selected-pet-section">
-                            <div class="selected-pet-display">
-                                <div class="selected-pet-icon" id="selectedPetIcon">🐶</div>
-                                <div class="selected-pet-name" id="selectedPetName">Dog</div>
-                            </div>
-                        </div>
-
-                        <!-- Pet Details Form -->
-                        <div class="pet-form-section">
-                            <input type="text" class="form-input" placeholder="Pet's name" id="petName" autocomplete="off">
-                            <div class="error-message" id="petNameError">Please enter your pet's name</div>
-                            
-                            <input type="text" class="form-input" placeholder="Pet's age" id="petAge" autocomplete="off">
-                            <div class="error-message" id="petAgeError">Please enter your pet's age</div>
-                            
-                            <input type="text" class="form-input" placeholder="Pet's race" id="petRace" autocomplete="off">
-                            <div class="error-message" id="petRaceError">Please enter your pet's race/breed</div>
-                            
-                            <select class="form-select" id="petGender">
-                                <option value="">Pet's gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                            <div class="error-message" id="petGenderError">Please select your pet's gender</div>
-                        </div>
-
-                        <!-- Done Button -->
-                        <div class="done-section">
-                            <button class="btn-done" id="doneBtn" onclick="completeRegistration()">Done</button>
-                        </div>
-                    </div>
+        <div class="pet-details-screen">
+            <!-- Header with Logo and Title -->
+            <div class="header-section">
+                <div class="doppy-logo-small">
+                    <img src="/Doppy-main/assets/images/logo.png" alt="">
                 </div>
+                <h2 class="screen-title">Pet selected:</h2>
+            </div>
+
+            <!-- Selected Pet Display -->
+            <div class="selected-pet-section">
+                <div class="selected-pet-display">
+                    <div class="selected-pet-icon" id="selectedPetIcon"><img src="/Doppy-main/assets/images/dog icon.png" alt="" width="50" height="50"></div>
+                    <div class="selected-pet-name" id="selectedPetName">Dog</div>
+                </div>
+            </div>
+
+            <!-- Pet Details Form -->
+            <div class="pet-form-section">
+                <input type="text" class="form-input" placeholder="Pet's name" id="petName" autocomplete="off">
+                <div class="error-message" id="petNameError">Please enter your pet's name</div>
+                
+                <input type="text" class="form-input" placeholder="Pet's age" id="petAge" autocomplete="off">
+                <div class="error-message" id="petAgeError">Please enter your pet's age</div>
+                
+                <input type="text" class="form-input" placeholder="Pet's race" id="petRace" autocomplete="off">
+                <div class="error-message" id="petRaceError">Please enter your pet's race/breed</div>
+                
+                <select class="form-select" id="petGender">
+                    <option value="">Pet's gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <div class="error-message" id="petGenderError">Please select your pet's gender</div>
+            </div>
+
+        
+            <!-- Done Button -->
+            <div class="done-section">
+                <button class="btn-done" id="doneBtn" onclick="completeRegistration()">Done</button>
             </div>
         </div>
     </div>
@@ -509,12 +518,24 @@
         function initPetDetailsScreen() {
             // Load selected pet data
             const selectedPet = getUserData('selectedPet');
+            const userData = getUserData('userData');
             
-            if (selectedPet) {
-                const iconElement = document.getElementById('selectedPetIcon');
-                const nameElement = document.getElementById('selectedPetName');
-                if (iconElement) iconElement.textContent = selectedPet.icon || '🐾';
-                if (nameElement) nameElement.textContent = selectedPet.name || 'Pet';
+            // Display selected pet 
+if (selectedPet) {
+    const iconElement = document.getElementById('selectedPetIcon');
+    const nameElement = document.getElementById('selectedPetName');
+    if (iconElement) {
+        iconElement.innerHTML = `<img src="${selectedPet.icon}" alt="${selectedPet.name || 'Pet'}" width="120" height="120">`;
+    }
+    if (nameElement) {
+        nameElement.textContent = selectedPet.name || 'Pet';
+    }
+}
+
+            // Pre-fill email if available
+            if (userData && userData.email) {
+                const emailInput = document.getElementById('userEmail');
+                if (emailInput) emailInput.value = userData.email;
             }
 
             // Update registration data
@@ -525,7 +546,7 @@
         }
 
         function setupFormHandling() {
-            const inputs = document.querySelectorAll('.form-input, .form-select');
+            const inputs = document.querySelectorAll('.form-input, .form-select, .credentials-input');
             inputs.forEach(input => {
                 input.addEventListener('blur', function() {
                     validateField(this);
@@ -550,12 +571,25 @@
                 return false;
             }
 
+            if (fieldId === 'userEmail' && value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    showFieldError(input);
+                    return false;
+                }
+            }
+
             if (fieldId === 'petAge' && value) {
                 const age = parseInt(value);
                 if (isNaN(age) || age < 0 || age > 30) {
                     showFieldError(input);
                     return false;
                 }
+            }
+
+            if (fieldId === 'userPassword' && value.length < 6) {
+                showFieldError(input);
+                return false;
             }
 
             return true;
@@ -581,9 +615,10 @@
             console.log('Completing registration...');
             const doneBtn = document.getElementById('doneBtn');
             
-            // Validate pet detail fields only
+            // Validate all fields
             const requiredFields = [
-                'petName', 'petAge', 'petRace', 'petGender'
+                'petName', 'petAge', 'petRace', 'petGender', 
+                'userEmail', 'userPassword'
             ];
             
             let isValid = true;
@@ -595,20 +630,25 @@
             });
 
             if (!isValid) {
-                showNotification('Please fill in all pet details correctly', 'error');
+                showNotification('Please fill in all required fields correctly', 'error');
                 return;
             }
 
             // Add loading state
             doneBtn.classList.add('loading');
-            doneBtn.textContent = 'Saving pet details...';
+            doneBtn.textContent = 'Completing registration...';
 
-            // Collect pet data
+            // Collect all data
             const petDetails = {
                 name: document.getElementById('petName').value.trim(),
                 age: document.getElementById('petAge').value.trim(),
                 race: document.getElementById('petRace').value.trim(),
                 gender: document.getElementById('petGender').value
+            };
+
+            const finalCredentials = {
+                email: document.getElementById('userEmail').value.trim(),
+                password: document.getElementById('userPassword').value
             };
 
             // Save complete registration data
@@ -622,6 +662,7 @@
                     type: selectedPet ? selectedPet.type : 'unknown',
                     ...petDetails
                 },
+                credentials: finalCredentials,
                 registrationFlow: registrationData,
                 completedAt: new Date().toISOString(),
                 status: 'completed'
@@ -632,19 +673,31 @@
             // Add ripple effect
             addRippleEffect(doneBtn);
 
-            // Show success and navigate to dashboard
+            // Show success sequence
             setTimeout(() => {
                 doneBtn.style.animation = 'success 0.6s ease';
-                doneBtn.textContent = '✓ Pet Details Saved!';
+                doneBtn.textContent = '✓ Registration Complete!';
                 doneBtn.style.background = '#4CAF50';
                 
-                showNotification('🎉 Pet details saved! Welcome to Doppy!', 'success');
+                const completionMessage = document.getElementById('completionMessage');
+                if (completionMessage) {
+                    completionMessage.classList.add('visible');
+                }
+                
+                showNotification('🎉 Welcome to Doppy! Registration completed successfully.', 'success');
             }, 1000);
 
-            // Navigate to dashboard
+            // Final success state
             setTimeout(() => {
-                window.location.href = 'user-dashboard.html';
-            }, 2500);
+                doneBtn.textContent = '🚀 Start Using Doppy';
+                doneBtn.style.background = '#FFC107';
+                doneBtn.classList.remove('loading');
+                
+                // In a real app, this would navigate to the main dashboard
+                doneBtn.onclick = () => {
+                    showNotification('🎊 Thank you! This completes the Doppy registration demo.', 'success');
+                };
+            }, 3000);
         }
 
         function addRippleEffect(button) {
