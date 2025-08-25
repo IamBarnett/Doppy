@@ -4,44 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Veterinary Profile</title>
+    <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background: #f8fafc;
-            height: 100vh;
+        .profile-screen {
+            height: calc(100% - 44px);
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
+            flex-direction: column;
             position: relative;
-        }
-
-        .status-bar {
-            height: 44px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            background: white;
-            color: #1a1a1a;
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 1px solid #f0f0f0;
+            z-index: 200;
+            background: #f8fafc;
         }
 
         .header {
@@ -51,9 +22,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 300;
         }
 
-        .back-btn {
+        .back-btn, .settings-btn {
             width: 32px;
             height: 32px;
             border-radius: 8px;
@@ -64,9 +37,12 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .settings-btn:hover {
             background: #e5e7eb;
         }
 
@@ -76,27 +52,12 @@
             color: #1a1a1a;
         }
 
-        .settings-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: none;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .settings-btn:hover {
-            background: #e5e7eb;
-        }
-
         .profile-content {
             flex: 1;
             overflow-y: auto;
-            padding-bottom: 70px;
+            padding-bottom: 90px;
+            position: relative;
+            z-index: 200;
         }
 
         .profile-header {
@@ -191,6 +152,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
         }
 
         .section-item:last-child {
@@ -261,6 +225,7 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            pointer-events: auto;
         }
 
         .toggle-switch.active {
@@ -331,6 +296,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             width: 100%;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .logout-btn:hover {
@@ -349,6 +317,7 @@
             align-items: center;
             justify-content: space-around;
             padding: 0 20px;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -360,6 +329,9 @@
             transition: all 0.2s ease;
             flex: 1;
             text-align: center;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .nav-item.active {
@@ -380,211 +352,211 @@
             font-weight: 500;
             color: inherit;
         }
-
-        @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
-
-        <div class="header">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="header-title">Profile</div>
-            <button class="settings-btn" onclick="openSettings()">⚙️</button>
-        </div>
-
-        <div class="profile-content">
-            <div class="profile-header">
-                <div class="profile-avatar">👨‍⚕️</div>
-                <div class="profile-name" id="vetName">Dr. Name</div>
-                <div class="profile-title">Veterinarian</div>
-                <div class="profile-clinic">Happy Pets Veterinary Clinic</div>
-                
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">150</div>
-                        <div class="stat-label">Patients</div>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Years</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">4.9</div>
-                        <div class="stat-label">Rating</div>
+
+                    <div class="profile-screen">
+                        <div class="header">
+                            <button class="back-btn" onclick="goBack()">←</button>
+                            <div class="header-title">Profile</div>
+                            <button class="settings-btn" onclick="openSettings()">⚙️</button>
+                        </div>
+
+                        <div class="profile-content">
+                            <div class="profile-header">
+                                <div class="profile-avatar">👨‍⚕️</div>
+                                <div class="profile-name" id="vetName">Dr. Name</div>
+                                <div class="profile-title">Veterinarian</div>
+                                <div class="profile-clinic">Happy Pets Veterinary Clinic</div>
+                                
+                                <div class="profile-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-number">150</div>
+                                        <div class="stat-label">Patients</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">5</div>
+                                        <div class="stat-label">Years</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-number">4.9</div>
+                                        <div class="stat-label">Rating</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="profile-sections">
+                                <div class="professional-details">
+                                    <div class="section-header">
+                                        📋 Professional Details
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">License Number</div>
+                                        <div class="detail-value">VET-2019-001234</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Specialization</div>
+                                        <div class="detail-value">Small Animals</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Years of Experience</div>
+                                        <div class="detail-value">5 years</div>
+                                    </div>
+                                    <div class="detail-row">
+                                        <div class="detail-label">Clinic Code</div>
+                                        <div class="detail-value" id="clinicCodeDisplay">HPVC</div>
+                                    </div>
+                                </div>
+
+                                <div class="section">
+                                    <div class="section-header">
+                                        🏥 Clinic Management
+                                    </div>
+                                    <div class="section-item" onclick="manageSchedule()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-blue">📅</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Schedule & Appointments</div>
+                                                <div class="item-subtitle">Manage your calendar</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                    <div class="section-item" onclick="managePatients()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-green">🐾</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Patient Records</div>
+                                                <div class="item-subtitle">View and edit patient data</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                    <div class="section-item" onclick="viewReports()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-purple">📊</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Reports & Analytics</div>
+                                                <div class="item-subtitle">Clinic performance data</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                </div>
+
+                                <div class="section">
+                                    <div class="section-header">
+                                        📱 App Settings
+                                    </div>
+                                    <div class="section-item" onclick="toggleNotifications()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-yellow">🔔</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Notifications</div>
+                                                <div class="item-subtitle">Push notifications</div>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-switch active" id="notificationToggle"></div>
+                                    </div>
+                                    <div class="section-item" onclick="manageAccount()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-blue">👤</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Account Settings</div>
+                                                <div class="item-subtitle">Personal information</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                    <div class="section-item" onclick="privacySecurity()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-red">🔒</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Privacy & Security</div>
+                                                <div class="item-subtitle">Data protection settings</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                </div>
+
+                                <div class="section">
+                                    <div class="section-header">
+                                        ℹ️ Support & Information
+                                    </div>
+                                    <div class="section-item" onclick="getHelp()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-green">❓</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Help & Support</div>
+                                                <div class="item-subtitle">Get assistance</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                    <div class="section-item" onclick="viewDocumentation()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-purple">📖</div>
+                                            <div class="item-details">
+                                                <div class="item-title">Documentation</div>
+                                                <div class="item-subtitle">User guide and tutorials</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                    <div class="section-item" onclick="aboutApp()">
+                                        <div class="item-content">
+                                            <div class="item-icon icon-blue">ℹ️</div>
+                                            <div class="item-details">
+                                                <div class="item-title">About Doppy</div>
+                                                <div class="item-subtitle">Version 2.1.0</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-arrow">›</div>
+                                    </div>
+                                </div>
+
+                                <div class="logout-section">
+                                    <button class="logout-btn" onclick="logoutVet()">
+                                        🚪 Sign Out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bottom-nav">
+                            <div class="nav-item" onclick="selectNav('home')">
+                                <div class="nav-icon">🏠</div>
+                                <div class="nav-label">Home</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('pets')">
+                                <div class="nav-icon">🐾</div>
+                                <div class="nav-label">Pets</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('calendar')">
+                                <div class="nav-icon">📅</div>
+                                <div class="nav-label">Calendar</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('documents')">
+                                <div class="nav-icon">📋</div>
+                                <div class="nav-label">Documents</div>
+                            </div>
+                            <div class="nav-item active" onclick="selectNav('profile')">
+                                <div class="nav-icon">👤</div>
+                                <div class="nav-label">Profile</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="profile-sections">
-                <div class="professional-details">
-                    <div class="section-header">
-                        📋 Professional Details
-                    </div>
-                    <div class="detail-row">
-                        <div class="detail-label">License Number</div>
-                        <div class="detail-value">VET-2019-001234</div>
-                    </div>
-                    <div class="detail-row">
-                        <div class="detail-label">Specialization</div>
-                        <div class="detail-value">Small Animals</div>
-                    </div>
-                    <div class="detail-row">
-                        <div class="detail-label">Years of Experience</div>
-                        <div class="detail-value">5 years</div>
-                    </div>
-                    <div class="detail-row">
-                        <div class="detail-label">Clinic Code</div>
-                        <div class="detail-value" id="clinicCodeDisplay">HPVC</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="section-header">
-                        🏥 Clinic Management
-                    </div>
-                    <div class="section-item" onclick="manageSchedule()">
-                        <div class="item-content">
-                            <div class="item-icon icon-blue">📅</div>
-                            <div class="item-details">
-                                <div class="item-title">Schedule & Appointments</div>
-                                <div class="item-subtitle">Manage your calendar</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                    <div class="section-item" onclick="managePatients()">
-                        <div class="item-content">
-                            <div class="item-icon icon-green">🐾</div>
-                            <div class="item-details">
-                                <div class="item-title">Patient Records</div>
-                                <div class="item-subtitle">View and edit patient data</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                    <div class="section-item" onclick="viewReports()">
-                        <div class="item-content">
-                            <div class="item-icon icon-purple">📊</div>
-                            <div class="item-details">
-                                <div class="item-title">Reports & Analytics</div>
-                                <div class="item-subtitle">Clinic performance data</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="section-header">
-                        📱 App Settings
-                    </div>
-                    <div class="section-item" onclick="toggleNotifications()">
-                        <div class="item-content">
-                            <div class="item-icon icon-yellow">🔔</div>
-                            <div class="item-details">
-                                <div class="item-title">Notifications</div>
-                                <div class="item-subtitle">Push notifications</div>
-                            </div>
-                        </div>
-                        <div class="toggle-switch active" id="notificationToggle"></div>
-                    </div>
-                    <div class="section-item" onclick="manageAccount()">
-                        <div class="item-content">
-                            <div class="item-icon icon-blue">👤</div>
-                            <div class="item-details">
-                                <div class="item-title">Account Settings</div>
-                                <div class="item-subtitle">Personal information</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                    <div class="section-item" onclick="privacySecurity()">
-                        <div class="item-content">
-                            <div class="item-icon icon-red">🔒</div>
-                            <div class="item-details">
-                                <div class="item-title">Privacy & Security</div>
-                                <div class="item-subtitle">Data protection settings</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="section-header">
-                        ℹ️ Support & Information
-                    </div>
-                    <div class="section-item" onclick="getHelp()">
-                        <div class="item-content">
-                            <div class="item-icon icon-green">❓</div>
-                            <div class="item-details">
-                                <div class="item-title">Help & Support</div>
-                                <div class="item-subtitle">Get assistance</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                    <div class="section-item" onclick="viewDocumentation()">
-                        <div class="item-content">
-                            <div class="item-icon icon-purple">📖</div>
-                            <div class="item-details">
-                                <div class="item-title">Documentation</div>
-                                <div class="item-subtitle">User guide and tutorials</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                    <div class="section-item" onclick="aboutApp()">
-                        <div class="item-content">
-                            <div class="item-icon icon-blue">ℹ️</div>
-                            <div class="item-details">
-                                <div class="item-title">About Doppy</div>
-                                <div class="item-subtitle">Version 2.1.0</div>
-                            </div>
-                        </div>
-                        <div class="item-arrow">›</div>
-                    </div>
-                </div>
-
-                <div class="logout-section">
-                    <button class="logout-btn" onclick="logoutVet()">
-                        🚪 Sign Out
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="selectNav('home')">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Home</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('pets')">
-                <div class="nav-icon">🐾</div>
-                <div class="nav-label">Pets</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('calendar')">
-                <div class="nav-icon">📅</div>
-                <div class="nav-label">Calendar</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('documents')">
-                <div class="nav-icon">📋</div>
-                <div class="nav-label">Documents</div>
-            </div>
-            <div class="nav-item active" onclick="selectNav('profile')">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">Profile</div>
             </div>
         </div>
     </div>
@@ -600,13 +572,11 @@
         function initVetProfile() {
             console.log('Veterinary Profile loaded');
             
-            // Load vet data if available
             const vetSession = getVetData('vetSession');
             if (vetSession && vetSession.vetName) {
                 document.getElementById('vetName').textContent = vetSession.vetName;
             }
             
-            // Load clinic code
             const clinicCode = getVetData('clinicCode');
             if (clinicCode) {
                 document.getElementById('clinicCodeDisplay').textContent = clinicCode;
@@ -614,7 +584,6 @@
         }
 
         function loadVetData() {
-            // In a real app, this would load vet profile data from a server
             const vetProfile = {
                 name: 'Dr. Sarah Mitchell',
                 specialization: 'Small Animals',
@@ -674,27 +643,22 @@
 
         function logoutVet() {
             if (confirm('Are you sure you want to sign out?')) {
-                // Clear vet session data
                 localStorage.removeItem('vet_vetSession');
                 localStorage.removeItem('vet_clinicCode');
                 
                 showNotification('Signing out...', 'info');
                 
                 setTimeout(() => {
-                    // In a real app, this would go to vet login page
-                    // For demo purposes, go back to main app
-                    window.location.href = 'index.html';
+                    window.location.href = '../index.html';
                 }, 1000);
             }
         }
 
         function selectNav(section) {
-            // Remove active class from all nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Add active class to clicked item
             event.currentTarget.classList.add('active');
             
             switch(section) {
@@ -708,10 +672,9 @@
                     window.location.href = 'vet-calendar.html';
                     break;
                 case 'documents':
-                    showNotification('Documents section coming soon!', 'info');
+                    window.location.href = 'vet-documents.html';
                     break;
                 default:
-                    // Stay on profile page
                     break;
             }
         }
@@ -745,7 +708,7 @@
                 color: white;
                 padding: 12px 24px;
                 border-radius: 8px;
-                z-index: 1000;
+                z-index: 10000;
                 font-size: 14px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 max-width: 320px;

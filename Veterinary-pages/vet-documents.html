@@ -6,22 +6,12 @@
     <title>Doppy - Documents</title>
     <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
-
         .documents-screen {
             height: calc(100% - 44px);
             display: flex;
             flex-direction: column;
             position: relative;
-            z-index: 10;
+            z-index: 200;
             background: #f8fafc;
         }
 
@@ -34,10 +24,10 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
-        .back-btn {
+        .back-btn, .notification-btn {
             width: 32px;
             height: 32px;
             border-radius: 8px;
@@ -49,11 +39,11 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .notification-btn:hover {
             background: #e5e7eb;
         }
 
@@ -61,31 +51,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
+            z-index: 300;
         }
 
         .logo-image {
             height: 28px;
             width: auto;
-        }
-
-        .notification-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: none;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 300;
-            pointer-events: auto;
-        }
-
-        .notification-btn:hover {
-            background: #e5e7eb;
         }
 
         /* Search Section */
@@ -94,7 +66,7 @@
             padding: 15px 20px;
             border-bottom: 1px solid #e5e7eb;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
         .search-container {
@@ -110,7 +82,7 @@
             background: #f9fafb;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -128,7 +100,7 @@
             transform: translateY(-50%);
             color: #fbbf24;
             font-size: 16px;
-            z-index: 400;
+            z-index: 500;
         }
 
         /* Filter Section */
@@ -137,7 +109,7 @@
             padding: 10px 20px;
             border-bottom: 1px solid #e5e7eb;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
         .filter-tabs {
@@ -157,7 +129,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
             display: flex;
             align-items: center;
@@ -304,7 +276,7 @@
             gap: 8px;
             margin-top: 20px;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -316,11 +288,10 @@
 
         /* Bottom navigation */
         .bottom-nav {
-            position: fixed;
+            position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 375px;
+            left: 0;
+            right: 0;
             height: 70px;
             background: white;
             border-top: 1px solid #e5e7eb;
@@ -343,7 +314,7 @@
             text-align: center;
             padding: 8px 4px;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -390,15 +361,6 @@
             transform: scale(1.1);
             box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
         }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .bottom-nav {
-                width: 100vw;
-                left: 0;
-                transform: none;
-            }
-        }
     </style>
 </head>
 <body>
@@ -416,7 +378,8 @@
                         <div class="header">
                             <button class="back-btn" onclick="goBack()">←</button>
                             <div class="logo-section">
-                                <img src="../assets/images/logo.png" alt="Doppy Logo" class="logo-image">
+                                <div class="logo-d-small">D</div>
+                                <span class="logo-text-small">oppy</span>
                             </div>
                             <button class="notification-btn" onclick="showNotifications()">🔔</button>
                         </div>
@@ -510,29 +473,29 @@
                                 ➕ Add New Form
                             </button>
                         </div>
-                    </div>
 
-                    <!-- Bottom Navigation -->
-                    <div class="bottom-nav">
-                        <div class="nav-item" onclick="selectNav('home')">
-                            <div class="nav-icon">🏠</div>
-                            <div class="nav-label">Home</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('pets')">
-                            <div class="nav-icon">🐾</div>
-                            <div class="nav-label">Pets</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('calendar')">
-                            <div class="nav-icon">📅</div>
-                            <div class="nav-label">Calendar</div>
-                        </div>
-                        <div class="nav-item active" onclick="selectNav('documents')">
-                            <div class="nav-icon">📋</div>
-                            <div class="nav-label">Documents</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('profile')">
-                            <div class="nav-icon">👤</div>
-                            <div class="nav-label">Profile</div>
+                        <!-- Bottom Navigation -->
+                        <div class="bottom-nav">
+                            <div class="nav-item" onclick="selectNav('home')">
+                                <div class="nav-icon">🏠</div>
+                                <div class="nav-label">Home</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('pets')">
+                                <div class="nav-icon">🐾</div>
+                                <div class="nav-label">Pets</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('calendar')">
+                                <div class="nav-icon">📅</div>
+                                <div class="nav-label">Calendar</div>
+                            </div>
+                            <div class="nav-item active" onclick="selectNav('documents')">
+                                <div class="nav-icon">📋</div>
+                                <div class="nav-label">Documents</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('profile')">
+                                <div class="nav-icon">👤</div>
+                                <div class="nav-label">Profile</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -574,7 +537,6 @@
         }
 
         function filterDocuments(filterType) {
-            // Update active tab
             document.querySelectorAll('.filter-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -585,11 +547,9 @@
 
         function viewDocument(docType, petName) {
             showNotification(`Opening ${docType} for ${petName}...`, 'info');
-            // In a real app, this would navigate to document details
         }
 
         function addNewForm() {
-            // Navigate to consultation form
             window.location.href = 'consultation-form.html';
         }
 
@@ -601,7 +561,6 @@
             showNotification('You have 2 document updates', 'info');
         }
 
-        // Navigation functions
         function selectNav(section) {
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
@@ -619,7 +578,6 @@
                     window.location.href = 'vet-calendar.html';
                     break;
                 case 'documents':
-                    // Already on documents page
                     break;
                 case 'profile':
                     window.location.href = 'vet-profile.html';

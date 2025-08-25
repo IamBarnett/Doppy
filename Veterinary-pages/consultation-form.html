@@ -6,22 +6,12 @@
     <title>Doppy - Consultation Form</title>
     <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
-
         .consultation-screen {
             height: calc(100% - 44px);
             display: flex;
             flex-direction: column;
             position: relative;
-            z-index: 10;
+            z-index: 200;
             background: #f8fafc;
         }
 
@@ -34,10 +24,10 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
-        .back-btn {
+        .back-btn, .notification-btn {
             width: 32px;
             height: 32px;
             border-radius: 8px;
@@ -49,11 +39,11 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .notification-btn:hover {
             background: #e5e7eb;
         }
 
@@ -61,31 +51,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
+            z-index: 300;
         }
 
         .logo-image {
             height: 28px;
             width: auto;
-        }
-
-        .notification-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: none;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 300;
-            pointer-events: auto;
-        }
-
-        .notification-btn:hover {
-            background: #e5e7eb;
         }
 
         /* Content */
@@ -159,7 +131,7 @@
             background: white;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -184,7 +156,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -230,7 +202,7 @@
             gap: 8px;
             margin-top: 20px;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -242,11 +214,10 @@
 
         /* Bottom navigation */
         .bottom-nav {
-            position: fixed;
+            position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 375px;
+            left: 0;
+            right: 0;
             height: 70px;
             background: white;
             border-top: 1px solid #e5e7eb;
@@ -269,7 +240,7 @@
             text-align: center;
             padding: 8px 4px;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -316,15 +287,6 @@
             transform: scale(1.1);
             box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
         }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .bottom-nav {
-                width: 100vw;
-                left: 0;
-                transform: none;
-            }
-        }
     </style>
 </head>
 <body>
@@ -342,7 +304,8 @@
                         <div class="header">
                             <button class="back-btn" onclick="goBack()">←</button>
                             <div class="logo-section">
-                                <img src="../assets/images/logo.png" alt="Doppy Logo" class="logo-image">
+                                <div class="logo-d-small">D</div>
+                                <span class="logo-text-small">oppy</span>
                             </div>
                             <button class="notification-btn" onclick="showNotifications()">🔔</button>
                         </div>
@@ -484,29 +447,29 @@
                                 Save
                             </button>
                         </div>
-                    </div>
 
-                    <!-- Bottom Navigation -->
-                    <div class="bottom-nav">
-                        <div class="nav-item" onclick="selectNav('home')">
-                            <div class="nav-icon">🏠</div>
-                            <div class="nav-label">Home</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('pets')">
-                            <div class="nav-icon">🐾</div>
-                            <div class="nav-label">Pets</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('calendar')">
-                            <div class="nav-icon">📅</div>
-                            <div class="nav-label">Calendar</div>
-                        </div>
-                        <div class="nav-item active" onclick="selectNav('documents')">
-                            <div class="nav-icon">📋</div>
-                            <div class="nav-label">Documents</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('profile')">
-                            <div class="nav-icon">👤</div>
-                            <div class="nav-label">Profile</div>
+                        <!-- Bottom Navigation -->
+                        <div class="bottom-nav">
+                            <div class="nav-item" onclick="selectNav('home')">
+                                <div class="nav-icon">🏠</div>
+                                <div class="nav-label">Home</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('pets')">
+                                <div class="nav-icon">🐾</div>
+                                <div class="nav-label">Pets</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('calendar')">
+                                <div class="nav-icon">📅</div>
+                                <div class="nav-label">Calendar</div>
+                            </div>
+                            <div class="nav-item active" onclick="selectNav('documents')">
+                                <div class="nav-icon">📋</div>
+                                <div class="nav-label">Documents</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('profile')">
+                                <div class="nav-icon">👤</div>
+                                <div class="nav-label">Profile</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -525,11 +488,9 @@
         function initConsultationForm() {
             console.log('Consultation Form loaded');
             
-            // Set current date as default
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('consultationDate').value = today;
             
-            // Load veterinarian name if available
             const vetSession = getVetData('vetSession');
             if (vetSession && vetSession.vetName) {
                 document.getElementById('veterinarianName').value = vetSession.vetName;
@@ -537,7 +498,6 @@
         }
 
         function setupForm() {
-            // Auto-fill pet name in consultation section when patient pet name changes
             const patientPetName = document.getElementById('petName');
             const consultationPetName = document.getElementById('consultationPetName');
             
@@ -547,7 +507,6 @@
         }
 
         function saveConsultation() {
-            // Validate required fields
             const requiredFields = [
                 'ownerName', 'petName', 'petSpecies', 'consultationDate', 
                 'veterinarianName', 'consultationReason'
@@ -569,7 +528,6 @@
                 return;
             }
 
-            // Collect form data
             const consultationData = {
                 owner: {
                     name: document.getElementById('ownerName').value,
@@ -596,7 +554,6 @@
                 createdAt: new Date().toISOString()
             };
 
-            // Save consultation data
             saveVetData('consultations', consultationData);
             
             showNotification('Consultation form saved successfully!', 'success');
@@ -616,7 +573,6 @@
             showNotification('No new notifications', 'info');
         }
 
-        // Navigation functions
         function selectNav(section) {
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');

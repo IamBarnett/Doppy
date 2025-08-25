@@ -4,44 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Veterinary Calendar</title>
+    <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background: #f8fafc;
-            height: 100vh;
+        .calendar-screen {
+            height: calc(100% - 44px);
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
+            flex-direction: column;
             position: relative;
-        }
-
-        .status-bar {
-            height: 44px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            background: white;
-            color: #1a1a1a;
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 1px solid #f0f0f0;
+            z-index: 200;
+            background: #f8fafc;
         }
 
         .header {
@@ -51,6 +22,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 300;
         }
 
         .back-btn {
@@ -64,6 +37,9 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .back-btn:hover {
@@ -88,6 +64,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .notification-btn:hover {
@@ -107,7 +85,9 @@
         .calendar-content {
             flex: 1;
             overflow-y: auto;
-            padding-bottom: 70px;
+            padding-bottom: 90px;
+            position: relative;
+            z-index: 200;
         }
 
         .month-nav {
@@ -116,6 +96,8 @@
             align-items: center;
             padding: 20px;
             background: white;
+            position: relative;
+            z-index: 300;
         }
 
         .month-display {
@@ -147,6 +129,9 @@
             transition: all 0.2s ease;
             font-size: 16px;
             color: #6b7280;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .nav-arrow:hover {
@@ -194,6 +179,8 @@
             transition: all 0.2s ease;
             border-right: 1px solid #f0f0f0;
             border-bottom: 1px solid #f0f0f0;
+            z-index: 300;
+            pointer-events: auto;
         }
 
         .day:nth-child(7n) {
@@ -267,6 +254,9 @@
             border: none;
             cursor: pointer;
             font-weight: 500;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .appointments-list {
@@ -282,6 +272,9 @@
             padding: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
         }
 
         .appointment-card:hover {
@@ -373,6 +366,9 @@
             border-bottom: 1px solid #f0f0f0;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
         }
 
         .time-slot:last-child {
@@ -419,6 +415,33 @@
             color: #6b7280;
         }
 
+        .add-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #1976D2;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
+            transition: all 0.2s ease;
+            color: white;
+            font-size: 24px;
+            font-weight: 300;
+            z-index: 400;
+            pointer-events: auto;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
+
         .bottom-nav {
             position: absolute;
             bottom: 0;
@@ -431,6 +454,7 @@
             align-items: center;
             justify-content: space-around;
             padding: 0 20px;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -442,6 +466,9 @@
             transition: all 0.2s ease;
             flex: 1;
             text-align: center;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .nav-item.active {
@@ -462,184 +489,159 @@
             font-weight: 500;
             color: inherit;
         }
-
-        .add-btn {
-            position: absolute;
-            bottom: 90px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            background: #1976D2;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
-            transition: all 0.2s ease;
-            color: white;
-            font-size: 24px;
-            font-weight: 300;
-        }
-
-        .add-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
-        }
-
-        @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
-
-        <div class="header">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="header-title">Calendar</div>
-            <button class="notification-btn" onclick="showNotifications()">
-                🔔
-                <div class="notification-badge"></div>
-            </button>
-        </div>
-
-        <div class="calendar-content">
-            <div class="month-nav">
-                <button class="nav-arrow" onclick="previousMonth()">‹</button>
-                <div class="month-display">
-                    <div class="month-year" id="monthYear">January 2025</div>
-                    <div class="month-subtitle">Tap a date to view appointments</div>
-                </div>
-                <button class="nav-arrow" onclick="nextMonth()">›</button>
-            </div>
-
-            <div class="calendar-grid">
-                <div class="weekdays">
-                    <div class="weekday">S</div>
-                    <div class="weekday">M</div>
-                    <div class="weekday">T</div>
-                    <div class="weekday">W</div>
-                    <div class="weekday">T</div>
-                    <div class="weekday">F</div>
-                    <div class="weekday">S</div>
-                </div>
-                <div class="days" id="calendarDays">
-                    <!-- Calendar days will be generated by JavaScript -->
-                </div>
-            </div>
-
-            <div class="appointments-section">
-                <div class="section-header">
-                    <div>
-                        <div class="section-title">Today's Appointments</div>
-                        <div class="date-subtitle" id="selectedDate">Friday, 18 Jul</div>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
                     </div>
-                    <button class="view-all-btn" onclick="viewAllAppointments()">View All</button>
-                </div>
 
-                <div class="appointments-list">
-                    <div class="appointment-card" onclick="viewAppointment('apt1')">
-                        <div class="appointment-time">11:00 AM - 11:30 AM</div>
-                        <div class="appointment-patient">
-                            <div class="patient-name">Luna</div>
-                            <div class="patient-type">Dog</div>
+                    <div class="calendar-screen">
+                        <div class="header">
+                            <button class="back-btn" onclick="goBack()">←</button>
+                            <div class="header-title">Calendar</div>
+                            <button class="notification-btn" onclick="showNotifications()">
+                                🔔
+                                <div class="notification-badge"></div>
+                            </button>
                         </div>
-                        <div class="appointment-details">Golden Retriever • Checkup</div>
-                        <div class="appointment-status">
-                            <div class="status-badge status-scheduled">Scheduled</div>
-                            <div class="appointment-owner">Owner: Sarah Johnson</div>
-                        </div>
-                    </div>
 
-                    <div class="appointment-card" onclick="viewAppointment('apt2')">
-                        <div class="appointment-time">11:30 AM - 12:00 PM</div>
-                        <div class="appointment-patient">
-                            <div class="patient-name">Max</div>
-                            <div class="patient-type">Cat</div>
-                        </div>
-                        <div class="appointment-details">Persian • Vaccination</div>
-                        <div class="appointment-status">
-                            <div class="status-badge status-urgent">Urgent</div>
-                            <div class="appointment-owner">Owner: Michael Brown</div>
-                        </div>
-                    </div>
+                        <div class="calendar-content">
+                            <div class="month-nav">
+                                <button class="nav-arrow" onclick="previousMonth()">‹</button>
+                                <div class="month-display">
+                                    <div class="month-year" id="monthYear">January 2025</div>
+                                    <div class="month-subtitle">Tap a date to view appointments</div>
+                                </div>
+                                <button class="nav-arrow" onclick="nextMonth()">›</button>
+                            </div>
 
-                    <div class="appointment-card" onclick="viewAppointment('apt3')">
-                        <div class="appointment-time">1:30 PM - 2:00 PM</div>
-                        <div class="appointment-patient">
-                            <div class="patient-name">Bella</div>
-                            <div class="patient-type">Dog</div>
+                            <div class="calendar-grid">
+                                <div class="weekdays">
+                                    <div class="weekday">S</div>
+                                    <div class="weekday">M</div>
+                                    <div class="weekday">T</div>
+                                    <div class="weekday">W</div>
+                                    <div class="weekday">T</div>
+                                    <div class="weekday">F</div>
+                                    <div class="weekday">S</div>
+                                </div>
+                                <div class="days" id="calendarDays">
+                                    <!-- Calendar days will be generated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <div class="appointments-section">
+                                <div class="section-header">
+                                    <div>
+                                        <div class="section-title">Today's Appointments</div>
+                                        <div class="date-subtitle" id="selectedDate">Friday, 18 Jul</div>
+                                    </div>
+                                    <button class="view-all-btn" onclick="viewAllAppointments()">View All</button>
+                                </div>
+
+                                <div class="appointments-list">
+                                    <div class="appointment-card" onclick="viewAppointment('apt1')">
+                                        <div class="appointment-time">11:00 AM - 11:30 AM</div>
+                                        <div class="appointment-patient">
+                                            <div class="patient-name">Luna</div>
+                                            <div class="patient-type">Dog</div>
+                                        </div>
+                                        <div class="appointment-details">Golden Retriever • Checkup</div>
+                                        <div class="appointment-status">
+                                            <div class="status-badge status-scheduled">Scheduled</div>
+                                            <div class="appointment-owner">Owner: Sarah Johnson</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="appointment-card" onclick="viewAppointment('apt2')">
+                                        <div class="appointment-time">11:30 AM - 12:00 PM</div>
+                                        <div class="appointment-patient">
+                                            <div class="patient-name">Max</div>
+                                            <div class="patient-type">Cat</div>
+                                        </div>
+                                        <div class="appointment-details">Persian • Vaccination</div>
+                                        <div class="appointment-status">
+                                            <div class="status-badge status-urgent">Urgent</div>
+                                            <div class="appointment-owner">Owner: Michael Brown</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="appointment-card" onclick="viewAppointment('apt3')">
+                                        <div class="appointment-time">1:30 PM - 2:00 PM</div>
+                                        <div class="appointment-patient">
+                                            <div class="patient-name">Bella</div>
+                                            <div class="patient-type">Dog</div>
+                                        </div>
+                                        <div class="appointment-details">Labrador • Surgery Follow-up</div>
+                                        <div class="appointment-status">
+                                            <div class="status-badge status-completed">Completed</div>
+                                            <div class="appointment-owner">Owner: Emily Davis</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="appointments-section">
+                                <div class="section-header">
+                                    <div class="section-title">Available Time Slots</div>
+                                </div>
+
+                                <div class="time-slots">
+                                    <div class="time-slot available" onclick="bookSlot('9:00')">
+                                        <div class="slot-time">9:00 AM</div>
+                                        <div class="slot-status slot-available">Available</div>
+                                    </div>
+                                    <div class="time-slot booked">
+                                        <div>
+                                            <div class="slot-time">11:00 AM</div>
+                                            <div class="slot-patient">Luna - Checkup</div>
+                                        </div>
+                                        <div class="slot-status slot-booked">Booked</div>
+                                    </div>
+                                    <div class="time-slot available" onclick="bookSlot('2:30')">
+                                        <div class="slot-time">2:30 PM</div>
+                                        <div class="slot-status slot-available">Available</div>
+                                    </div>
+                                    <div class="time-slot available" onclick="bookSlot('4:00')">
+                                        <div class="slot-time">4:00 PM</div>
+                                        <div class="slot-status slot-available">Available</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="appointment-details">Labrador • Surgery Follow-up</div>
-                        <div class="appointment-status">
-                            <div class="status-badge status-completed">Completed</div>
-                            <div class="appointment-owner">Owner: Emily Davis</div>
+
+                        <button class="add-btn" onclick="addAppointment()" title="Add new appointment">+</button>
+
+                        <div class="bottom-nav">
+                            <div class="nav-item" onclick="selectNav('home')">
+                                <div class="nav-icon">🏠</div>
+                                <div class="nav-label">Home</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('pets')">
+                                <div class="nav-icon">🐾</div>
+                                <div class="nav-label">Pets</div>
+                            </div>
+                            <div class="nav-item active" onclick="selectNav('calendar')">
+                                <div class="nav-icon">📅</div>
+                                <div class="nav-label">Calendar</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('documents')">
+                                <div class="nav-icon">📋</div>
+                                <div class="nav-label">Documents</div>
+                            </div>
+                            <div class="nav-item" onclick="selectNav('profile')">
+                                <div class="nav-icon">👤</div>
+                                <div class="nav-label">Profile</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="appointments-section">
-                <div class="section-header">
-                    <div class="section-title">Available Time Slots</div>
-                </div>
-
-                <div class="time-slots">
-                    <div class="time-slot available" onclick="bookSlot('9:00')">
-                        <div class="slot-time">9:00 AM</div>
-                        <div class="slot-status slot-available">Available</div>
-                    </div>
-                    <div class="time-slot booked">
-                        <div>
-                            <div class="slot-time">11:00 AM</div>
-                            <div class="slot-patient">Luna - Checkup</div>
-                        </div>
-                        <div class="slot-status slot-booked">Booked</div>
-                    </div>
-                    <div class="time-slot available" onclick="bookSlot('2:30')">
-                        <div class="slot-time">2:30 PM</div>
-                        <div class="slot-status slot-available">Available</div>
-                    </div>
-                    <div class="time-slot available" onclick="bookSlot('4:00')">
-                        <div class="slot-time">4:00 PM</div>
-                        <div class="slot-status slot-available">Available</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <button class="add-btn" onclick="addAppointment()" title="Add new appointment">+</button>
-
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="selectNav('home')">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Home</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('pets')">
-                <div class="nav-icon">🐾</div>
-                <div class="nav-label">Pets</div>
-            </div>
-            <div class="nav-item active" onclick="selectNav('calendar')">
-                <div class="nav-icon">📅</div>
-                <div class="nav-label">Calendar</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('documents')">
-                <div class="nav-icon">📋</div>
-                <div class="nav-label">Documents</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('profile')">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">Profile</div>
             </div>
         </div>
     </div>
@@ -681,21 +683,17 @@
                 'July', 'August', 'September', 'October', 'November', 'December'
             ];
             
-            // Update month display
             document.getElementById('monthYear').textContent = 
                 `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
             
-            // Clear calendar
             const daysContainer = document.getElementById('calendarDays');
             daysContainer.innerHTML = '';
             
-            // Get first day of month and number of days
             const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
             const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
             const daysInMonth = lastDay.getDate();
             const startDate = firstDay.getDay();
             
-            // Add previous month's days
             for (let i = startDate - 1; i >= 0; i--) {
                 const day = new Date(firstDay);
                 day.setDate(day.getDate() - i - 1);
@@ -703,14 +701,12 @@
                 daysContainer.appendChild(dayElement);
             }
             
-            // Add current month's days
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
                 const dayElement = createDayElement(date, false);
                 daysContainer.appendChild(dayElement);
             }
             
-            // Add next month's days to fill the grid
             const totalCells = daysContainer.children.length;
             const remainingCells = 42 - totalCells;
             for (let day = 1; day <= remainingCells; day++) {
@@ -729,13 +725,11 @@
                 dayElement.classList.add('other-month');
             }
             
-            // Check if it's today
             const today = new Date();
             if (date.toDateString() === today.toDateString()) {
                 dayElement.classList.add('today');
             }
             
-            // Check if date has appointments
             const dateKey = date.toISOString().split('T')[0];
             if (appointments[dateKey]) {
                 dayElement.classList.add('has-appointments');
@@ -753,7 +747,6 @@
             selectedDate = date;
             updateSelectedDateDisplay();
             
-            // Update appointments display for selected date
             const dateKey = date.toISOString().split('T')[0];
             if (appointments[dateKey]) {
                 showNotification(`${appointments[dateKey].length} appointments found for ${date.toLocaleDateString()}`, 'info');
@@ -780,22 +773,18 @@
 
         function viewAppointment(appointmentId) {
             showNotification(`Opening appointment details for ${appointmentId}...`, 'info');
-            // In a real app, this would open the appointment details
         }
 
         function viewAllAppointments() {
             showNotification('Opening all appointments view...', 'info');
-            // In a real app, this would show a list of all appointments
         }
 
         function bookSlot(time) {
             showNotification(`Booking appointment slot for ${time}...`, 'info');
-            // In a real app, this would open the appointment booking form
         }
 
         function addAppointment() {
             showNotification('Opening new appointment form...', 'info');
-            // In a real app, this would open the appointment creation form
         }
 
         function showNotifications() {
@@ -803,12 +792,10 @@
         }
 
         function selectNav(section) {
-            // Remove active class from all nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Add active class to clicked item
             event.currentTarget.classList.add('active');
             
             switch(section) {
@@ -819,13 +806,12 @@
                     window.location.href = 'vet-pets.html';
                     break;
                 case 'documents':
-                    showNotification('Documents section coming soon!', 'info');
+                    window.location.href = 'vet-documents.html';
                     break;
                 case 'profile':
-                    showNotification('Profile settings coming soon!', 'info');
+                    window.location.href = 'vet-profile.html';
                     break;
                 default:
-                    // Stay on calendar
                     break;
             }
         }
@@ -859,7 +845,7 @@
                 color: white;
                 padding: 12px 24px;
                 border-radius: 8px;
-                z-index: 1000;
+                z-index: 10000;
                 font-size: 14px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 max-width: 320px;

@@ -4,44 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doppy - Veterinary Pets</title>
+    <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background: #f8fafc;
-            height: 100vh;
+        .pets-screen {
+            height: calc(100% - 44px);
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
-
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
+            flex-direction: column;
             position: relative;
-        }
-
-        .status-bar {
-            height: 44px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            background: white;
-            color: #1a1a1a;
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 1px solid #f0f0f0;
+            z-index: 200;
+            background: #f8fafc;
         }
 
         .header {
@@ -51,9 +22,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 300;
         }
 
-        .back-btn {
+        .back-btn, .search-btn {
             width: 32px;
             height: 32px;
             border-radius: 8px;
@@ -64,9 +37,12 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .search-btn:hover {
             background: #e5e7eb;
         }
 
@@ -76,27 +52,13 @@
             color: #1a1a1a;
         }
 
-        .search-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: none;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .search-btn:hover {
-            background: #e5e7eb;
-        }
-
         .search-section {
             padding: 15px 20px;
             background: white;
             border-bottom: 1px solid #e5e7eb;
+            display: none;
+            position: relative;
+            z-index: 300;
         }
 
         .search-container {
@@ -111,6 +73,9 @@
             font-size: 16px;
             background: #f9fafb;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .search-input:focus {
@@ -127,6 +92,7 @@
             transform: translateY(-50%);
             color: #6b7280;
             font-size: 16px;
+            z-index: 500;
         }
 
         .clear-btn {
@@ -140,18 +106,24 @@
             cursor: pointer;
             font-size: 18px;
             display: none;
+            z-index: 500;
+            pointer-events: auto;
         }
 
         .pets-content {
             flex: 1;
             overflow-y: auto;
-            padding-bottom: 70px;
+            padding-bottom: 90px;
+            position: relative;
+            z-index: 200;
         }
 
         .filters-section {
             padding: 15px 20px;
             background: white;
             border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 300;
         }
 
         .filters {
@@ -172,6 +144,9 @@
             color: #6b7280;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .filter-chip.active {
@@ -220,6 +195,9 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .pets-grid {
@@ -236,6 +214,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            z-index: 300;
+            pointer-events: auto;
         }
 
         .pet-card:hover {
@@ -377,6 +357,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 14px;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .btn-call {
@@ -398,27 +381,31 @@
             transform: scale(1.1);
         }
 
-        .no-results {
-            text-align: center;
-            padding: 40px 20px;
-            color: #6b7280;
+        .add-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #1976D2;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
+            transition: all 0.2s ease;
+            color: white;
+            font-size: 24px;
+            font-weight: 300;
+            z-index: 400;
+            pointer-events: auto;
         }
 
-        .no-results-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .no-results-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .no-results-subtitle {
-            font-size: 14px;
-            color: #6b7280;
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
         }
 
         .bottom-nav {
@@ -433,6 +420,7 @@
             align-items: center;
             justify-content: space-around;
             padding: 0 20px;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -444,6 +432,9 @@
             transition: all 0.2s ease;
             flex: 1;
             text-align: center;
+            position: relative;
+            z-index: 400;
+            pointer-events: auto;
         }
 
         .nav-item.active {
@@ -464,275 +455,184 @@
             font-weight: 500;
             color: inherit;
         }
-
-        .add-btn {
-            position: absolute;
-            bottom: 90px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            background: #1976D2;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
-            transition: all 0.2s ease;
-            color: white;
-            font-size: 24px;
-            font-weight: 300;
-        }
-
-        .add-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
-        }
-
-        @media (max-width: 480px) {
-            .phone-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="phone-container">
-        <div class="status-bar">
-            <span class="status-left">9:41</span>
-            <span class="status-right">🔋 100%</span>
-        </div>
-
-        <div class="header">
-            <button class="back-btn" onclick="goBack()">←</button>
-            <div class="header-title">Patients</div>
-            <button class="search-btn" onclick="toggleSearch()">🔍</button>
-        </div>
-
-        <div class="search-section" id="searchSection" style="display: none;">
-            <div class="search-container">
-                <div class="search-icon">🔍</div>
-                <input type="text" class="search-input" placeholder="Search pets, owners, or conditions..." id="searchInput">
-                <button class="clear-btn" onclick="clearSearch()" id="clearBtn">×</button>
-            </div>
-        </div>
-
-        <div class="filters-section">
-            <div class="filters">
-                <div class="filter-chip active" onclick="filterPets('all')">All</div>
-                <div class="filter-chip" onclick="filterPets('dogs')">Dogs</div>
-                <div class="filter-chip" onclick="filterPets('cats')">Cats</div>
-                <div class="filter-chip" onclick="filterPets('urgent')">Urgent</div>
-                <div class="filter-chip" onclick="filterPets('today')">Today</div>
-            </div>
-        </div>
-
-        <div class="pets-content">
-            <div class="pets-list">
-                <div class="section-header">
-                    <div class="section-title">
-                        🐾 Active Patients
-                        <span class="pet-count">(8)</span>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
                     </div>
-                    <button class="sort-btn" onclick="sortPets()">
-                        Sort ↕️
-                    </button>
-                </div>
 
-                <div class="pets-grid" id="petsGrid">
-                    <div class="pet-card" onclick="viewPetDetails('bruno')" data-type="dog" data-status="healthy">
-                        <div class="pet-header">
-                            <div style="display: flex; align-items: center;">
-                                <div class="pet-avatar">🐕</div>
-                                <div class="pet-info">
-                                    <div class="pet-name">Bruno</div>
-                                    <div class="pet-breed">Golden Retriever</div>
+                    <div class="pets-screen">
+                        <div class="header">
+                            <button class="back-btn" onclick="goBack()">←</button>
+                            <div class="header-title">Patients</div>
+                            <button class="search-btn" onclick="toggleSearch()">🔍</button>
+                        </div>
+
+                        <div class="search-section" id="searchSection">
+                            <div class="search-container">
+                                <div class="search-icon">🔍</div>
+                                <input type="text" class="search-input" placeholder="Search pets, owners, or conditions..." id="searchInput">
+                                <button class="clear-btn" onclick="clearSearch()" id="clearBtn">×</button>
+                            </div>
+                        </div>
+
+                        <div class="filters-section">
+                            <div class="filters">
+                                <div class="filter-chip active" onclick="filterPets('all')">All</div>
+                                <div class="filter-chip" onclick="filterPets('dogs')">Dogs</div>
+                                <div class="filter-chip" onclick="filterPets('cats')">Cats</div>
+                                <div class="filter-chip" onclick="filterPets('urgent')">Urgent</div>
+                                <div class="filter-chip" onclick="filterPets('today')">Today</div>
+                            </div>
+                        </div>
+
+                        <div class="pets-content">
+                            <div class="pets-list">
+                                <div class="section-header">
+                                    <div class="section-title">
+                                        🐾 Active Patients
+                                        <span class="pet-count">(8)</span>
+                                    </div>
+                                    <button class="sort-btn" onclick="sortPets()">
+                                        Sort ↕️
+                                    </button>
+                                </div>
+
+                                <div class="pets-grid" id="petsGrid">
+                                    <div class="pet-card" onclick="viewPetDetails('bruno')" data-type="dog" data-status="healthy">
+                                        <div class="pet-header">
+                                            <div style="display: flex; align-items: center;">
+                                                <div class="pet-avatar">🐕</div>
+                                                <div class="pet-info">
+                                                    <div class="pet-name">Bruno</div>
+                                                    <div class="pet-breed">Golden Retriever</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="pet-status">
+                                            <div class="status-badge status-healthy">Healthy</div>
+                                        </div>
+
+                                        <div class="pet-owner">Owner: Antonio Ramirez</div>
+                                        
+                                        <div class="pet-details">
+                                            <div class="detail-chip chip-age">3 years</div>
+                                            <div class="detail-chip chip-gender">Male</div>
+                                            <div class="detail-chip chip-weight">28kg</div>
+                                        </div>
+
+                                        <div class="pet-actions">
+                                            <div class="last-visit">Last visit: 3 days ago</div>
+                                            <div class="quick-actions">
+                                                <button class="action-btn btn-call" onclick="callOwner('bruno')" title="Call owner">📞</button>
+                                                <button class="action-btn btn-message" onclick="messageOwner('bruno')" title="Send message">💬</button>
+                                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('bruno')" title="Schedule">📅</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pet-card" onclick="viewPetDetails('luna')" data-type="dog" data-status="treatment">
+                                        <div class="pet-header">
+                                            <div style="display: flex; align-items: center;">
+                                                <div class="pet-avatar">🐕</div>
+                                                <div class="pet-info">
+                                                    <div class="pet-name">Luna</div>
+                                                    <div class="pet-breed">Labrador</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="pet-status">
+                                            <div class="status-badge status-treatment">Treatment</div>
+                                        </div>
+
+                                        <div class="pet-owner">Owner: Sarah Johnson</div>
+                                        
+                                        <div class="pet-details">
+                                            <div class="detail-chip chip-age">5 years</div>
+                                            <div class="detail-chip chip-gender">Female</div>
+                                            <div class="detail-chip chip-weight">22kg</div>
+                                        </div>
+
+                                        <div class="pet-actions">
+                                            <div class="last-visit">Next: Today 11:00 AM</div>
+                                            <div class="quick-actions">
+                                                <button class="action-btn btn-call" onclick="callOwner('luna')" title="Call owner">📞</button>
+                                                <button class="action-btn btn-message" onclick="messageOwner('luna')" title="Send message">💬</button>
+                                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('luna')" title="Schedule">📅</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pet-card" onclick="viewPetDetails('max')" data-type="cat" data-status="urgent">
+                                        <div class="pet-header">
+                                            <div style="display: flex; align-items: center;">
+                                                <div class="pet-avatar">🐱</div>
+                                                <div class="pet-info">
+                                                    <div class="pet-name">Max</div>
+                                                    <div class="pet-breed">Persian Cat</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="pet-status">
+                                            <div class="status-badge status-urgent">Urgent</div>
+                                        </div>
+
+                                        <div class="pet-owner">Owner: Michael Brown</div>
+                                        
+                                        <div class="pet-details">
+                                            <div class="detail-chip chip-age">2 years</div>
+                                            <div class="detail-chip chip-gender">Male</div>
+                                            <div class="detail-chip chip-weight">4.5kg</div>
+                                        </div>
+
+                                        <div class="pet-actions">
+                                            <div class="last-visit">Next: Today 11:30 AM</div>
+                                            <div class="quick-actions">
+                                                <button class="action-btn btn-call" onclick="callOwner('max')" title="Call owner">📞</button>
+                                                <button class="action-btn btn-message" onclick="messageOwner('max')" title="Send message">💬</button>
+                                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('max')" title="Schedule">📅</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="pet-status">
-                            <div class="status-badge status-healthy">Healthy</div>
-                        </div>
 
-                        <div class="pet-owner">Owner: Antonio Ramirez</div>
-                        
-                        <div class="pet-details">
-                            <div class="detail-chip chip-age">3 years</div>
-                            <div class="detail-chip chip-gender">Male</div>
-                            <div class="detail-chip chip-weight">28kg</div>
-                        </div>
+                        <button class="add-btn" onclick="addNewPet()" title="Add new patient">+</button>
 
-                        <div class="pet-actions">
-                            <div class="last-visit">Last visit: 3 days ago</div>
-                            <div class="quick-actions">
-                                <button class="action-btn btn-call" onclick="callOwner('bruno')" title="Call owner">📞</button>
-                                <button class="action-btn btn-message" onclick="messageOwner('bruno')" title="Send message">💬</button>
-                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('bruno')" title="Schedule">📅</button>
+                        <div class="bottom-nav">
+                            <div class="nav-item" onclick="selectNav('home')">
+                                <div class="nav-icon">🏠</div>
+                                <div class="nav-label">Home</div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="pet-card" onclick="viewPetDetails('luna')" data-type="dog" data-status="treatment">
-                        <div class="pet-header">
-                            <div style="display: flex; align-items: center;">
-                                <div class="pet-avatar">🐕</div>
-                                <div class="pet-info">
-                                    <div class="pet-name">Luna</div>
-                                    <div class="pet-breed">Labrador</div>
-                                </div>
+                            <div class="nav-item active" onclick="selectNav('pets')">
+                                <div class="nav-icon">🐾</div>
+                                <div class="nav-label">Pets</div>
                             </div>
-                        </div>
-                        
-                        <div class="pet-status">
-                            <div class="status-badge status-treatment">Treatment</div>
-                        </div>
-
-                        <div class="pet-owner">Owner: Sarah Johnson</div>
-                        
-                        <div class="pet-details">
-                            <div class="detail-chip chip-age">5 years</div>
-                            <div class="detail-chip chip-gender">Female</div>
-                            <div class="detail-chip chip-weight">22kg</div>
-                        </div>
-
-                        <div class="pet-actions">
-                            <div class="last-visit">Next: Today 11:00 AM</div>
-                            <div class="quick-actions">
-                                <button class="action-btn btn-call" onclick="callOwner('luna')" title="Call owner">📞</button>
-                                <button class="action-btn btn-message" onclick="messageOwner('luna')" title="Send message">💬</button>
-                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('luna')" title="Schedule">📅</button>
+                            <div class="nav-item" onclick="selectNav('calendar')">
+                                <div class="nav-icon">📅</div>
+                                <div class="nav-label">Calendar</div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="pet-card" onclick="viewPetDetails('max')" data-type="cat" data-status="urgent">
-                        <div class="pet-header">
-                            <div style="display: flex; align-items: center;">
-                                <div class="pet-avatar">🐱</div>
-                                <div class="pet-info">
-                                    <div class="pet-name">Max</div>
-                                    <div class="pet-breed">Persian Cat</div>
-                                </div>
+                            <div class="nav-item" onclick="selectNav('documents')">
+                                <div class="nav-icon">📋</div>
+                                <div class="nav-label">Documents</div>
                             </div>
-                        </div>
-                        
-                        <div class="pet-status">
-                            <div class="status-badge status-urgent">Urgent</div>
-                        </div>
-
-                        <div class="pet-owner">Owner: Michael Brown</div>
-                        
-                        <div class="pet-details">
-                            <div class="detail-chip chip-age">2 years</div>
-                            <div class="detail-chip chip-gender">Male</div>
-                            <div class="detail-chip chip-weight">4.5kg</div>
-                        </div>
-
-                        <div class="pet-actions">
-                            <div class="last-visit">Next: Today 11:30 AM</div>
-                            <div class="quick-actions">
-                                <button class="action-btn btn-call" onclick="callOwner('max')" title="Call owner">📞</button>
-                                <button class="action-btn btn-message" onclick="messageOwner('max')" title="Send message">💬</button>
-                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('max')" title="Schedule">📅</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pet-card" onclick="viewPetDetails('bella')" data-type="dog" data-status="healthy">
-                        <div class="pet-header">
-                            <div style="display: flex; align-items: center;">
-                                <div class="pet-avatar">🐕</div>
-                                <div class="pet-info">
-                                    <div class="pet-name">Bella</div>
-                                    <div class="pet-breed">German Shepherd</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="pet-status">
-                            <div class="status-badge status-healthy">Healthy</div>
-                        </div>
-
-                        <div class="pet-owner">Owner: Emily Davis</div>
-                        
-                        <div class="pet-details">
-                            <div class="detail-chip chip-age">4 years</div>
-                            <div class="detail-chip chip-gender">Female</div>
-                            <div class="detail-chip chip-weight">32kg</div>
-                        </div>
-
-                        <div class="pet-actions">
-                            <div class="last-visit">Last visit: 1 week ago</div>
-                            <div class="quick-actions">
-                                <button class="action-btn btn-call" onclick="callOwner('bella')" title="Call owner">📞</button>
-                                <button class="action-btn btn-message" onclick="messageOwner('bella')" title="Send message">💬</button>
-                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('bella')" title="Schedule">📅</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pet-card" onclick="viewPetDetails('whiskers')" data-type="cat" data-status="healthy">
-                        <div class="pet-header">
-                            <div style="display: flex; align-items: center;">
-                                <div class="pet-avatar">🐱</div>
-                                <div class="pet-info">
-                                    <div class="pet-name">Whiskers</div>
-                                    <div class="pet-breed">Siamese Cat</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="pet-status">
-                            <div class="status-badge status-healthy">Healthy</div>
-                        </div>
-
-                        <div class="pet-owner">Owner: James Wilson</div>
-                        
-                        <div class="pet-details">
-                            <div class="detail-chip chip-age">6 years</div>
-                            <div class="detail-chip chip-gender">Male</div>
-                            <div class="detail-chip chip-weight">5.2kg</div>
-                        </div>
-
-                        <div class="pet-actions">
-                            <div class="last-visit">Last visit: 2 weeks ago</div>
-                            <div class="quick-actions">
-                                <button class="action-btn btn-call" onclick="callOwner('whiskers')" title="Call owner">📞</button>
-                                <button class="action-btn btn-message" onclick="messageOwner('whiskers')" title="Send message">💬</button>
-                                <button class="action-btn btn-schedule" onclick="scheduleAppointment('whiskers')" title="Schedule">📅</button>
+                            <div class="nav-item" onclick="selectNav('profile')">
+                                <div class="nav-icon">👤</div>
+                                <div class="nav-label">Profile</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <button class="add-btn" onclick="addNewPet()" title="Add new patient">+</button>
-
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="selectNav('home')">
-                <div class="nav-icon">🏠</div>
-                <div class="nav-label">Home</div>
-            </div>
-            <div class="nav-item active" onclick="selectNav('pets')">
-                <div class="nav-icon">🐾</div>
-                <div class="nav-label">Pets</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('calendar')">
-                <div class="nav-icon">📅</div>
-                <div class="nav-label">Calendar</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('documents')">
-                <div class="nav-icon">📋</div>
-                <div class="nav-label">Documents</div>
-            </div>
-            <div class="nav-item" onclick="selectNav('profile')">
-                <div class="nav-icon">👤</div>
-                <div class="nav-label">Profile</div>
             </div>
         </div>
     </div>
@@ -811,7 +711,6 @@
         }
 
         function filterPets(filter) {
-            // Update active filter
             document.querySelectorAll('.filter-chip').forEach(chip => {
                 chip.classList.remove('active');
             });
@@ -861,7 +760,6 @@
 
         function sortPets() {
             showNotification('Sorting options: Name, Date, Status, Type', 'info');
-            // In a real app, this would show sorting options
         }
 
         function viewPetDetails(petId) {
@@ -871,33 +769,26 @@
         function callOwner(petId) {
             event.stopPropagation();
             showNotification(`Calling ${petId}'s owner...`, 'info');
-            // In a real app, this would initiate a call
         }
 
         function messageOwner(petId) {
             event.stopPropagation();
             showNotification(`Opening message to ${petId}'s owner...`, 'info');
-            // In a real app, this would open messaging
         }
 
         function scheduleAppointment(petId) {
             event.stopPropagation();
             showNotification(`Scheduling appointment for ${petId}...`, 'info');
-            // In a real app, this would open scheduling form
         }
 
         function addNewPet() {
             showNotification('Opening new patient registration form...', 'info');
-            // In a real app, this would open the new patient form
         }
 
         function selectNav(section) {
-            // Remove active class from all nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
-            // Add active class to clicked item
             event.currentTarget.classList.add('active');
             
             switch(section) {
@@ -908,13 +799,12 @@
                     window.location.href = 'vet-calendar.html';
                     break;
                 case 'documents':
-                    showNotification('Documents section coming soon!', 'info');
+                    window.location.href = 'vet-documents.html';
                     break;
                 case 'profile':
-                    showNotification('Profile settings coming soon!', 'info');
+                    window.location.href = 'vet-profile.html';
                     break;
                 default:
-                    // Stay on pets page
                     break;
             }
         }
@@ -948,7 +838,7 @@
                 color: white;
                 padding: 12px 24px;
                 border-radius: 8px;
-                z-index: 1000;
+                z-index: 10000;
                 font-size: 14px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 max-width: 320px;

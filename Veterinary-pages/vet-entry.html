@@ -6,16 +6,6 @@
     <title>Doppy - Veterinary Entry</title>
     <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
-
         .vet-entry-screen {
             height: calc(100% - 44px);
             display: flex;
@@ -23,7 +13,7 @@
             align-items: center;
             justify-content: space-between;
             position: relative;
-            z-index: 10;
+            z-index: 200;
             padding: 60px 40px 80px 40px;
         }
 
@@ -32,7 +22,7 @@
             text-align: center;
             animation: fadeInDown 0.8s ease-out;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
         .doppy-logo {
@@ -49,8 +39,9 @@
             filter: drop-shadow(0 8px 20px rgba(255, 193, 7, 0.3));
             transition: all 0.3s ease;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             cursor: pointer;
+            pointer-events: auto;
         }
 
         .logo-image:hover {
@@ -69,7 +60,7 @@
             max-width: 320px;
             animation: zoomIn 1.2s ease-out 0.3s both;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
         .clinic-info {
@@ -130,7 +121,7 @@
             transition: all 0.3s ease;
             font-family: inherit;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
             text-transform: uppercase;
         }
@@ -153,7 +144,7 @@
             max-width: 280px;
             animation: slideInUp 1s ease-out 0.6s both;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
         .btn-done {
@@ -173,7 +164,7 @@
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
             position: relative;
-            z-index: 300;
+            z-index: 400;
             pointer-events: auto;
         }
 
@@ -191,7 +182,7 @@
             pointer-events: none;
         }
 
-        /* Animations */
+        /* Animaciones */
         @keyframes slideInDown {
             from {
                 opacity: 0;
@@ -245,14 +236,6 @@
             }
         }
 
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Error states */
         .code-input.error {
             border: 2px solid #ff4444;
             background: rgba(255, 68, 68, 0.1);
@@ -265,21 +248,27 @@
             75% { transform: translateX(5px); }
         }
 
-        /* Success state */
         .code-input.success {
             border: 2px solid #4CAF50;
             background: rgba(76, 175, 80, 0.1);
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .vet-entry-screen {
-                padding: 40px 30px 60px 30px;
-            }
-            
-            .content-section {
-                max-width: 100%;
-            }
+        .btn-done::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-done:active::before {
+            width: 300px;
+            height: 300px;
         }
     </style>
 </head>
@@ -347,13 +336,11 @@
         function initVetEntry() {
             console.log('Veterinary Entry screen loaded');
             
-            // Focus on code input
             const codeInput = document.getElementById('codeInput');
             setTimeout(() => {
                 codeInput.focus();
             }, 1000);
             
-            // Save entry step
             const vetEntryData = {
                 step: 'vet-entry',
                 timestamp: new Date().toISOString(),
@@ -365,7 +352,6 @@
         function setupCodeInput() {
             const codeInput = document.getElementById('codeInput');
             
-            // Auto-format and validate input
             codeInput.addEventListener('input', function(e) {
                 let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
                 if (value.length > 4) {
@@ -373,10 +359,8 @@
                 }
                 e.target.value = value;
                 
-                // Remove error state when typing
                 e.target.classList.remove('error');
                 
-                // Auto-submit when 4 characters entered
                 if (value.length === 4) {
                     setTimeout(() => {
                         handleCodeEntry();
@@ -384,14 +368,12 @@
                 }
             });
 
-            // Handle Enter key
             codeInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     handleCodeEntry();
                 }
             });
 
-            // Prevent spaces and special characters
             codeInput.addEventListener('keydown', function(e) {
                 if (e.key === ' ') {
                     e.preventDefault();
@@ -404,29 +386,23 @@
             const doneBtn = document.getElementById('doneBtn');
             const enteredCode = codeInput.value.trim().toUpperCase();
 
-            // Reset states
             codeInput.classList.remove('error', 'success');
 
-            // Validate code length
             if (enteredCode.length < 4) {
                 showError('Please enter a 4-character code');
                 codeInput.classList.add('error');
                 return;
             }
 
-            // Add loading state
             doneBtn.classList.add('loading');
             doneBtn.textContent = 'Verifying...';
 
-            // Simulate code verification
             setTimeout(() => {
                 if (isValidCode(enteredCode)) {
-                    // Success
                     codeInput.classList.add('success');
                     doneBtn.textContent = '✓ Code Verified!';
                     doneBtn.style.background = '#4CAF50';
                     
-                    // Save successful entry
                     const vetSession = {
                         code: enteredCode,
                         clinicName: 'Happy Pets Veterinary Clinic',
@@ -437,23 +413,19 @@
                     
                     showNotification('✅ Welcome to Doppy Veterinary!', 'success');
                     
-                    // Add ripple effect
                     addRippleEffect(doneBtn);
                     
-                    // Navigate to dashboard
                     setTimeout(() => {
                         window.location.href = 'vet-dashboard.html';
                     }, 1500);
                     
                 } else {
-                    // Error
                     codeInput.classList.add('error');
                     doneBtn.textContent = 'Invalid Code';
                     doneBtn.style.background = '#ff4444';
                     
                     showError('Invalid code. Please try again.');
                     
-                    // Reset after delay
                     setTimeout(() => {
                         doneBtn.textContent = 'Done';
                         doneBtn.style.background = '#fbe157';
@@ -466,8 +438,6 @@
         }
 
         function isValidCode(code) {
-            // Simulate code validation
-            // In a real app, this would check against a server
             const validCodes = ['HPVC', 'VET1', 'TEST', 'DEMO', '1234'];
             return validCodes.includes(code);
         }
