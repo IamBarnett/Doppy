@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Dashboard</title>
+    <link rel="stylesheet" href="../phone-frame.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        .dashboard-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            overflow-y: auto;
+            padding-bottom: 90px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .dashboard-screen::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* Header con saludo y mascota */
+        .welcome-header {
+            padding: 30px 20px 20px 20px;
+            position: relative;
+            z-index: 200;
+        }
+
+        .greeting-section {
+            margin-bottom: 20px;
+        }
+
+        .greeting-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .user-name {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .pet-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .pet-card:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .pet-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .pet-info {
+            flex: 1;
+        }
+
+        .pet-name {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .pet-breed {
+            color: white;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .notification-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .notification-icon:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+
+        /* Content area */
+        .main-content {
+            background: white;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            flex: 1;
+            padding: 25px 20px 20px 20px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 200;
+        }
+
+        /* Quick stats */
+        .stats-section {
+            margin-bottom: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1976D2;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .action-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .action-card:hover {
+            border-color: #1976D2;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin: 0 auto 8px auto;
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .action-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Today's schedule */
+        .schedule-section {
+            margin-bottom: 20px;
+        }
+
+        .schedule-item {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .schedule-item:hover {
+            background: #e0f2fe;
+        }
+
+        .schedule-info {
+            flex: 1;
+        }
+
+        .schedule-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1976D2;
+            margin-bottom: 2px;
+        }
+
+        .schedule-time {
+            font-size: 12px;
+            color: #0369a1;
+        }
+
+        .schedule-status {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            height: 70px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        /* Special styling for the center add button */
+        .nav-item.add-button {
+            background: #FFC107;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            margin-top: -15px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .nav-item.add-button .nav-icon {
+            color: #1976D2;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .nav-item.add-button .nav-label {
+            display: none;
+        }
+
+        .nav-item.add-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+        }
+
+        /* Responsive ajustes */
+        @media (max-width: 480px) {
+            .bottom-nav {
+                width: 100vw;
+                left: 0;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
+
+                    <div class="dashboard-screen">
+                        <!-- Welcome Header -->
+                        <div class="welcome-header">
+                            <div class="greeting-section">
+                                <div class="greeting-text" id="greetingText">Good morning!</div>
+                                <div class="user-name" id="userName">Max</div>
+                            </div>
+                            
+                            <div class="pet-card" onclick="openPetProfile()">
+                                <div class="pet-avatar" id="petAvatar">🐕</div>
+                                <div class="pet-info">
+                                    <div class="pet-name" id="petName">Bruno</div>
+                                    <div class="pet-breed" id="petBreed">Golden Retriever</div>
+                                </div>
+                                <div class="notification-icon" onclick="event.stopPropagation(); openNotifications()">
+                                    🔔
+                                    <div class="notification-badge"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="main-content">
+                            <!-- Quick Stats -->
+                            <div class="stats-section">
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-number">98%</div>
+                                        <div class="stat-label">Health</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">3</div>
+                                        <div class="stat-label">Tasks</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">Next</div>
+                                        <div class="stat-label">Feeding</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="quick-actions">
+                                <div class="section-title">Quick Actions</div>
+                                <div class="actions-grid">
+                                    <div class="action-card" onclick="bookAppointment()">
+                                        <div class="action-icon">🏥</div>
+                                        <div class="action-title">Vet Visit</div>
+                                        <div class="action-subtitle">Book appointment</div>
+                                    </div>
+                                    <div class="action-card" onclick="setReminder()">
+                                        <div class="action-icon">⏰</div>
+                                        <div class="action-title">Set Reminder</div>
+                                        <div class="action-subtitle">Medicine, food</div>
+                                    </div>
+                                    <div class="action-card" onclick="healthCheck()">
+                                        <div class="action-icon">📊</div>
+                                        <div class="action-title">Health Status</div>
+                                        <div class="action-subtitle">View reports</div>
+                                    </div>
+                                    <div class="action-card" onclick="emergencyCall()">
+                                        <div class="action-icon">🚨</div>
+                                        <div class="action-title">Emergency</div>
+                                        <div class="action-subtitle">24/7 support</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Today's Schedule -->
+                            <div class="schedule-section">
+                                <div class="section-title">Today's Schedule</div>
+                                
+                                <div class="schedule-item" onclick="viewScheduleItem('feeding')">
+                                    <div class="schedule-info">
+                                        <div class="schedule-title">Morning Feeding</div>
+                                        <div class="schedule-time">8:00 AM</div>
+                                    </div>
+                                    <div class="schedule-status">Completed</div>
+                                </div>
+
+                                <div class="schedule-item" onclick="viewScheduleItem('walk')">
+                                    <div class="schedule-info">
+                                        <div class="schedule-title">Daily Walk</div>
+                                        <div class="schedule-time">2:00 PM</div>
+                                    </div>
+                                    <div class="schedule-status">Upcoming</div>
+                                </div>
+
+                                <div class="schedule-item" onclick="viewScheduleItem('medicine')">
+                                    <div class="schedule-info">
+                                        <div class="schedule-title">Heart Medicine</div>
+                                        <div class="schedule-time">6:00 PM</div>
+                                    </div>
+                                    <div class="schedule-status">Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item active" onclick="selectNav('home')">
+                            <div class="nav-icon">🏠</div>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('calendar')">
+                            <div class="nav-icon">📅</div>
+                            <div class="nav-label">Calendar</div>
+                        </div>
+                        <div class="nav-item add-button" onclick="quickAdd()">
+                            <div class="nav-icon">+</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('profile')">
+                            <div class="nav-icon">🐾</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('more')">
+                            <div class="nav-icon">⋯</div>
+                            <div class="nav-label">More</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initDashboard();
+            updateGreeting();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initDashboard() {
+            console.log('Doppy Dashboard loaded');
+            
+            // Load user and pet data from previous registration
+            const completeRegistration = getUserData('completeRegistration');
+            const userData = getUserData('userData');
+            const petData = getUserData('selectedPet');
+
+            // Display user name
+            if (completeRegistration && completeRegistration.user && completeRegistration.user.fullName) {
+                const firstName = completeRegistration.user.fullName.split(' ')[0];
+                document.getElementById('userName').textContent = firstName;
+            } else if (userData && userData.fullName) {
+                const firstName = userData.fullName.split(' ')[0];
+                document.getElementById('userName').textContent = firstName;
+            }
+
+            // Display pet information
+            if (completeRegistration && completeRegistration.pet) {
+                const pet = completeRegistration.pet;
+                document.getElementById('petName').textContent = pet.name || 'Bruno';
+                document.getElementById('petBreed').textContent = `${pet.race || 'Golden Retriever'}`;
+                
+                // Set pet avatar based on type
+                const petType = pet.type ? pet.type.toLowerCase() : 'dog';
+                const avatars = {
+                    'dog': '🐕',
+                    'cat': '🐱',
+                    'bird': '🐦',
+                    'rabbit': '🐰',
+                    'turtle': '🐢',
+                    'lizard': '🦎'
+                };
+                document.getElementById('petAvatar').textContent = avatars[petType] || '🐕';
+            }
+
+            updateGreeting();
+        }
+
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting = 'Good morning!';
+            
+            if (hour >= 12 && hour < 18) {
+                greeting = 'Good afternoon!';
+            } else if (hour >= 18 || hour < 6) {
+                greeting = 'Good evening!';
+            }
+            
+            document.getElementById('greetingText').textContent = greeting;
+        }
+
+        // Navigation functions
+        function selectNav(section) {
+            // Remove active class from all nav items except add button
+            document.querySelectorAll('.nav-item:not(.add-button)').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            if (!event.currentTarget.classList.contains('add-button')) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            switch(section) {
+                case 'home':
+                    // Already on home
+                    showNotification('You are on Home', 'info');
+                    break;
+                case 'calendar':
+                    window.location.href = 'calendar.html';
+                    break;
+                case 'profile':
+                    window.location.href = 'pet-profile.html';
+                    break;
+                case 'more':
+                    window.location.href = 'more.html';
+                    break;
+            }
+        }
+
+        function quickAdd() {
+            showNotification('Quick add: Feeding, Medicine, Walk, or Note?', 'info');
+            // In a real app, this would show a popup with quick add options
+        }
+
+        // Action functions
+        function openPetProfile() {
+            window.location.href = 'pet-profile.html';
+        }
+
+        function openNotifications() {
+            window.location.href = 'notifications.html';
+        }
+
+        function bookAppointment() {
+            showNotification('Opening appointment booking...', 'info');
+        }
+
+        function setReminder() {
+            showNotification('Setting up reminder...', 'info');
+        }
+
+        function healthCheck() {
+            showNotification('Loading health reports...', 'info');
+        }
+
+        function emergencyCall() {
+            showNotification('Connecting to emergency vet services...', 'info');
+        }
+
+        function viewScheduleItem(type) {
+            showNotification(`Opening ${type} details...`, 'info');
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#4CAF50' : '#2196F3'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: fadeInDown 0.3s ease-out;
+                max-width: 300px;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function getUserData(key) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+                return null;
+            }
+        }
+
+        console.log('Doppy Main Dashboard loaded successfully');
+    </script>
+</body>
+</html>

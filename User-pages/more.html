@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - More</title>
+    <link rel="stylesheet" href="../phone-frame.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        .more-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            overflow-y: auto;
+            padding-bottom: 90px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .more-screen::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* Header */
+        .more-header {
+            padding: 20px 20px 15px 20px;
+            position: relative;
+            z-index: 200;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .page-title {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .nav-btn {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 400;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            pointer-events: auto;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .user-info:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .user-email {
+            color: white;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .settings-icon {
+            color: white;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        /* Content */
+        .more-content {
+            background: white;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            z-index: 200;
+        }
+
+        .menu-section {
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            font-size: 16px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+
+        .menu-list {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: #f9fafb;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .icon-blue { background: #dbeafe; }
+        .icon-green { background: #dcfce7; }
+        .icon-yellow { background: #fef3c7; }
+        .icon-purple { background: #e9d5ff; }
+        .icon-red { background: #fee2e2; }
+        .icon-gray { background: #f3f4f6; }
+
+        .menu-details {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .menu-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .menu-arrow {
+            color: #9ca3af;
+            font-size: 16px;
+        }
+
+        .menu-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .menu-badge.update {
+            background: #10b981;
+        }
+
+        .menu-badge.new {
+            background: #f59e0b;
+        }
+
+        /* App info */
+        .app-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .app-logo {
+            width: 50px;
+            height: 50px;
+            background: #1976D2;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 12px auto;
+        }
+
+        .app-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .app-version {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            height: 70px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        /* Special styling for the center add button */
+        .nav-item.add-button {
+            background: #FFC107;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            margin-top: -15px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .nav-item.add-button .nav-icon {
+            color: #1976D2;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .nav-item.add-button .nav-label {
+            display: none;
+        }
+
+        .nav-item.add-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+        }
+
+        /* Responsive ajustes */
+        @media (max-width: 480px) {
+            .bottom-nav {
+                width: 100vw;
+                left: 0;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
+
+                    <div class="more-screen">
+                        <!-- Header -->
+                        <div class="more-header">
+                            <div class="header-top">
+                                <button class="nav-btn" onclick="goBack()">←</button>
+                                <div class="page-title">More</div>
+                                <button class="nav-btn" onclick="openSettings()">⚙️</button>
+                            </div>
+
+                            <div class="user-info" onclick="editProfile()">
+                                <div class="user-avatar">👤</div>
+                                <div class="user-details">
+                                    <div class="user-name" id="userName">Antonio Ramirez</div>
+                                    <div class="user-email" id="userEmail">antonio@email.com</div>
+                                </div>
+                                <div class="settings-icon">›</div>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="more-content">
+                            <!-- Pet Management Section -->
+                            <div class="menu-section">
+                                <div class="section-header">Pet Management</div>
+                                <div class="menu-list">
+                                    <div class="menu-item" onclick="manageReminders()">
+                                        <div class="menu-icon icon-yellow">⏰</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Reminders & Alerts</div>
+                                            <div class="menu-subtitle">Set feeding, medicine, and care reminders</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="healthRecords()">
+                                        <div class="menu-icon icon-red">❤️</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Health Records</div>
+                                            <div class="menu-subtitle">Medical history and vaccinations</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="vetContacts()">
+                                        <div class="menu-icon icon-blue">🏥</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Veterinary Contacts</div>
+                                            <div class="menu-subtitle">Manage vet clinics and contacts</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="emergencyInfo()">
+                                        <div class="menu-icon icon-red">🚨</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Emergency Information</div>
+                                            <div class="menu-subtitle">24/7 emergency contacts and tips</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- App Features Section -->
+                            <div class="menu-section">
+                                <div class="section-header">App Features</div>
+                                <div class="menu-list">
+                                    <div class="menu-item" onclick="notifications()">
+                                        <div class="menu-icon icon-blue">🔔</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Notifications</div>
+                                            <div class="menu-subtitle">Manage push notifications settings</div>
+                                        </div>
+                                        <div class="menu-badge">3</div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="dataSync()">
+                                        <div class="menu-icon icon-green">☁️</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Cloud Sync</div>
+                                            <div class="menu-subtitle">Backup and sync your data</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="shareApp()">
+                                        <div class="menu-icon icon-purple">📤</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Share Doppy</div>
+                                            <div class="menu-subtitle">Invite friends and family</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="exportData()">
+                                        <div class="menu-icon icon-gray">📋</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Export Data</div>
+                                            <div class="menu-subtitle">Download your pet's information</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Support & Info Section -->
+                            <div class="menu-section">
+                                <div class="section-header">Support & Information</div>
+                                <div class="menu-list">
+                                    <div class="menu-item" onclick="helpCenter()">
+                                        <div class="menu-icon icon-blue">❓</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Help Center</div>
+                                            <div class="menu-subtitle">FAQs, guides, and tutorials</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="contactSupport()">
+                                        <div class="menu-icon icon-green">💬</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Contact Support</div>
+                                            <div class="menu-subtitle">Get help from our team</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="rateApp()">
+                                        <div class="menu-icon icon-yellow">⭐</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Rate Doppy</div>
+                                            <div class="menu-subtitle">Share your experience</div>
+                                        </div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                    <div class="menu-item" onclick="checkUpdates()">
+                                        <div class="menu-icon icon-purple">🔄</div>
+                                        <div class="menu-details">
+                                            <div class="menu-title">Check for Updates</div>
+                                            <div class="menu-subtitle">Keep Doppy up to date</div>
+                                        </div>
+                                        <div class="menu-badge update">New</div>
+                                        <div class="menu-arrow">›</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- App Info -->
+                            <div class="app-info">
+                                <div class="app-logo">D</div>
+                                <div class="app-name">Doppy</div>
+                                <div class="app-version">Version 2.1.0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item" onclick="selectNav('home')">
+                            <div class="nav-icon">🏠</div>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('calendar')">
+                            <div class="nav-icon">📅</div>
+                            <div class="nav-label">Calendar</div>
+                        </div>
+                        <div class="nav-item add-button" onclick="quickAdd()">
+                            <div class="nav-icon">+</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('profile')">
+                            <div class="nav-icon">🐾</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                        <div class="nav-item active" onclick="selectNav('more')">
+                            <div class="nav-icon">⋯</div>
+                            <div class="nav-label">More</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initMorePage();
+            loadUserData();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initMorePage() {
+            console.log('More page loaded');
+        }
+
+        function loadUserData() {
+            // Load user data from registration
+            const completeRegistration = getUserData('completeRegistration');
+            const userData = getUserData('userData');
+            
+            if (completeRegistration && completeRegistration.user) {
+                const user = completeRegistration.user;
+                if (user.fullName) document.getElementById('userName').textContent = user.fullName;
+                if (user.email) document.getElementById('userEmail').textContent = user.email;
+            } else if (userData) {
+                if (userData.fullName) document.getElementById('userName').textContent = userData.fullName;
+                if (userData.email) document.getElementById('userEmail').textContent = userData.email;
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'dashboard.html';
+        }
+
+        function openSettings() {
+            window.location.href = 'settings.html';
+        }
+
+        function editProfile() {
+            showNotification('Opening profile editor...', 'info');
+        }
+
+        // Pet Management functions
+        function manageReminders() {
+            showNotification('Opening reminder management...', 'info');
+        }
+
+        function healthRecords() {
+            showNotification('Loading health records...', 'info');
+        }
+
+        function vetContacts() {
+            showNotification('Managing veterinary contacts...', 'info');
+        }
+
+        function emergencyInfo() {
+            showNotification('Loading emergency information...', 'info');
+        }
+
+        // App Features functions
+        function notifications() {
+            window.location.href = 'notifications.html';
+        }
+
+        function dataSync() {
+            showNotification('Syncing data with cloud...', 'info');
+        }
+
+        function shareApp() {
+            showNotification('Opening share options...', 'info');
+        }
+
+        function exportData() {
+            showNotification('Preparing data export...', 'info');
+        }
+
+        // Support functions
+        function helpCenter() {
+            showNotification('Opening help center...', 'info');
+        }
+
+        function contactSupport() {
+            showNotification('Contacting support team...', 'info');
+        }
+
+        function rateApp() {
+            showNotification('Opening app store rating...', 'info');
+        }
+
+        function checkUpdates() {
+            showNotification('Checking for updates...', 'info');
+            setTimeout(() => {
+                showNotification('You have the latest version!', 'success');
+            }, 2000);
+        }
+
+        // Navigation functions
+        function selectNav(section) {
+            document.querySelectorAll('.nav-item:not(.add-button)').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (!event.currentTarget.classList.contains('add-button')) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            switch(section) {
+                case 'home':
+                    window.location.href = 'dashboard.html';
+                    break;
+                case 'calendar':
+                    window.location.href = 'calendar.html';
+                    break;
+                case 'profile':
+                    window.location.href = 'pet-profile.html';
+                    break;
+                case 'more':
+                    // Already on more page
+                    break;
+            }
+        }
+
+        function quickAdd() {
+            showNotification('Quick add: Feeding, Medicine, Walk, or Note?', 'info');
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#4CAF50' : '#2196F3'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                max-width: 300px;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function getUserData(key) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+                return null;
+            }
+        }
+
+        console.log('Doppy More page loaded successfully');
+    </script>
+</body>
+</html>
