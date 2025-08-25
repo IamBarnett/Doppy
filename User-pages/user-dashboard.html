@@ -6,27 +6,26 @@
     <title>Doppy - Dashboard</title>
     <link rel="stylesheet" href="../phone-frame.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
-
         .dashboard-screen {
             height: calc(100% - 44px);
             display: flex;
             flex-direction: column;
             position: relative;
-            z-index: 10;
+            z-index: 200;
             overflow-y: auto;
-            padding-bottom: 85px;
+            padding-bottom: 75px;
             scrollbar-width: none;
             -ms-overflow-style: none;
             background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+        }
+
+        /* Elementos específicos que DEBEN ser clickeables */
+        .notification-btn, .user-info-card, .feature-section, .feature-main-card, 
+        .feature-side-card, .vet-item, .schedule-main, .schedule-side, .notes-content {
+            position: relative;
+            z-index: 350 !important;
+            pointer-events: auto !important;
+            cursor: pointer !important;
         }
 
         .dashboard-screen::-webkit-scrollbar {
@@ -38,7 +37,7 @@
         .header-section {
             padding: 20px 20px 25px 20px;
             position: relative;
-            z-index: 200;
+            z-index: 300;
         }
 
         .user-info-card {
@@ -51,7 +50,8 @@
             align-items: center;
             gap: 12px;
             position: relative;
-            z-index: 300;
+            z-index: 350;
+            pointer-events: auto;
         }
 
         .user-avatar-large {
@@ -123,7 +123,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            z-index: 300;
+            z-index: 350;
+            pointer-events: auto;
             color: white;
             font-size: 18px;
         }
@@ -140,7 +141,7 @@
             flex: 1;
             padding: 20px;
             position: relative;
-            z-index: 200;
+            z-index: 300;
             min-height: calc(100vh - 200px);
         }
 
@@ -158,6 +159,10 @@
             padding: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             border: 1px solid #E8ECF0;
+            position: relative;
+            z-index: 350;
+            pointer-events: auto;
+            cursor: pointer;
         }
 
         .section-header {
@@ -421,14 +426,14 @@
             text-align: center;
         }
 
-        /* Bottom navigation - Same as before */
+        /* Bottom navigation - DENTRO del phone-frame */
         .bottom-nav {
-            position: fixed;
+            position: absolute;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 375px;
-            height: 80px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 70px;
             background: white;
             border-top: 1px solid #e5e7eb;
             display: flex;
@@ -481,16 +486,16 @@
         .nav-item.add-button {
             background: #FFC107;
             border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            margin-top: -20px;
+            width: 50px;
+            height: 50px;
+            margin-top: -10px;
             box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-            max-width: 56px;
+            max-width: 50px;
         }
 
         .nav-item.add-button .nav-icon {
             color: #1976D2;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 300;
         }
 
@@ -505,14 +510,16 @@
 
         @media (max-width: 480px) {
             .bottom-nav {
-                width: 100vw;
+                width: 100%;
                 left: 0;
                 transform: none;
                 border-radius: 0;
+                position: absolute;
+                bottom: 0;
             }
             
             .dashboard-screen {
-                padding-bottom: 90px;
+                padding-bottom: 75px;
             }
         }
     </style>
