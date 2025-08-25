@@ -865,8 +865,7 @@
         }
 
         function viewPetDetails(petId) {
-            showNotification(`Opening medical record for ${petId}...`, 'info');
-            // In a real app, this would open the detailed pet view
+            window.location.href = `vet-pet-detail.html?petId=${petId}`;
         }
 
         function callOwner(petId) {

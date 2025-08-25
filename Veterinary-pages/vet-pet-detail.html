@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Pet Details</title>
+    <link rel="stylesheet" href="../phone-frame.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        .pet-detail-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            background: #f8fafc;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 200;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: #fbbf24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #f59e0b;
+            transform: scale(1.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-image {
+            height: 28px;
+            width: auto;
+        }
+
+        .notification-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .notification-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* Next Appointment Card */
+        .next-appointment {
+            background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+            margin: 0 20px;
+            border-radius: 12px;
+            padding: 16px;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 200;
+        }
+
+        .appointment-header {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .appointment-date {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .appointment-time {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Pet Info Card */
+        .pet-info-card {
+            background: white;
+            margin: 0 20px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 200;
+        }
+
+        .pet-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .pet-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #e5e7eb;
+        }
+
+        .pet-basic-info {
+            flex: 1;
+        }
+
+        .pet-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1976D2;
+            margin-bottom: 4px;
+        }
+
+        .pet-owner {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .pet-icon {
+            font-size: 20px;
+            margin-right: 4px;
+        }
+
+        /* Pet Details Grid */
+        .pet-details {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .color-tag {
+            background: #1f2937;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        /* Owner Info Section */
+        .owner-info {
+            background: #e0f2fe;
+            margin: 0 20px;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 200;
+        }
+
+        .owner-header {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 8px;
+        }
+
+        .owner-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .owner-avatar {
+            width: 40px;
+            height: 40px;
+            background: #0369a1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .owner-info-text {
+            flex: 1;
+        }
+
+        .owner-contact {
+            font-size: 14px;
+            color: #0369a1;
+            margin-bottom: 2px;
+        }
+
+        .owner-email {
+            font-size: 12px;
+            color: #0284c7;
+        }
+
+        /* Add Consultation Button */
+        .add-consultation-btn {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .add-consultation-btn:hover {
+            background: #1565C0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+
+        /* Content padding for scroll */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 90px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            height: 70px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        .add-button {
+            background: #FFC107;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            margin-top: -15px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .add-button .nav-icon {
+            color: #1976D2;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .add-button .nav-label {
+            display: none;
+        }
+
+        .add-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .bottom-nav {
+                width: 100vw;
+                left: 0;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
+
+                    <div class="pet-detail-screen">
+                        <!-- Header -->
+                        <div class="header">
+                            <div class="header-top">
+                                <button class="back-btn" onclick="goBack()">←</button>
+                                <div class="logo-section">
+                                    <img src="/assets/images/logo.png" alt="Doppy Logo" class="logo-image">
+                                </div>
+                                <button class="notification-btn" onclick="showNotifications()">🔔</button>
+                            </div>
+                        </div>
+
+                        <div class="scrollable-content">
+                            <!-- Next Appointment Card -->
+                            <div class="next-appointment">
+                                <div class="appointment-header">Next appointment:</div>
+                                <div class="appointment-date">WED JULY 17</div>
+                                <div class="appointment-time">1:30pm</div>
+                            </div>
+
+                            <!-- Pet Info Card -->
+                            <div class="pet-info-card">
+                                <div class="pet-header">
+                                    <img src="../assets/images/bruno-dog.jpg" alt="Bruno" class="pet-photo" onerror="this.style.display='none'">
+                                    <div class="pet-basic-info">
+                                        <div class="pet-name">
+                                            <span class="pet-icon">🐕</span>
+                                            Bruno
+                                        </div>
+                                        <div class="pet-owner">Owner: Antonio Ramirez</div>
+                                    </div>
+                                </div>
+
+                                <div class="pet-details">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Species:</span>
+                                        <span class="detail-value">Canine</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Sex:</span>
+                                        <span class="detail-value">Male</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Age:</span>
+                                        <span class="detail-value">3 years, 7 months</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Breed:</span>
+                                        <span class="detail-value">Energetic Mixed Breed (Looks like a happy blend of a terrier and a spaniel!)</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Color and Distinctive Markings:</span>
+                                        <span class="detail-value">
+                                            <span class="color-tag">Black hair</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add New Consultation Button -->
+                            <button class="add-consultation-btn" onclick="addNewConsultation()">
+                                ➕ Add New Consultation
+                            </button>
+
+                            <!-- Owner Information -->
+                            <div class="owner-info">
+                                <div class="owner-header">Owner Name</div>
+                                <div class="owner-details">
+                                    <div class="owner-avatar">👤</div>
+                                    <div class="owner-info-text">
+                                        <div class="owner-contact">[Phone number]</div>
+                                        <div class="owner-email">[email]</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item" onclick="selectNav('home')">
+                            <div class="nav-icon">🏠</div>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item active" onclick="selectNav('pets')">
+                            <div class="nav-icon">🐾</div>
+                            <div class="nav-label">Pets</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('calendar')">
+                            <div class="nav-icon">📅</div>
+                            <div class="nav-label">Calendar</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('documents')">
+                            <div class="nav-icon">📋</div>
+                            <div class="nav-label">Documents</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('profile')">
+                            <div class="nav-icon">👤</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initPetDetail();
+            loadPetData();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initPetDetail() {
+            console.log('Pet Detail page loaded');
+            
+            // Get pet data from URL parameters or localStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            const petId = urlParams.get('petId') || 'bruno';
+            
+            loadPetDetails(petId);
+        }
+
+        function loadPetData() {
+            // Sample pet data - in a real app this would come from an API
+            const petData = {
+                name: 'Bruno',
+                species: 'Canine',
+                sex: 'Male',
+                age: '3 years, 7 months',
+                breed: 'Energetic Mixed Breed (Looks like a happy blend of a terrier and a spaniel!)',
+                color: 'Black hair',
+                owner: {
+                    name: 'Antonio Ramirez',
+                    phone: '+1 (555) 123-4567',
+                    email: 'antonio.ramirez@email.com'
+                },
+                nextAppointment: {
+                    date: 'WED JULY 17',
+                    time: '1:30pm'
+                }
+            };
+            
+            // Update owner contact info
+            const ownerDetails = document.querySelector('.owner-info-text');
+            if (ownerDetails && petData.owner) {
+                ownerDetails.innerHTML = `
+                    <div class="owner-contact">${petData.owner.phone}</div>
+                    <div class="owner-email">${petData.owner.email}</div>
+                `;
+            }
+        }
+
+        function loadPetDetails(petId) {
+            // In a real app, this would fetch pet details from the server
+            console.log(`Loading details for pet: ${petId}`);
+        }
+
+        function addNewConsultation() {
+            // Navigate to consultation form with pre-filled pet data
+            window.location.href = 'consultation-form.html?petId=bruno&ownerName=Antonio%20Ramirez';
+        }
+
+        function goBack() {
+            window.location.href = 'vet-pets.html';
+        }
+
+        function showNotifications() {
+            showNotification('No new notifications for this pet', 'info');
+        }
+
+        // Navigation functions
+        function selectNav(section) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            switch(section) {
+                case 'home':
+                    window.location.href = 'vet-dashboard.html';
+                    break;
+                case 'pets':
+                    window.location.href = 'vet-pets.html';
+                    break;
+                case 'calendar':
+                    window.location.href = 'vet-calendar.html';
+                    break;
+                case 'documents':
+                    window.location.href = 'vet-documents.html';
+                    break;
+                case 'profile':
+                    window.location.href = 'vet-profile.html';
+                    break;
+            }
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                max-width: 300px;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        console.log('Doppy Pet Detail (Veterinary) loaded successfully');
+    </script>
+</body>
+</html>

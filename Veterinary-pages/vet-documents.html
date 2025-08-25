@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Documents</title>
+    <link rel="stylesheet" href="../phone-frame.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        .documents-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            background: #f8fafc;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 200;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-image {
+            height: 28px;
+            width: auto;
+        }
+
+        .notification-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .notification-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 200;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 40px 12px 40px;
+            border: 1px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 16px;
+            background: #f9fafb;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #1976D2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fbbf24;
+            font-size: 16px;
+            z-index: 400;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 200;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .filter-tab.active {
+            background: #1976D2;
+            color: white;
+        }
+
+        .filter-tab:hover:not(.active) {
+            background: #e5e7eb;
+        }
+
+        .dropdown-arrow {
+            font-size: 12px;
+        }
+
+        /* Content */
+        .documents-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            padding-bottom: 90px;
+            position: relative;
+            z-index: 200;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .documents-content::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        .document-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .document-item:hover {
+            border-color: #1976D2;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.1);
+        }
+
+        .document-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .document-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-medical-history {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+
+        .icon-vaccine {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .icon-examination {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .document-info {
+            flex: 1;
+        }
+
+        .document-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .document-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .document-status {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-expired {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-expiring {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+
+        /* Add New Form Button */
+        .add-form-btn {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .add-form-btn:hover {
+            background: #1565C0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            height: 70px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        .add-button {
+            background: #FFC107;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            margin-top: -15px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .add-button .nav-icon {
+            color: #1976D2;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .add-button .nav-label {
+            display: none;
+        }
+
+        .add-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .bottom-nav {
+                width: 100vw;
+                left: 0;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
+
+                    <div class="documents-screen">
+                        <!-- Header -->
+                        <div class="header">
+                            <button class="back-btn" onclick="goBack()">←</button>
+                            <div class="logo-section">
+                                <img src="../assets/images/logo.png" alt="Doppy Logo" class="logo-image">
+                            </div>
+                            <button class="notification-btn" onclick="showNotifications()">🔔</button>
+                        </div>
+
+                        <!-- Search Section -->
+                        <div class="search-section">
+                            <div class="search-container">
+                                <div class="search-icon">🔍</div>
+                                <input type="text" class="search-input" placeholder="Search..." id="searchInput">
+                            </div>
+                        </div>
+
+                        <!-- Filter Section -->
+                        <div class="filter-section">
+                            <div class="filter-tabs">
+                                <button class="filter-tab active" onclick="filterDocuments('pets')">
+                                    Pets <span class="dropdown-arrow">▼</span>
+                                </button>
+                                <button class="filter-tab" onclick="filterDocuments('date')">
+                                    Date <span class="dropdown-arrow">▼</span>
+                                </button>
+                                <button class="filter-tab" onclick="filterDocuments('type')">
+                                    Type of document
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Documents Content -->
+                        <div class="documents-content">
+                            <!-- Medical History Document -->
+                            <div class="document-item" onclick="viewDocument('medical-history', 'luna')" data-type="medical-history" data-pet="luna">
+                                <div class="document-status status-expired">Expired</div>
+                                <div class="document-header">
+                                    <div class="document-icon icon-medical-history">📋</div>
+                                    <div class="document-info">
+                                        <div class="document-title">Medical History</div>
+                                        <div class="document-subtitle">Luna, Cat</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Vaccine Document -->
+                            <div class="document-item" onclick="viewDocument('vaccine', 'bruno')" data-type="vaccine" data-pet="bruno">
+                                <div class="document-status status-active">Active</div>
+                                <div class="document-header">
+                                    <div class="document-icon icon-vaccine">💉</div>
+                                    <div class="document-info">
+                                        <div class="document-title">Vaccine</div>
+                                        <div class="document-subtitle">Bruno, Dog</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Medical Examination Document -->
+                            <div class="document-item" onclick="viewDocument('medical-examination', 'kairos')" data-type="medical-examination" data-pet="kairos">
+                                <div class="document-status status-expiring">Expiring</div>
+                                <div class="document-header">
+                                    <div class="document-icon icon-examination">🏥</div>
+                                    <div class="document-info">
+                                        <div class="document-title">Medical Examination</div>
+                                        <div class="document-subtitle">Kairos, Turtle</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional documents -->
+                            <div class="document-item" onclick="viewDocument('vaccine', 'max')" data-type="vaccine" data-pet="max">
+                                <div class="document-status status-active">Active</div>
+                                <div class="document-header">
+                                    <div class="document-icon icon-vaccine">💉</div>
+                                    <div class="document-info">
+                                        <div class="document-title">Vaccine</div>
+                                        <div class="document-subtitle">Max, Cat</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="document-item" onclick="viewDocument('medical-history', 'bella')" data-type="medical-history" data-pet="bella">
+                                <div class="document-status status-active">Active</div>
+                                <div class="document-header">
+                                    <div class="document-icon icon-medical-history">📋</div>
+                                    <div class="document-info">
+                                        <div class="document-title">Medical History</div>
+                                        <div class="document-subtitle">Bella, Dog</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add New Form Button -->
+                            <button class="add-form-btn" onclick="addNewForm()">
+                                ➕ Add New Form
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item" onclick="selectNav('home')">
+                            <div class="nav-icon">🏠</div>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('pets')">
+                            <div class="nav-icon">🐾</div>
+                            <div class="nav-label">Pets</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('calendar')">
+                            <div class="nav-icon">📅</div>
+                            <div class="nav-label">Calendar</div>
+                        </div>
+                        <div class="nav-item active" onclick="selectNav('documents')">
+                            <div class="nav-icon">📋</div>
+                            <div class="nav-label">Documents</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('profile')">
+                            <div class="nav-icon">👤</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initDocuments();
+            setupSearch();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initDocuments() {
+            console.log('Veterinary Documents page loaded');
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', handleSearch);
+        }
+
+        function handleSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const documentItems = document.querySelectorAll('.document-item');
+            
+            documentItems.forEach(item => {
+                const title = item.querySelector('.document-title').textContent.toLowerCase();
+                const subtitle = item.querySelector('.document-subtitle').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || subtitle.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function filterDocuments(filterType) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            showNotification(`Filtering by ${filterType}...`, 'info');
+        }
+
+        function viewDocument(docType, petName) {
+            showNotification(`Opening ${docType} for ${petName}...`, 'info');
+            // In a real app, this would navigate to document details
+        }
+
+        function addNewForm() {
+            // Navigate to consultation form
+            window.location.href = 'consultation-form.html';
+        }
+
+        function goBack() {
+            window.location.href = 'vet-dashboard.html';
+        }
+
+        function showNotifications() {
+            showNotification('You have 2 document updates', 'info');
+        }
+
+        // Navigation functions
+        function selectNav(section) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            switch(section) {
+                case 'home':
+                    window.location.href = 'vet-dashboard.html';
+                    break;
+                case 'pets':
+                    window.location.href = 'vet-pets.html';
+                    break;
+                case 'calendar':
+                    window.location.href = 'vet-calendar.html';
+                    break;
+                case 'documents':
+                    // Already on documents page
+                    break;
+                case 'profile':
+                    window.location.href = 'vet-profile.html';
+                    break;
+            }
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                max-width: 300px;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        console.log('Doppy Veterinary Documents loaded successfully');
+    </script>
+</body>
+</html>

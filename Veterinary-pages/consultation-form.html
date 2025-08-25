@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doppy - Consultation Form</title>
+    <link rel="stylesheet" href="../phone-frame.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        .consultation-screen {
+            height: calc(100% - 44px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            background: #f8fafc;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 200;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-image {
+            height: 28px;
+            width: auto;
+        }
+
+        .notification-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .notification-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* Content */
+        .form-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            padding-bottom: 90px;
+            position: relative;
+            z-index: 200;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .form-content::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        .form-title {
+            background: #e0f2fe;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-title h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0369a1;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 300;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1976D2;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e3f2fd;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1976D2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #1976D2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .clinical-exam-section {
+            margin-top: 12px;
+        }
+
+        .exam-subsection {
+            margin-bottom: 16px;
+        }
+
+        .subsection-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+
+        .notes-section {
+            margin-top: 16px;
+        }
+
+        .save-btn {
+            background: #fbbf24;
+            color: #1976D2;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .save-btn:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            height: 70px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            position: relative;
+            z-index: 300;
+            pointer-events: auto;
+        }
+
+        .nav-item.active {
+            color: #1976D2;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        .add-button {
+            background: #FFC107;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            margin-top: -15px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .add-button .nav-icon {
+            color: #1976D2;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .add-button .nav-label {
+            display: none;
+        }
+
+        .add-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .bottom-nav {
+                width: 100vw;
+                left: 0;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame-container">
+        <div class="phone-frame">
+            <div class="phone-screen">
+                <div class="phone-container">
+                    <div class="status-bar">
+                        <span class="status-left">9:41</span>
+                        <span class="status-right">🔋 100%</span>
+                    </div>
+
+                    <div class="consultation-screen">
+                        <!-- Header -->
+                        <div class="header">
+                            <button class="back-btn" onclick="goBack()">←</button>
+                            <div class="logo-section">
+                                <img src="../assets/images/logo.png" alt="Doppy Logo" class="logo-image">
+                            </div>
+                            <button class="notification-btn" onclick="showNotifications()">🔔</button>
+                        </div>
+
+                        <!-- Form Content -->
+                        <div class="form-content">
+                            <!-- Form Title -->
+                            <div class="form-title">
+                                <h1>Consultation Form</h1>
+                            </div>
+
+                            <!-- Owner Information Section -->
+                            <div class="form-section">
+                                <div class="section-title">Owner Information:</div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-input" placeholder="Owner's full name" id="ownerName">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">ID / Document</label>
+                                    <input type="text" class="form-input" placeholder="ID number or document" id="ownerID">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Contact</label>
+                                    <input type="text" class="form-input" placeholder="Phone number or email" id="ownerContact">
+                                </div>
+                            </div>
+
+                            <!-- Patient Information Section -->
+                            <div class="form-section">
+                                <div class="section-title">Patient Information:</div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-input" placeholder="Pet's name" id="petName">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Species</label>
+                                    <select class="form-select" id="petSpecies">
+                                        <option value="">Select species</option>
+                                        <option value="dog">Dog</option>
+                                        <option value="cat">Cat</option>
+                                        <option value="bird">Bird</option>
+                                        <option value="rabbit">Rabbit</option>
+                                        <option value="turtle">Turtle</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Sex</label>
+                                    <select class="form-select" id="petSex">
+                                        <option value="">Select sex</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Breed</label>
+                                    <input type="text" class="form-input" placeholder="Pet's breed" id="petBreed">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Color</label>
+                                    <input type="text" class="form-input" placeholder="Pet's color" id="petColor">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Weight</label>
+                                    <input type="text" class="form-input" placeholder="Weight (kg)" id="petWeight">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-input" id="petBirthdate">
+                                </div>
+                            </div>
+
+                            <!-- Consultation Details Section -->
+                            <div class="form-section">
+                                <div class="section-title">Consultation Details:</div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Pet name:</label>
+                                    <input type="text" class="form-input" placeholder="Pet's name" id="consultationPetName">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Date of consultation:</label>
+                                    <input type="date" class="form-input" id="consultationDate">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Veterinarian:</label>
+                                    <input type="text" class="form-input" placeholder="Veterinarian name" id="veterinarianName">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Reason for consultation:</label>
+                                    <textarea class="form-input form-textarea" placeholder="Describe the reason for the visit" id="consultationReason"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Status icon</label>
+                                    <select class="form-select" id="consultationStatus">
+                                        <option value="">Select status</option>
+                                        <option value="scheduled">Scheduled</option>
+                                        <option value="in-progress">In Progress</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Clinical Examination Section -->
+                            <div class="form-section">
+                                <div class="section-title">Clinical Examination:</div>
+                                
+                                <div class="clinical-exam-section">
+                                    <div class="exam-subsection">
+                                        <div class="subsection-title">Vital signs, Organs and systems</div>
+                                        <textarea class="form-input form-textarea" placeholder="Record vital signs, organ examination, and system assessments..." id="vitalSigns"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="notes-section">
+                                    <div class="subsection-title">Notes Attachments: Photos, documents, test results, prescriptions</div>
+                                    <textarea class="form-input form-textarea" placeholder="Add notes about attachments, photos, documents, test results, prescriptions, etc..." id="notesAttachments"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Save Button -->
+                            <button class="save-btn" onclick="saveConsultation()">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Navigation -->
+                    <div class="bottom-nav">
+                        <div class="nav-item" onclick="selectNav('home')">
+                            <div class="nav-icon">🏠</div>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('pets')">
+                            <div class="nav-icon">🐾</div>
+                            <div class="nav-label">Pets</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('calendar')">
+                            <div class="nav-icon">📅</div>
+                            <div class="nav-label">Calendar</div>
+                        </div>
+                        <div class="nav-item active" onclick="selectNav('documents')">
+                            <div class="nav-icon">📋</div>
+                            <div class="nav-label">Documents</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('profile')">
+                            <div class="nav-icon">👤</div>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initConsultationForm();
+            setupForm();
+            updateStatusTime();
+            setInterval(updateStatusTime, 60000);
+        });
+
+        function initConsultationForm() {
+            console.log('Consultation Form loaded');
+            
+            // Set current date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('consultationDate').value = today;
+            
+            // Load veterinarian name if available
+            const vetSession = getVetData('vetSession');
+            if (vetSession && vetSession.vetName) {
+                document.getElementById('veterinarianName').value = vetSession.vetName;
+            }
+        }
+
+        function setupForm() {
+            // Auto-fill pet name in consultation section when patient pet name changes
+            const patientPetName = document.getElementById('petName');
+            const consultationPetName = document.getElementById('consultationPetName');
+            
+            patientPetName.addEventListener('input', function() {
+                consultationPetName.value = this.value;
+            });
+        }
+
+        function saveConsultation() {
+            // Validate required fields
+            const requiredFields = [
+                'ownerName', 'petName', 'petSpecies', 'consultationDate', 
+                'veterinarianName', 'consultationReason'
+            ];
+            
+            let isValid = true;
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#ef4444';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#d1d5db';
+                }
+            });
+
+            if (!isValid) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+
+            // Collect form data
+            const consultationData = {
+                owner: {
+                    name: document.getElementById('ownerName').value,
+                    id: document.getElementById('ownerID').value,
+                    contact: document.getElementById('ownerContact').value
+                },
+                patient: {
+                    name: document.getElementById('petName').value,
+                    species: document.getElementById('petSpecies').value,
+                    sex: document.getElementById('petSex').value,
+                    breed: document.getElementById('petBreed').value,
+                    color: document.getElementById('petColor').value,
+                    weight: document.getElementById('petWeight').value,
+                    birthdate: document.getElementById('petBirthdate').value
+                },
+                consultation: {
+                    date: document.getElementById('consultationDate').value,
+                    veterinarian: document.getElementById('veterinarianName').value,
+                    reason: document.getElementById('consultationReason').value,
+                    status: document.getElementById('consultationStatus').value,
+                    vitalSigns: document.getElementById('vitalSigns').value,
+                    notes: document.getElementById('notesAttachments').value
+                },
+                createdAt: new Date().toISOString()
+            };
+
+            // Save consultation data
+            saveVetData('consultations', consultationData);
+            
+            showNotification('Consultation form saved successfully!', 'success');
+            
+            setTimeout(() => {
+                window.location.href = 'vet-documents.html';
+            }, 1500);
+        }
+
+        function goBack() {
+            if (confirm('Are you sure you want to go back? Unsaved changes will be lost.')) {
+                window.location.href = 'vet-documents.html';
+            }
+        }
+
+        function showNotifications() {
+            showNotification('No new notifications', 'info');
+        }
+
+        // Navigation functions
+        function selectNav(section) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            switch(section) {
+                case 'home':
+                    window.location.href = 'vet-dashboard.html';
+                    break;
+                case 'pets':
+                    window.location.href = 'vet-pets.html';
+                    break;
+                case 'calendar':
+                    window.location.href = 'vet-calendar.html';
+                    break;
+                case 'documents':
+                    window.location.href = 'vet-documents.html';
+                    break;
+                case 'profile':
+                    window.location.href = 'vet-profile.html';
+                    break;
+            }
+        }
+
+        function updateStatusTime() {
+            const timeElement = document.querySelector('.status-left');
+            if (timeElement) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: false 
+                });
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 10000;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                max-width: 300px;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function saveVetData(key, value) {
+            try {
+                const existing = getVetData(key) || [];
+                existing.push(value);
+                localStorage.setItem('vet_' + key, JSON.stringify(existing));
+                return true;
+            } catch (error) {
+                console.error('Error saving vet data:', error);
+                return false;
+            }
+        }
+
+        function getVetData(key) {
+            try {
+                const data = localStorage.getItem('vet_' + key);
+                return data ? JSON.parse(data) : null;
+            } catch (error) {
+                console.error('Error retrieving vet data:', error);
+                return null;
+            }
+        }
+
+        console.log('Doppy Consultation Form loaded successfully');
+    </script>
+</body>
+</html>
