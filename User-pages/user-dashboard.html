@@ -14,351 +14,431 @@
 
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background: #f8fafc;
-            height: 100vh;
+        }
+
+        .dashboard-screen {
+            height: calc(100% - 44px);
             display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            overflow-y: auto;
+            padding-bottom: 85px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+        }
+
+        .dashboard-screen::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* Header with user info */
+        .header-section {
+            padding: 20px 20px 25px 20px;
+            position: relative;
+            z-index: 200;
+        }
+
+        .user-info-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 300;
+        }
+
+        .user-avatar-large {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            margin: 0;
+            font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .phone-container {
-            width: 375px;
-            height: 812px;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
-            position: relative;
+        .user-details {
+            flex: 1;
         }
 
-        .status-bar {
-            height: 44px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            background: white;
-            color: #1a1a1a;
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+        .greeting-text {
             color: white;
-            padding: 20px;
-            position: relative;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 4px;
         }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        .user-name {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .logo-section {
+        .pet-info-compact {
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .logo-d {
-            width: 32px;
-            height: 32px;
-            background: #FFC107;
-            border-radius: 8px;
+        .pet-avatar-small {
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            font-weight: bold;
-            color: #1976D2;
+            font-size: 14px;
         }
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 400;
+        .pet-name-small {
             color: white;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .notification-btn {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            border: none;
             background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            z-index: 300;
+            color: white;
+            font-size: 18px;
         }
 
         .notification-btn:hover {
             background: rgba(255,255,255,0.3);
         }
 
-        .notification-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
+        /* Main content area */
+        .main-content {
+            background: #F5F7FA;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            z-index: 200;
+            min-height: calc(100vh - 200px);
         }
 
-        .welcome-section {
+        /* Section containers identical to the image */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
             margin-bottom: 20px;
         }
 
-        .welcome-text {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 4px;
+        .feature-section {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #E8ECF0;
         }
 
-        .user-name {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .pet-summary {
-            background: rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 12px 16px;
-            backdrop-filter: blur(10px);
+        .section-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-        }
-
-        .pet-avatar {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .pet-info {
-            flex: 1;
-        }
-
-        .pet-name {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .pet-details {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            padding-bottom: 70px;
-        }
-
-        .quick-actions {
-            padding: 20px;
+            margin-bottom: 12px;
         }
 
         .section-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 15px;
+            color: #2C3E50;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .actions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .action-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .action-card:hover {
-            background: #f9fafb;
-            border-color: #1976D2;
-            transform: translateY(-2px);
-        }
-
-        .action-icon {
-            width: 48px;
-            height: 48px;
-            background: #e3f2fd;
-            border-radius: 16px;
+        .section-icon {
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 16px;
         }
 
-        .action-title {
+        /* Pet Features Section - Matching the image exactly */
+        .pet-features {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+        }
+
+        .feature-main-card {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+            border-radius: 12px;
+            padding: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(20px, -20px);
+        }
+
+        .feature-title {
             font-size: 14px;
             font-weight: 600;
-            color: #374151;
+            margin-bottom: 4px;
         }
 
-        .action-subtitle {
+        .feature-subtitle {
             font-size: 12px;
-            color: #6b7280;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .feature-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .feature-side-card {
+            background: #FFF3E0;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            border: 2px solid #FFE0B2;
         }
 
-        .appointments-section {
-            padding: 0 20px 20px 20px;
+        .side-card-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
         }
 
-        .appointment-card {
+        .side-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #FF8A65;
+            margin-bottom: 4px;
+        }
+
+        .side-card-subtitle {
+            font-size: 10px;
+            color: #FF7043;
+            line-height: 1.2;
+        }
+
+        /* Vet Features Section */
+        .vet-features {
+            background: #E8F5E8;
+            border: 2px solid #C8E6C9;
+        }
+
+        .vet-features .section-title {
+            color: #2E7D32;
+        }
+
+        .vet-items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .vet-item {
             background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #E0E0E0;
+        }
+
+        .vet-item:hover {
+            background: #F1F8E9;
+            border-color: #4CAF50;
+        }
+
+        .vet-icon {
+            width: 32px;
+            height: 32px;
+            background: #4CAF50;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .vet-info {
+            flex: 1;
+        }
+
+        .vet-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2E7D32;
+            margin-bottom: 2px;
+        }
+
+        .vet-details {
+            font-size: 10px;
+            color: #558B2F;
+        }
+
+        /* Schedule Section */
+        .schedule-section {
+            background: #FFF8E1;
+            border: 2px solid #FFE082;
+        }
+
+        .schedule-section .section-title {
+            color: #F57F17;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 12px;
+        }
+
+        .schedule-main {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #FFD54F;
+        }
+
+        .schedule-date {
+            font-size: 12px;
+            color: #FF8F00;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .schedule-event {
+            font-size: 14px;
+            font-weight: 600;
+            color: #F57C00;
+            margin-bottom: 2px;
+        }
+
+        .schedule-time {
+            font-size: 12px;
+            color: #FF8F00;
+        }
+
+        .schedule-side {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid #FFD54F;
+        }
+
+        .schedule-side-day {
+            font-size: 20px;
+            font-weight: 700;
+            color: #F57C00;
+            margin-bottom: 2px;
+        }
+
+        .schedule-side-month {
+            font-size: 10px;
+            color: #FF8F00;
+        }
+
+        /* Notes Section */
+        .notes-section {
+            background: #FFF3E0;
+            border: 2px solid #FFCC02;
+        }
+
+        .notes-section .section-title {
+            color: #FF8F00;
+        }
+
+        .notes-content {
+            background: #FFEB3B;
+            border-radius: 12px;
             padding: 16px;
-            margin-bottom: 12px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .appointment-card:hover {
-            border-color: #1976D2;
-            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.1);
+        .notes-content:hover {
+            background: #FDD835;
+            transform: translateY(-1px);
         }
 
-        .appointment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .appointment-time {
+        .notes-placeholder {
+            color: #F57C00;
             font-size: 14px;
-            font-weight: 600;
-            color: #1976D2;
-            margin-bottom: 4px;
-        }
-
-        .appointment-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 4px;
-        }
-
-        .appointment-clinic {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .appointment-status {
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 6px;
             font-weight: 500;
-        }
-
-        .status-upcoming {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .status-confirmed {
-            background: #dcfce7;
-            color: #16a34a;
-        }
-
-        .health-summary {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 16px;
-            margin: 0 20px 20px 20px;
-        }
-
-        .health-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .health-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a1a1a;
-        }
-
-        .view-all-btn {
-            font-size: 14px;
-            color: #1976D2;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .health-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .health-stat {
             text-align: center;
         }
 
-        .stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1976D2;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
+        /* Bottom navigation - Same as before */
         .bottom-nav {
-            position: absolute;
+            position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 375px;
+            height: 80px;
             background: white;
             border-top: 1px solid #e5e7eb;
             display: flex;
             align-items: center;
             justify-content: space-around;
-            padding: 0 20px;
+            padding: 8px 15px;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
         }
 
         .nav-item {
@@ -370,6 +450,11 @@
             transition: all 0.2s ease;
             flex: 1;
             text-align: center;
+            padding: 8px 4px;
+            position: relative;
+            z-index: 1100;
+            pointer-events: auto;
+            max-width: 60px;
         }
 
         .nav-item.active {
@@ -383,44 +468,51 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
+            position: relative;
         }
 
         .nav-label {
             font-size: 10px;
             font-weight: 500;
             color: inherit;
+            line-height: 1;
         }
 
-        .add-btn {
-            position: absolute;
-            bottom: 90px;
-            right: 20px;
+        .nav-item.add-button {
+            background: #FFC107;
+            border-radius: 50%;
             width: 56px;
             height: 56px;
-            background: #1976D2;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
-            transition: all 0.2s ease;
-            color: white;
-            font-size: 24px;
+            margin-top: -20px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+            max-width: 56px;
+        }
+
+        .nav-item.add-button .nav-icon {
+            color: #1976D2;
+            font-size: 28px;
             font-weight: 300;
         }
 
-        .add-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        .nav-item.add-button .nav-label {
+            display: none;
+        }
+
+        .nav-item.add-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
         }
 
         @media (max-width: 480px) {
-            .phone-container {
+            .bottom-nav {
                 width: 100vw;
-                height: 100vh;
+                left: 0;
+                transform: none;
                 border-radius: 0;
+            }
+            
+            .dashboard-screen {
+                padding-bottom: 90px;
             }
         }
     </style>
@@ -435,133 +527,137 @@
                         <span class="status-right">🔋 100%</span>
                     </div>
 
-                    <div class="header">
-                        <div class="header-top">
-                            <div class="logo-section">
-                                <div class="logo-d">D</div>
-                                <span class="logo-text">oppy</span>
+                    <div class="dashboard-screen">
+                        <!-- Header Section -->
+                        <div class="header-section">
+                            <div class="user-info-card">
+                                <div class="user-avatar-large" id="userAvatar">👤</div>
+                                <div class="user-details">
+                                    <div class="greeting-text" id="greetingText">Hi partner of</div>
+                                    <div class="user-name" id="userName">Max</div>
+                                    <div class="pet-info-compact">
+                                        <div class="pet-avatar-small" id="petAvatar">🐕</div>
+                                        <div class="pet-name-small" id="petName">Bruno</div>
+                                    </div>
+                                </div>
+                                <button class="notification-btn" onclick="openNotifications()">
+                                    🔔
+                                </button>
                             </div>
-                            <button class="notification-btn" onclick="showNotifications()">
-                                🔔
-                                <div class="notification-badge"></div>
-                            </button>
                         </div>
 
-                        <div class="welcome-section">
-                            <div class="welcome-text">Good morning!</div>
-                            <div class="user-name" id="userName">John Doe</div>
-                            
-                            <div class="pet-summary" onclick="viewPetProfile()">
-                                <div class="pet-avatar" id="petAvatar">🐶</div>
-                                <div class="pet-info">
-                                    <div class="pet-name" id="petName">Bruno</div>
-                                    <div class="pet-details" id="petDetails">Golden Retriever • 3 years old</div>
+                        <!-- Main Content -->
+                        <div class="main-content">
+                            <div class="features-grid">
+                                
+                                <!-- Pet Features Section -->
+                                <div class="feature-section">
+                                    <div class="section-header">
+                                        <div class="section-title">
+                                            <span class="section-icon">🐾</span>
+                                            Pet Features
+                                        </div>
+                                    </div>
+                                    <div class="pet-features">
+                                        <div class="feature-main-card" onclick="viewPetDetails()">
+                                            <div class="feature-title">3 years old</div>
+                                            <div class="feature-subtitle">Golden Retriever</div>
+                                            <div class="feature-value">36 kg</div>
+                                        </div>
+                                        <div class="feature-side-card" onclick="viewVaccinations()">
+                                            <div class="side-card-icon">💉</div>
+                                            <div class="side-card-title">Vaccination</div>
+                                            <div class="side-card-subtitle">Up to date</div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <!-- Vet Features Section -->
+                                <div class="feature-section vet-features">
+                                    <div class="section-header">
+                                        <div class="section-title">
+                                            <span class="section-icon">🏥</span>
+                                            Vet Features
+                                        </div>
+                                    </div>
+                                    <div class="vet-items-grid">
+                                        <div class="vet-item" onclick="callVet('american')">
+                                            <div class="vet-icon">🏥</div>
+                                            <div class="vet-info">
+                                                <div class="vet-name">American Pets</div>
+                                                <div class="vet-details">Albert Ramirez</div>
+                                            </div>
+                                        </div>
+                                        <div class="vet-item" onclick="emergencyCall()">
+                                            <div class="vet-icon">🚨</div>
+                                            <div class="vet-info">
+                                                <div class="vet-name">Emergency</div>
+                                                <div class="vet-details">24/7 support</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Schedule Section -->
+                                <div class="feature-section schedule-section">
+                                    <div class="section-header">
+                                        <div class="section-title">
+                                            <span class="section-icon">📅</span>
+                                            Schedule
+                                        </div>
+                                    </div>
+                                    <div class="schedule-grid">
+                                        <div class="schedule-main" onclick="viewFullSchedule()">
+                                            <div class="schedule-date">Friday</div>
+                                            <div class="schedule-event">Vaccination</div>
+                                            <div class="schedule-time">Jan 18</div>
+                                        </div>
+                                        <div class="schedule-side" onclick="viewCalendar()">
+                                            <div class="schedule-side-day">18</div>
+                                            <div class="schedule-side-month">JAN</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Notes Section -->
+                                <div class="feature-section notes-section">
+                                    <div class="section-header">
+                                        <div class="section-title">
+                                            <span class="section-icon">📝</span>
+                                            Notes
+                                        </div>
+                                    </div>
+                                    <div class="notes-content" onclick="openNotes()">
+                                        <div class="notes-placeholder">
+                                            💡 Tap to add notes about your pet
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <div class="content">
-                        <div class="quick-actions">
-                            <div class="section-title">
-                                ⚡ Quick Actions
-                            </div>
-                            <div class="actions-grid">
-                                <div class="action-card" onclick="bookAppointment()">
-                                    <div class="action-icon">📅</div>
-                                    <div class="action-title">Book Appointment</div>
-                                    <div class="action-subtitle">Schedule vet visit</div>
-                                </div>
-                                <div class="action-card" onclick="emergencyCall()">
-                                    <div class="action-icon">🚨</div>
-                                    <div class="action-title">Emergency</div>
-                                    <div class="action-subtitle">24/7 vet support</div>
-                                </div>
-                                <div class="action-card" onclick="viewHealthRecords()">
-                                    <div class="action-icon">📋</div>
-                                    <div class="action-title">Health Records</div>
-                                    <div class="action-subtitle">Medical history</div>
-                                </div>
-                                <div class="action-card" onclick="findVets()">
-                                    <div class="action-icon">🏥</div>
-                                    <div class="action-title">Find Vets</div>
-                                    <div class="action-subtitle">Nearby clinics</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="appointments-section">
-                            <div class="section-title">
-                                📅 Upcoming Appointments
-                            </div>
-                            
-                            <div class="appointment-card" onclick="viewAppointment('apt1')">
-                                <div class="appointment-header">
-                                    <div>
-                                        <div class="appointment-time">Today, 2:30 PM</div>
-                                        <div class="appointment-title">Regular Checkup</div>
-                                        <div class="appointment-clinic">Happy Pets Veterinary Clinic</div>
-                                    </div>
-                                    <div class="appointment-status status-confirmed">Confirmed</div>
-                                </div>
-                            </div>
-
-                            <div class="appointment-card" onclick="viewAppointment('apt2')">
-                                <div class="appointment-header">
-                                    <div>
-                                        <div class="appointment-time">Jan 25, 10:00 AM</div>
-                                        <div class="appointment-title">Vaccination</div>
-                                        <div class="appointment-clinic">Pet Care Center</div>
-                                    </div>
-                                    <div class="appointment-status status-upcoming">Upcoming</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="health-summary">
-                            <div class="health-header">
-                                <div class="health-title">Health Summary</div>
-                                <button class="view-all-btn" onclick="viewFullHealth()">View All</button>
-                            </div>
-                            <div class="health-stats">
-                                <div class="health-stat">
-                                    <div class="stat-value">98%</div>
-                                    <div class="stat-label">Health Score</div>
-                                </div>
-                                <div class="health-stat">
-                                    <div class="stat-value">28kg</div>
-                                    <div class="stat-label">Weight</div>
-                                </div>
-                                <div class="health-stat">
-                                    <div class="stat-value">Up to date</div>
-                                    <div class="stat-label">Vaccinations</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="add-btn" onclick="quickAdd()" title="Quick add">+</button>
-
+                    <!-- Bottom Navigation -->
                     <div class="bottom-nav">
                         <div class="nav-item active" onclick="selectNav('home')">
                             <div class="nav-icon">🏠</div>
                             <div class="nav-label">Home</div>
                         </div>
-                        <div class="nav-item" onclick="selectNav('appointments')">
+                        <div class="nav-item" onclick="selectNav('calendar')">
                             <div class="nav-icon">📅</div>
-                            <div class="nav-label">Appointments</div>
+                            <div class="nav-label">Calendar</div>
                         </div>
-                        <div class="nav-item" onclick="selectNav('health')">
-                            <div class="nav-icon">💊</div>
-                            <div class="nav-label">Health</div>
-                        </div>
-                        <div class="nav-item" onclick="selectNav('documents')">
-                            <div class="nav-icon">📋</div>
-                            <div class="nav-label">Documents</div>
+                        <div class="nav-item add-button" onclick="quickAdd()">
+                            <div class="nav-icon">+</div>
                         </div>
                         <div class="nav-item" onclick="selectNav('profile')">
-                            <div class="nav-icon">👤</div>
+                            <div class="nav-icon">🐾</div>
                             <div class="nav-label">Profile</div>
+                        </div>
+                        <div class="nav-item" onclick="selectNav('more')">
+                            <div class="nav-icon">⋯</div>
+                            <div class="nav-label">More</div>
                         </div>
                     </div>
                 </div>
@@ -572,124 +668,138 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             initDashboard();
+            updateGreeting();
             updateStatusTime();
             setInterval(updateStatusTime, 60000);
         });
 
         function initDashboard() {
-            console.log('User Dashboard loaded');
+            console.log('Doppy Dashboard loaded - New Design');
             
-            // Load user and pet data
-            const userData = getUserData('userData');
-            const petData = getUserData('selectedPet');
+            // Load user and pet data from previous registration
             const completeRegistration = getUserData('completeRegistration');
-            
+            const userData = getUserData('userData');
+
             // Display user name
-            if (userData && userData.fullName) {
-                document.getElementById('userName').textContent = userData.fullName;
-            } else if (completeRegistration && completeRegistration.user && completeRegistration.user.fullName) {
-                document.getElementById('userName').textContent = completeRegistration.user.fullName;
+            if (completeRegistration && completeRegistration.user && completeRegistration.user.fullName) {
+                const firstName = completeRegistration.user.fullName.split(' ')[0];
+                document.getElementById('userName').textContent = firstName;
+            } else if (userData && userData.fullName) {
+                const firstName = userData.fullName.split(' ')[0];
+                document.getElementById('userName').textContent = firstName;
             }
-            
+
             // Display pet information
-            if (petData) {
-                document.getElementById('petAvatar').textContent = petData.icon || '🐾';
-                document.getElementById('petName').textContent = petData.name || 'Pet';
-            }
-            
             if (completeRegistration && completeRegistration.pet) {
                 const pet = completeRegistration.pet;
-                document.getElementById('petName').textContent = pet.name || 'Pet';
-                document.getElementById('petDetails').textContent = 
-                    `${pet.race || pet.type} • ${pet.age || 'Unknown age'}`;
+                document.getElementById('petName').textContent = pet.name || 'Bruno';
+                
+                // Set pet avatar based on type
+                const petType = pet.type ? pet.type.toLowerCase() : 'dog';
+                const avatars = {
+                    'dog': '🐕',
+                    'cat': '🐱',
+                    'bird': '🐦',
+                    'rabbit': '🐰',
+                    'turtle': '🐢',
+                    'lizard': '🦎'
+                };
+                document.getElementById('petAvatar').textContent = avatars[petType] || '🐕';
             }
-            
+
             updateGreeting();
         }
 
         function updateGreeting() {
             const hour = new Date().getHours();
-            let greeting = 'Good morning!';
+            let greeting = 'Hi partner of';
             
-            if (hour >= 12 && hour < 18) {
-                greeting = 'Good afternoon!';
-            } else if (hour >= 18) {
-                greeting = 'Good evening!';
+            // Keep it simple as in the image
+            document.getElementById('greetingText').textContent = greeting;
+        }
+
+        // Pet Features Functions
+        function viewPetDetails() {
+            showNotification('Opening pet details...', 'info');
+        }
+
+        function viewVaccinations() {
+            showNotification('Checking vaccination records...', 'info');
+        }
+
+        // Vet Features Functions
+        function callVet(vetType) {
+            if (vetType === 'american') {
+                showNotification('Calling American Pets - Albert Ramirez...', 'info');
+            } else {
+                showNotification('Connecting to veterinarian...', 'info');
             }
-            
-            document.querySelector('.welcome-text').textContent = greeting;
-        }
-
-        function showNotifications() {
-            showNotification('You have 2 new messages and 1 appointment reminder', 'info');
-        }
-
-        function viewPetProfile() {
-            showNotification('Opening pet profile...', 'info');
-            // In a real app, this would open the pet profile page
-        }
-
-        function bookAppointment() {
-            showNotification('Opening appointment booking...', 'info');
-            // In a real app, this would open the appointment booking flow
         }
 
         function emergencyCall() {
-            showNotification('Connecting to emergency vet services...', 'info');
-            // In a real app, this would initiate emergency contact
+            showNotification('🚨 Connecting to emergency vet services...', 'info');
         }
 
-        function viewHealthRecords() {
-            showNotification('Opening health records...', 'info');
-            // In a real app, this would show medical history
+        // Schedule Functions
+        function viewFullSchedule() {
+            navigateToPage('calendar.html');
         }
 
-        function findVets() {
-            showNotification('Finding nearby veterinary clinics...', 'info');
-            // In a real app, this would show a map or list of nearby vets
+        function viewCalendar() {
+            navigateToPage('calendar.html');
         }
 
-        function viewAppointment(appointmentId) {
-            showNotification(`Opening appointment details for ${appointmentId}...`, 'info');
-            // In a real app, this would show appointment details
+        // Notes Functions
+        function openNotes() {
+            showNotification('Opening notes editor...', 'info');
         }
 
-        function viewFullHealth() {
-            showNotification('Opening complete health dashboard...', 'info');
-            // In a real app, this would show detailed health metrics
-        }
-
-        function quickAdd() {
-            showNotification('Quick add: Appointment, Medication, or Note?', 'info');
-            // In a real app, this would show quick add options
-        }
-
+        // Navigation Functions
         function selectNav(section) {
-            // Remove active class from all nav items
-            document.querySelectorAll('.nav-item').forEach(item => {
+            document.querySelectorAll('.nav-item:not(.add-button)').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Add active class to clicked item
-            event.currentTarget.classList.add('active');
+            if (!event.currentTarget.classList.contains('add-button')) {
+                event.currentTarget.classList.add('active');
+            }
             
             switch(section) {
-                case 'appointments':
-                    showNotification('Appointments section coming soon!', 'info');
+                case 'home':
+                    showNotification('You are on Home', 'info');
                     break;
-                case 'health':
-                    showNotification('Health tracking coming soon!', 'info');
-                    break;
-                case 'documents':
-                    showNotification('Documents section coming soon!', 'info');
+                case 'calendar':
+                    navigateToPage('calendar.html');
                     break;
                 case 'profile':
-                    window.location.href = 'user-profile.html';
+                    navigateToPage('pet-profile.html');
                     break;
-                default:
-                    // Stay on home
+                case 'more':
+                    navigateToPage('more.html');
                     break;
             }
+        }
+
+        function navigateToPage(page) {
+            try {
+                saveUserData('previousPage', 'dashboard.html');
+                saveUserData('navigationState', {
+                    from: 'dashboard',
+                    timestamp: new Date().toISOString()
+                });
+                window.location.href = page;
+            } catch (error) {
+                console.error('Navigation error:', error);
+                showNotification('Navigation error, please try again', 'error');
+            }
+        }
+
+        function quickAdd() {
+            showNotification('Quick add: Feeding, Medicine, Walk, or Note?', 'info');
+        }
+
+        function openNotifications() {
+            navigateToPage('notifications.html');
         }
 
         function updateStatusTime() {
@@ -713,16 +823,15 @@
                 top: 70px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6'};
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#4CAF50' : '#2196F3'};
                 color: white;
                 padding: 12px 24px;
                 border-radius: 8px;
-                z-index: 1000;
+                z-index: 10000;
                 font-size: 14px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                max-width: 320px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                max-width: 300px;
                 text-align: center;
-                line-height: 1.4;
             `;
             
             document.body.appendChild(notification);
@@ -732,16 +841,6 @@
                     notification.parentNode.removeChild(notification);
                 }
             }, 3000);
-        }
-
-        function saveUserData(key, value) {
-            try {
-                localStorage.setItem(key, JSON.stringify(value));
-                return true;
-            } catch (error) {
-                console.error('Error saving data:', error);
-                return false;
-            }
         }
 
         function getUserData(key) {
@@ -754,7 +853,17 @@
             }
         }
 
-        console.log('Doppy User Dashboard loaded successfully');
+        function saveUserData(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (error) {
+                console.error('Error saving data:', error);
+                return false;
+            }
+        }
+
+        console.log('Doppy Dashboard - New Design loaded successfully');
     </script>
 </body>
 </html>
